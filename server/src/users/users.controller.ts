@@ -1,4 +1,13 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete } from '@nestjs/common';
+import {
+  Controller,
+  Get,
+  Post,
+  Body,
+  Param,
+  Put,
+  Delete,
+  BadRequestException,
+} from '@nestjs/common';
 import { UsersService } from './users.service';
 import { CreateUserDto } from './dto/create-user.dto';
 import { UpdateUserDto } from './dto/update-user.dto';
@@ -8,27 +17,46 @@ export class UsersController {
   constructor(private readonly usersService: UsersService) {}
 
   @Post()
-  create(@Body() createUserDto: CreateUserDto) {
-    return this.usersService.create(createUserDto);
+  async create(@Body() createUserDto: CreateUserDto) {
+    try {
+      return await this.usersService.createUsers(createUserDto);
+    } catch (error) {
+      throw new BadRequestException('Something bad happened', {
+        cause: error,
+      });
+    }
   }
 
   @Get()
   findAll() {
-    return this.usersService.findAll();
+    return this.usersService.findAllUsers();
   }
 
   @Get(':id')
-  findOne(@Param('id') id: string) {
-    return this.usersService.findOne(+id);
+  async findOne(@Param('id') userId: string) {
+    try {
+      const user = await this.usersService.findOneById(userId);
+      return { user, message: 'User successfully found' };
+    } catch (error) {
+      throw new BadRequestException('Something bad happened', error.message);
+    }
   }
 
-  @Patch(':id')
-  update(@Param('id') id: string, @Body() updateUserDto: UpdateUserDto) {
-    return this.usersService.update(+id, updateUserDto);
+  @Put(':id')
+  async update(
+    @Param('id') userId: string,
+    @Body() updateUserDto: UpdateUserDto,
+  ) {
+    const updatedUser = await this.usersService.updateUser(
+      userId,
+      updateUserDto,
+    );
+    return { user: updatedUser, message: 'User correctly updated' };
   }
 
   @Delete(':id')
-  remove(@Param('id') id: string) {
-    return this.usersService.remove(+id);
+  async remove(@Param('id') userId: string) {
+    await this.usersService.removeUser(userId);
+    return 'User successfully deleted';
   }
 }
