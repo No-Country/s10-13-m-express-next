@@ -37,14 +37,18 @@ export class UsersService {
   }
 
   async findOneById(userId: string): Promise<User | null> {
-    if (!userId) {
-      throw new NotFoundException('User ID entered is incorrect');
+    const idPattern = /^[0-9a-f]{24}$/i;
+
+    if (!userId || !idPattern.test(userId)) {
+      throw new BadRequestException('User ID entered is incorrect');
     }
-    const result = this.prisma.user.findUnique({
+
+    const result = await this.prisma.user.findUnique({
       where: { id: userId },
     });
+
     if (!result) {
-      throw new NotFoundException('User not found');
+      throw new ConflictException('User not found');
     }
 
     return result;
