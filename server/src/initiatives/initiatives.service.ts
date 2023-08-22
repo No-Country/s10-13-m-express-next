@@ -1,4 +1,4 @@
-import { BadRequestException, Injectable, NotFoundException } from '@nestjs/common';
+import { BadRequestException, HttpException, HttpStatus, Injectable, NotFoundException } from '@nestjs/common';
 import { CreateInitiativeDto } from './dto/create-initiative.dto';
 import { UpdateInitiativeDto } from './dto/update-initiative.dto';
 import { PrismaService } from '../prisma/prisma.service';
@@ -36,7 +36,7 @@ export class InitiativesService {
     });
 
     if (!result) {
-      throw new NotFoundException('Initiative not found');
+      throw new NotFoundException(`Initiative ${id} not found`);
     }
 
     return result;
@@ -52,19 +52,29 @@ export class InitiativesService {
     });
 
     if (!initiativeUpdated) {
-      throw new NotFoundException('Initiative not found');
+      throw new NotFoundException(`Initiative ${id} not found`);
     }
 
     return initiativeUpdated;
   }
 
-  async remove(id: string): Promise<void> {
-    if(!isMongoId(id)){
-      throw new BadRequestException('You must provide a MongoId param.'); 
+  async remove(id: string): Promise<Initiative | null> {
+
+    try {
+      if(!isMongoId(id)){
+        throw new BadRequestException('You must provide a MongoId param.'); 
+      }    
+      const removed = await this.prisma.initiative.delete({ where: { id } })
+      if (!removed) {
+        throw new NotFoundException(`Initiative ${id} not found`);
+      }
+      return removed;
+    } catch (error) {
+      throw new HttpException(
+        `Can't delete or not found ${id}.`,
+        HttpStatus.BAD_REQUEST,
+      );
     }
-    const deletedInitiative = await this.prisma.initiative.delete({
-      where: { id },
-    });
-    //return `This action removes a #${id} initiative`;
+
   }
 }
