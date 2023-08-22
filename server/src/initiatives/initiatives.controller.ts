@@ -19,7 +19,7 @@ export class InitiativesController {
 
   @Get(':id')
   findOne(@Param('id') id: string) {
-    return this.initiativesService.findOne(+id);
+    return this.initiativesService.findOne(id);
   }
 
   @Patch(':id')
