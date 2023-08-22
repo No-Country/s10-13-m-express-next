@@ -3,14 +3,22 @@ import { CreateInitiativeDto } from './dto/create-initiative.dto';
 import { UpdateInitiativeDto } from './dto/update-initiative.dto';
 import { PrismaService } from '../prisma/prisma.service';
 import { Initiative } from '@prisma/client';
-import { isMongoId } from 'class-validator';
+import { isMongoId, validate } from 'class-validator';
 
 
 @Injectable()
 export class InitiativesService {
   constructor(private readonly prisma: PrismaService) {}
-  create(createInitiativeDto: CreateInitiativeDto) {
-    return 'This action adds a new initiative';
+  async create(createInitiativeDto: CreateInitiativeDto) {
+    const errors = await validate(createInitiativeDto);
+
+    if (errors.length > 0) {
+      throw new BadRequestException(errors);
+    }
+    const newInitiative = await this.prisma.initiative.create({
+      data: createInitiativeDto,
+    });
+    return newInitiative;
   }
 
   async findAll(): Promise<Initiative[]> {
@@ -20,7 +28,7 @@ export class InitiativesService {
   async findOne(id: string): Promise<Initiative | null> {
 
     if(!isMongoId(id)){
-      throw new BadRequestException('You must provide a MongoId param'); 
+      throw new BadRequestException('You must provide a MongoId param.'); 
     }
 
     const result = await this.prisma.initiative.findUnique({
@@ -34,11 +42,29 @@ export class InitiativesService {
     return result;
   }
 
-  update(id: number, updateInitiativeDto: UpdateInitiativeDto) {
-    return `This action updates a #${id} initiative`;
+  async update(id: string, updateInitiativeDto: UpdateInitiativeDto): Promise<Initiative> {
+    if(!isMongoId(id)){
+      throw new BadRequestException('You must provide a MongoId param.'); 
+    }
+    const initiativeUpdated = await this.prisma.initiative.update({
+      where: { id },
+      data: updateInitiativeDto,
+    });
+
+    if (!initiativeUpdated) {
+      throw new NotFoundException('Initiative not found');
+    }
+
+    return initiativeUpdated;
   }
 
-  remove(id: number) {
-    return `This action removes a #${id} initiative`;
+  async remove(id: string): Promise<void> {
+    if(!isMongoId(id)){
+      throw new BadRequestException('You must provide a MongoId param.'); 
+    }
+    const deletedInitiative = await this.prisma.initiative.delete({
+      where: { id },
+    });
+    //return `This action removes a #${id} initiative`;
   }
 }

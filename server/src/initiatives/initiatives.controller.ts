@@ -24,11 +24,11 @@ export class InitiativesController {
 
   @Patch(':id')
   update(@Param('id') id: string, @Body() updateInitiativeDto: UpdateInitiativeDto) {
-    return this.initiativesService.update(+id, updateInitiativeDto);
+    return this.initiativesService.update(id, updateInitiativeDto);
   }
 
   @Delete(':id')
   remove(@Param('id') id: string) {
-    return this.initiativesService.remove(+id);
+    return this.initiativesService.remove(id);
   }
 }
