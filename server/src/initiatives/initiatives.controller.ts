@@ -2,7 +2,18 @@ import { Controller, Get, Post, Body, Patch, Param, Delete } from '@nestjs/commo
 import { InitiativesService } from './initiatives.service';
 import { CreateInitiativeDto } from './dto/create-initiative.dto';
 import { UpdateInitiativeDto } from './dto/update-initiative.dto';
+import {
+  ApiBadRequestResponse,
+  ApiBearerAuth,
+  ApiConflictResponse,
+  ApiCreatedResponse,
+  ApiNotFoundResponse,
+  ApiOkResponse,
+  ApiTags,
+} from '@nestjs/swagger';
 
+@ApiBearerAuth()
+@ApiTags('Initiatives')
 @Controller('initiatives')
 export class InitiativesController {
   constructor(private readonly initiativesService: InitiativesService) {}
