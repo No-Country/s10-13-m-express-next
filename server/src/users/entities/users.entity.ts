@@ -3,24 +3,24 @@ import { IsNotEmpty, IsEmail } from 'class-validator';
 
 export class UsersEntity implements ModelUser {
   id: string;
-  @IsNotEmpty()
+  @IsNotEmpty({ message: 'name is required' })
   name: string;
 
-  @IsNotEmpty()
+  @IsNotEmpty({ message: 'lastName is required' })
   lastName: string;
-  @IsNotEmpty()
+
+  @IsNotEmpty({ message: 'phone is required' })
   phone: string;
 
-  @IsNotEmpty()
+  @IsNotEmpty({ message: 'email is invalid' })
   @IsEmail()
   email: string;
 
-  @IsNotEmpty()
+  @IsNotEmpty({ message: 'role is required' })
   role: role;
 
-  @IsNotEmpty()
+  @IsNotEmpty({ message: 'password is required' })
   password: string;
 
-  @IsNotEmpty()
   profileImage: string;
 }

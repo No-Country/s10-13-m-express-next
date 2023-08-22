@@ -7,6 +7,7 @@ import {
   Put,
   Delete,
   BadRequestException,
+  ConflictException,
 } from '@nestjs/common';
 import { UsersService } from './users.service';
 import { CreateUserDto } from './dto/create-user.dto';
@@ -19,11 +20,21 @@ export class UsersController {
   @Post()
   async create(@Body() createUserDto: CreateUserDto) {
     try {
-      return await this.usersService.createUsers(createUserDto);
+      const newUser = await this.usersService.createUsers(createUserDto);
+      return { newUser, message: 'User created Successfully' };
     } catch (error) {
-      throw new BadRequestException('Something bad happened', {
-        cause: error,
-      });
+      if (error instanceof BadRequestException) {
+        // Si es una BadRequestException, devolvemos los detalles de validación
+        throw error;
+      } else if (error instanceof ConflictException) {
+        // Si es una ConflictException, devolvemos el mensaje de conflicto
+        throw error;
+      } else {
+        // Para cualquier otra excepción, devolvemos un mensaje genérico
+        throw new BadRequestException('Something bad happened', {
+          cause: error,
+        });
+      }
     }
   }
 
@@ -38,7 +49,15 @@ export class UsersController {
       const user = await this.usersService.findOneById(userId);
       return { user, message: 'User successfully found' };
     } catch (error) {
-      throw new BadRequestException('Something bad happened', error.message);
+      if (error instanceof BadRequestException) {
+        throw error;
+      } else if (error instanceof ConflictException) {
+        throw error;
+      } else {
+        throw new BadRequestException('Something bad happened', {
+          cause: error,
+        });
+      }
     }
   }
 
