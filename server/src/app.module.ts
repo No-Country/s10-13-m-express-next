@@ -8,7 +8,6 @@ import { AuthModule } from './auth/auth.module';
 import { ConfigModule } from '@nestjs/config';
 import { InitiativesModule } from './initiatives/initiatives.module';
 import { PostsModule } from './posts/posts.module';
-import { InitiativesModule } from './initiatives/initiatives.module';
 
 @Module({
   imports: [
