@@ -1,6 +1,5 @@
 import { ApiProperty } from '@nestjs/swagger';
-import { IsArray, IsDate, IsMongoId, IsNotEmpty, IsOptional, IsString } from 'class-validator';
-import { Transform } from 'class-transformer';
+import { IsArray, IsISO8601, IsMongoId, IsNotEmpty, IsOptional, IsString } from 'class-validator';
 
 export class CreateInitiativeDto  {
   @ApiProperty({
@@ -28,8 +27,7 @@ export class CreateInitiativeDto  {
     example: '2023-08-23T03:02:06.086Z',
   })
   @IsNotEmpty({ message: 'Dead Line is required' })
-  @IsDate()
-  @Transform(({ value }) => new Date(value))
+  @IsISO8601()
   deadLine: Date;
 
   @ApiProperty({
@@ -39,8 +37,7 @@ export class CreateInitiativeDto  {
     example: '2023-08-23T03:02:06.086Z',
   })
   @IsNotEmpty({ message: 'startDate is required' })
-  @IsDate()
-  @Transform(({ value }) => new Date(value))
+  @IsISO8601()
   startDate: Date;
 
   @ApiProperty({
@@ -50,8 +47,7 @@ export class CreateInitiativeDto  {
     example: '2023-08-23T03:02:06.086Z',
   })
   @IsNotEmpty({ message: 'endDate is required' })
-  @IsDate()
-  @Transform(({ value }) => new Date(value))
+  @IsISO8601()
   endDate: Date;
 
   @ApiProperty({

@@ -22,10 +22,11 @@ export class InitiativesService {
       });
       return newInitiative;
     } catch (error) {
-      throw new HttpException(
-        "Database error",
+      this.errorHandler(error)
+      /*throw new HttpException(
+        "Data error: " + error.message,
         HttpStatus.BAD_REQUEST,
-      );  
+      );  */
     }
   }
 
@@ -94,7 +95,7 @@ export class InitiativesService {
       );      
     }else{
       throw new HttpException(
-        error.message,
+        "Data error: " + error.message + " - "+JSON.stringify(error.meta),
         HttpStatus.BAD_REQUEST,
       );  
     }
