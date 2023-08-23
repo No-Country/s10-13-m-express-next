@@ -18,8 +18,8 @@ import { GoogleOauthGuard } from './google/google-oauth.guard';
 export class AuthController {
   constructor(private readonly authService: AuthService) {}
 
-  @UseGuards(LocalAuthGuard)
   @Post('/login')
+  @UseGuards(LocalAuthGuard)
   async login(@Request() req, @Session() session): Promise<any> {
     const user = req.user;
     console.log('user', session, user);
@@ -38,10 +38,10 @@ export class AuthController {
 
   @Post('/verify')
   async verify(@Body() body, @Res() res: Response): Promise<any> {
-    const SessionID = body.SessionID;
-    const session = await this.authService.findOneById(SessionID);
+    const userId = body.userId;
+    const session = await this.authService.findOneById(userId);
     if (session) {
-      console.log('session', session, SessionID);
+      console.log('session', session);
       return res.status(200).json({ verified: true });
     } else {
       throw new UnauthorizedException();

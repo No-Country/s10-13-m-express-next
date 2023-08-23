@@ -13,6 +13,7 @@ export class LocalStrategy extends PassportStrategy(Strategy, 'local') {
     private readonly authService: AuthService,
   ) {
     super({
+      usernameField: 'email',
       passReqToCallback: true,
     });
   }
