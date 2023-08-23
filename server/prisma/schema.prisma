@@ -39,6 +39,21 @@ enum role {
   organization
 }
 
+model Session {
+  id    String      @id @default(auto()) @map("_id") @db.ObjectId
+  expires DateTime
+  session SessionInfo
+}
+
+type SessionInfo {
+  user UserSession
+}
+
+type UserSession {
+  userId String
+}
+
+
 model Initiative {
   id                String      @id @default(auto()) @map("_id") @db.ObjectId
   title             String
