@@ -10,24 +10,25 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
-
 model User {
-  id                String      @id @default(auto()) @map("_id") @db.ObjectId
-  name              String
-  lastName          String
-  phone             String
-  email             String      @unique
-  role              role?
-  password          String
-  profileImage      String?
-  
- 
-  
+  id           String  @id @default(auto()) @map("_id") @db.ObjectId
+  name         String
+  lastName     String
+  phone        String
+  email        String  @unique
+  role         role?
+  password     String
+  profileImage String?
 }
-
-
 
 enum role {
   volunteer
   organization
+}
+
+model Session {
+  id           String  @id @default(auto()) @map("_id") @db.ObjectId
+ sessionId    String
+  expires DateTime
+  session Json
 }

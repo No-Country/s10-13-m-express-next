@@ -8,6 +8,7 @@ import { CreateUserDto } from './dto/create-user.dto';
 import { PrismaService } from '../prisma/prisma.service';
 import { User } from '@prisma/client';
 import { validate } from 'class-validator';
+import { encryptPassword } from 'src/utils/bcrypt.utils';
 
 @Injectable()
 export class UsersService {
@@ -26,6 +27,7 @@ export class UsersService {
     if (existingUser) {
       throw new ConflictException('Email is already in use');
     }
+    createUserDto.password = await encryptPassword(createUserDto.password);
     const newUser = await this.prisma.user.create({
       data: createUserDto,
     });
@@ -52,6 +54,18 @@ export class UsersService {
     }
 
     return result;
+  }
+
+  async findByEmail(email: string) {
+    try {
+      const user = await this.prisma.user.findUnique({ where: { email } });
+      if (user) {
+        return user;
+      }
+      return null;
+    } catch (error) {
+      console.log(error);
+    }
   }
 
   async updateUser(id: string, updateUserDto: Partial<User>): Promise<User> {

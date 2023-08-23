@@ -20,10 +20,23 @@
     "test:e2e": "jest --config ./test/jest-e2e.json"
   },
   "dependencies": {
+    "@nestjs/axios": "^3.0.0",
     "@nestjs/common": "^10.0.0",
+    "@nestjs/config": "^3.0.0",
     "@nestjs/core": "^10.0.0",
     "@nestjs/mapped-types": "*",
+    "@nestjs/passport": "^10.0.1",
     "@nestjs/platform-express": "^10.0.0",
+    "@types/bcrypt": "^5.0.0",
+    "@types/express-session": "^1.17.7",
+    "@types/passport-google-oauth20": "^2.0.11",
+    "@types/passport-local": "^1.0.35",
+    "bcrypt": "^5.1.1",
+    "connect-mongodb-session": "^3.1.1",
+    "express-session": "^1.17.3",
+    "passport": "^0.6.0",
+    "passport-google-oauth20": "^2.0.0",
+    "passport-local": "^1.0.0",
     "reflect-metadata": "^0.1.13",
     "rxjs": "^7.8.1"
   },
