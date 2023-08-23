@@ -10,11 +10,20 @@ export class GoogleSerializer extends PassportSerializer {
   }
 
   serializeUser(user: User, done: CallableFunction) {
-    done(null, user.id);
+    done(null, {
+      userId: user.id,
+      email: user.email,
+      provider: "google"
+    });
   }
 
   async deserializeUser(userId: string, done: CallableFunction) {
     const user = await this.usersService.findOneById(userId);
-    done(null, user);
-  }
+    done(null, {
+      userId: user.id,
+      email: user.email,
+      provider: "google"
+    });
+    }
+  
 }

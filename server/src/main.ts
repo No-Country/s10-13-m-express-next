@@ -14,7 +14,6 @@ async function bootstrap() {
 
   app.use(
     session({
-      name: 'sessionId',
       secret: 'your-secret-key',
       resave: false,
       saveUninitialized: false,

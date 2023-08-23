@@ -1,8 +1,7 @@
-import { Injectable, NotAcceptableException } from '@nestjs/common';
+import { Injectable, NotAcceptableException, BadRequestException } from '@nestjs/common';
 import { comparePasswords } from '../utils/bcrypt.utils';
 import { UsersService } from 'src/users/users.service';
 import { PrismaService } from '../prisma/prisma.service';
-import { v4 as uuidv4 } from 'uuid';
 
 @Injectable()
 export class AuthService {
@@ -26,55 +25,30 @@ export class AuthService {
     if (user && passwordValid) {
       console.log('password valid', user.id);
       return {
-        userId: user.id,
+        id: user.id,
         email: user.email,
+        provider: 'local',
       };
     }
     return null;
   }
 
-  async findOneById(id:string) {
+  async findOneById(id: string) {
     try {
-      //pasamos a obj id
-      const user = await this.prisma.session.findMany({ where: { sessionId: id } });
-      if (user) {
-        return user;
+      const idPattern = /^[0-9a-f]{24}$/i;
+
+      if (!id || !idPattern.test(id)) {
+        throw new BadRequestException('User ID entered is incorrect');
       }
-      return null;
-    } catch (error) {
-      console.log(error);
-    }
-  }
-
-  async findAll() {
-    try {
-      const sessions = await this.prisma.session.findMany();
-      if (sessions) {
-        return sessions;
-      }
-      return null;
-    } catch (error) {
-      console.log(error);
-    }
-  }
-
-  async createSession(user) {
-    const uuid = uuidv4();
-    const newSession = {
-      sessionId: uuid,
-      expires: new Date(Date.now() + 3600000),
-      session: {
-        userId: user.userId,
-        email: user.email,
-      },
-    };
-
-    try {
-      const session = await this.prisma.session.create({
-        data: newSession,
+  
+      const result = await this.prisma.session.findUnique({
+        where: { id: id },
       });
 
-      return session;
+      if (result) {
+        return result;
+      }
+      return null;
     } catch (error) {
       console.log(error);
     }

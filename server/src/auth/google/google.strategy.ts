@@ -1,33 +1,45 @@
 import { PassportStrategy } from '@nestjs/passport';
-import { Strategy, VerifyCallback } from 'passport-google-oauth20';
+import { Strategy } from 'passport-google-oauth20';
 import { Injectable } from '@nestjs/common';
-import { AuthService } from '../auth.service';
+import { UsersService } from 'src/users/users.service';
+import { NotAcceptableException } from '@nestjs/common';
+import { GoogleSerializer } from './google.serializer';
 
 @Injectable()
 export class GoogleStrategy extends PassportStrategy(Strategy, 'google') {
-  constructor(private readonly authService: AuthService) {
+  constructor(
+    private readonly usersService: UsersService,
+    private readonly googleSerializer: GoogleSerializer,
+  ) {
     super({
       clientID: process.env.GOOGLE_OAUTH_CLIENT_ID,
       clientSecret: process.env.GOOGLE_OAUTH_SECRET,
       callbackURL: 'http://localhost:3001/auth/google/callback',
+      passReqToCallback: true,
       scope: ['email', 'profile'],
     });
   }
 
   async validate(
+    request: any,
     accessToken: string,
     refreshToken: string,
     profile: any,
-    done: VerifyCallback,
   ): Promise<any> {
-    console.log('Trying to access google acount', profile);
     const { emails } = profile;
+    const user = await this.usersService.findByEmail(emails[0].value);
 
-    const user = {
-      email: emails[0].value,
-      userId: 'name.givenName',
-    };
+    if (!user) {
+      throw new NotAcceptableException('Could not find the user');
+    }
 
-    done(null, user);
+    this.googleSerializer.serializeUser(user, (err, userSerialized) => {
+      if (err) {
+        throw err;
+      }
+      request.session.user = userSerialized;
+    });
+
+    return user;
   }
 }

@@ -22,14 +22,8 @@ export class AuthController {
   @Post('/login')
   async login(@Request() req, @Session() session): Promise<any> {
     const user = req.user;
-    console.log('user', req.session, user);
-    session.userId = user.userId;
-    session.email = user.email;
-
-    // Obtiene el ID de la sesión actual
-    const sessionId = req.sessionID;
-
-    return { User: user, SessionID: sessionId, msg: 'User logged in' };
+    console.log('user', session, user);
+    return { msg: 'User logged in' };
   }
 
   @Get('/google')
@@ -38,29 +32,19 @@ export class AuthController {
 
   @Get('/google/callback')
   @UseGuards(GoogleOauthGuard)
-  async googleAuthRedirect(@Request() req, @Session() session) {
-    // const session = await this.authService.createSession(req.user);
-    console.log('session', session, req);
-    // return { User: req.user, SessionID: session.id, msg: 'User logged in' };
+  async googleAuthRedirect(@Session() session, @Request() req) {
+    console.log('session', session, req.user, req.sessionID);
   }
 
   @Post('/verify')
   async verify(@Body() body, @Res() res: Response): Promise<any> {
     const SessionID = body.SessionID;
-    console.log('SessionID', SessionID);
     const session = await this.authService.findOneById(SessionID);
     if (session) {
-      console.log('session', session);
+      console.log('session', session, SessionID);
       return res.status(200).json({ verified: true });
     } else {
-      //devolvemos 401
       throw new UnauthorizedException();
     }
-  }
-
-  @Get('/session')
-  async getAllSessions(@Res() res: Response): Promise<any> {
-    const sessions = await this.authService.findAll();
-    return res.status(200).json({ sessions });
   }
 }
