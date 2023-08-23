@@ -4,21 +4,29 @@ import { UpdateInitiativeDto } from './dto/update-initiative.dto';
 import { PrismaService } from '../prisma/prisma.service';
 import { Initiative } from '@prisma/client';
 import { isMongoId, validate } from 'class-validator';
+import { PrismaClientKnownRequestError } from '@prisma/client/runtime/library';
 
 
 @Injectable()
 export class InitiativesService {
   constructor(private readonly prisma: PrismaService) {}
   async create(createInitiativeDto: CreateInitiativeDto) {
-    const errors = await validate(createInitiativeDto);
+    try {
+      const errors = await validate(createInitiativeDto);
 
-    if (errors.length > 0) {
-      throw new BadRequestException(errors);
+      if (errors.length > 0) {
+        throw new BadRequestException(errors);
+      }
+      const newInitiative = await this.prisma.initiative.create({
+        data: createInitiativeDto,
+      });
+      return newInitiative;
+    } catch (error) {
+      throw new HttpException(
+        "Database error",
+        HttpStatus.BAD_REQUEST,
+      );  
     }
-    const newInitiative = await this.prisma.initiative.create({
-      data: createInitiativeDto,
-    });
-    return newInitiative;
   }
 
   async findAll(): Promise<Initiative[]> {
@@ -77,4 +85,19 @@ export class InitiativesService {
     }
 
   }
+
+  errorHandler(error){
+    if (error instanceof PrismaClientKnownRequestError) {
+      throw new HttpException(
+        error.code+" - "+JSON.stringify(error.meta),
+        HttpStatus.BAD_REQUEST,
+      );      
+    }else{
+      throw new HttpException(
+        error.message,
+        HttpStatus.BAD_REQUEST,
+      );  
+    }
+  }
+  
 }

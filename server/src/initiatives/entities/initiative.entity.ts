@@ -2,7 +2,7 @@ import { ApiProperty } from '@nestjs/swagger';
 import { Initiative as ModelInitiative, Volunteers } from '@prisma/client';
 import { IsNotEmpty } from 'class-validator';
 
-export class InitiativeEntity implements ModelInitiative {
+export class Initiative implements ModelInitiative {
   id: string;
   
   @ApiProperty({
