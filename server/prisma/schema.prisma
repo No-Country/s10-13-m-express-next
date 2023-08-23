@@ -19,9 +19,19 @@ model User {
   role              role?
   password          String
   profileImage      String?
+  posts             Posts[]
   volunteering      Volunteers[]
   initiatives       Initiative[] @relation(name: "UserInitiatives")
-  
+}
+
+
+model Posts {
+  id                String      @id @default(auto()) @map("_id") @db.ObjectId
+  userId            String      @db.ObjectId
+  user              User        @relation(fields: [userId], references: [id])
+  description       String 
+  createdAt         DateTime    @default(now())
+  galery            String?
 }
 
 enum role {
