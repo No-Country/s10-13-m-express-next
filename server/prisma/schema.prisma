@@ -27,7 +27,15 @@ enum role {
 }
 
 model Session {
-  id      String   @id @default(auto()) @map("_id") @db.ObjectId
+  id      String      @id @default(auto()) @map("_id") @db.ObjectId
   expires DateTime
-  session Json
+  session SessionInfo
+}
+
+type SessionInfo {
+  user UserSession
+}
+
+type UserSession {
+  userId String
 }

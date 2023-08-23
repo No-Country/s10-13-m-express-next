@@ -1,4 +1,4 @@
-import { Injectable, NotAcceptableException, BadRequestException } from '@nestjs/common';
+import { Injectable, NotAcceptableException } from '@nestjs/common';
 import { comparePasswords } from '../utils/bcrypt.utils';
 import { UsersService } from 'src/users/users.service';
 import { PrismaService } from '../prisma/prisma.service';
@@ -33,21 +33,19 @@ export class AuthService {
     return null;
   }
 
-  async findOneById(id: string) {
+  async findOneById(userId: string) {
     try {
-      const idPattern = /^[0-9a-f]{24}$/i;
+      const sessions = await this.prisma.session.findMany();
 
-      if (!id || !idPattern.test(id)) {
-        throw new BadRequestException('User ID entered is incorrect');
-      }
-  
-      const result = await this.prisma.session.findUnique({
-        where: { id: id },
+      const filteredSessions = sessions.filter((session) => {
+        const sessionInfo = session.session; // No necesitas JSON.parse() aquí
+        return sessionInfo.user.userId === userId;
       });
 
-      if (result) {
-        return result;
+      if (filteredSessions && filteredSessions.length > 0) {
+        return filteredSessions;
       }
+
       return null;
     } catch (error) {
       console.log(error);
