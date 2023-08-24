@@ -1,14 +1,11 @@
 # API Reference
 
-All routes are prefixed with `/api/v1`. 
+All routes are prefixed with `/api/v1`.
 
 - To start the server, run `npm run start:dev` in the /server directory, then navigate to `localhost:3001/api/v1` in your browser.
 
 - Remember run `npm install` in the /server directory before starting the server and create a .env file with the necessary environment variables, you can get the values for the .env file in our Discord server.
-  
 - Run `npx prisma generate` in the /server directory before starting the server to generate the Prisma client.
-
-
 
 ## Auth API
 
@@ -16,9 +13,9 @@ The Auth API provides endpoints for user authentication and session management.
 
 ### Local Authentication
 
-**Get Access Token**
+**Get Session ID**
 
-Obtain an access token after authenticating the user locally.
+Obtain an Session ID after authenticating the user locally.
 
 ```http
 POST /auth/login
@@ -44,7 +41,13 @@ POST /auth/login
 }
 ```
 
-You will redirect the user to your application's URL with the `sessionId` and `userId` as query parameters, and then make a request to the `/auth/verify` endpoint to verify the session.
+You will redirect the user to your application's URL with the `sessionId` and `userId` as query parameters.
+
+```http
+yourwebsite.com/?sessionId=your-session-id&userId=your-user-id
+```
+
+You must make a request to the `/auth/verify` endpoint to verify the session. Check the [Verify Session](#verify-session) section for more details.
 
 ### Google Authentication
 
@@ -66,7 +69,13 @@ GET /auth/google/callback
 
 **Successful Response (Redirect)**
 
-The user will be redirected to your application's URL with relevant parameters such as `sessionId` and `userId` if authentication is successful. You can then make a request to the `/auth/verify` endpoint to verify the session.
+The user will be redirected to your application's URL with relevant query parameters such as `sessionId` and `userId` if authentication is successful.
+
+```http
+yourwebsite.com/?sessionId=your-session-id&userId=your-user-id
+```
+
+You must make a request to the `/auth/verify` endpoint to verify the session. Check the [Verify Session](#verify-session) section for more details.
 
 ### Verify Session
 
