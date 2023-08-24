@@ -45,7 +45,7 @@ export class AuthController {
     try {
       const user = req.user;
       return res.status(200).json({
-        sessionID: req.sessionID,
+        sessionId: req.sessionID,
         user: {
           id: user.id,
           email: user.email,
