@@ -1,7 +1,12 @@
 # API Reference
 
-All routes are prefixed with `/api/v1`. To start the server, run `npm run start:dev` in the /server directory, then navigate to `localhost:3001/api/v1` in your browser.
-Remember run `npm install` in the /server directory before starting the server and create a .env file with the necessary environment variables, you can get the values for the .env file in our Discord server.
+All routes are prefixed with `/api/v1`. 
+
+- To start the server, run `npm run start:dev` in the /server directory, then navigate to `localhost:3001/api/v1` in your browser.
+
+- Remember run `npm install` in the /server directory before starting the server and create a .env file with the necessary environment variables, you can get the values for the .env file in our Discord server.
+  
+- Run `npx prisma generate` in the /server directory before starting the server to generate the Prisma client.
 
 
 
