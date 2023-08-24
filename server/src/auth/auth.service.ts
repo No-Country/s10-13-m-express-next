@@ -20,10 +20,9 @@ export class AuthService {
     const passwordValid = await comparePasswords(password, user.password);
 
     if (!user) {
-      throw new NotAcceptableException('could not find the user');
+      throw new NotAcceptableException('Could not find the user');
     }
     if (user && passwordValid) {
-      console.log('password valid', user.id);
       return {
         id: user.id,
         email: user.email,
@@ -38,7 +37,7 @@ export class AuthService {
       const sessions = await this.prisma.session.findMany();
 
       const filteredSessions = sessions.filter((session) => {
-        const sessionInfo = session.session; // No necesitas JSON.parse() aquí
+        const sessionInfo = session.session;
         return sessionInfo.user.userId === userId;
       });
 
@@ -48,7 +47,7 @@ export class AuthService {
 
       return null;
     } catch (error) {
-      console.log(error);
+      console.error(error);
     }
   }
 }

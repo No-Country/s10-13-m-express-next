@@ -4,7 +4,7 @@ import { IsNotEmpty, IsEmail } from 'class-validator';
 export class UsersEntity implements ModelUser {
   id: string;
   @IsNotEmpty({ message: 'name is required' })
-  name: string;
+  firstName: string;
 
   @IsNotEmpty({ message: 'lastName is required' })
   lastName: string;
