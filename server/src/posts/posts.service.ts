@@ -27,7 +27,18 @@ export class PostsService {
         return newPost
     }
 
-    async getPostsByUserId(){
-        return 'Posts por id user'
+    async getPostsByUserId(userId: string) {
+        try {
+            const userPosts = await this.prisma.posts.findMany({
+                where: { userId: userId }
+            });
+            if (userPosts.length === 0) {
+                throw new ConflictException('User ID not found');
+            } else {
+                return userPosts;
+            }
+        } catch (error) {
+            throw error;
+        }
     }
 }

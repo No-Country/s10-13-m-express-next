@@ -1,4 +1,4 @@
-import { Controller, Get, Post, Body, BadRequestException, ConflictException  } from '@nestjs/common';
+import { Controller, Get, Post, Body, Param, BadRequestException, ConflictException  } from '@nestjs/common';
 import { PostsService } from './posts.service';
 import { CreatePostsDto } from './dto/create-posts.dto';
 
@@ -20,7 +20,6 @@ export class PostsController {
                 throw error;
               } else {
                 // Para cualquier otra excepción, devolvemos un mensaje genérico
-                return error
                 throw new BadRequestException('Something bad happened', {
                   cause: error,
                 });
@@ -28,8 +27,19 @@ export class PostsController {
         }
     }
 
-    @Get()
-    getPostsByUserid(){
-        return this.postsServices.getPostsByUserId()
+    @Get(':id')
+    async getPostsByUserid(@Param('id') userId: string) {
+        try {
+            const posts = await this.postsServices.getPostsByUserId(userId);
+            return { posts, message: 'Posts successfully found' };
+        } catch (error) {
+            if (error instanceof BadRequestException || error instanceof ConflictException) {
+                throw error;
+            } else {
+                throw new BadRequestException('Something bad happened', {
+                    cause: error,
+                });
+            }
+        }
     }
 }
