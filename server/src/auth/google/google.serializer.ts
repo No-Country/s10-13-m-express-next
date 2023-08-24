@@ -13,7 +13,7 @@ export class GoogleSerializer extends PassportSerializer {
     done(null, {
       userId: user.id,
       email: user.email,
-      provider: "google"
+      provider: 'google',
     });
   }
 
@@ -22,8 +22,7 @@ export class GoogleSerializer extends PassportSerializer {
     done(null, {
       userId: user.id,
       email: user.email,
-      provider: "google"
+      provider: 'google',
     });
-    }
-  
+  }
 }

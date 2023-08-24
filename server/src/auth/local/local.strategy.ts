@@ -23,9 +23,8 @@ export class LocalStrategy extends PassportStrategy(Strategy, 'local') {
     username: string,
     password: string,
   ): Promise<any> {
-    console.log('user log', username, password);
-    const eMail = username.toLowerCase();
-    const user = await this.authService.validateUser(eMail, password);
+    const email = username.toLowerCase();
+    const user = await this.authService.validateUser(email, password);
 
     if (!user) {
       throw new UnauthorizedException();

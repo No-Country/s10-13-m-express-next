@@ -14,7 +14,7 @@ export class GoogleStrategy extends PassportStrategy(Strategy, 'google') {
     super({
       clientID: process.env.GOOGLE_OAUTH_CLIENT_ID,
       clientSecret: process.env.GOOGLE_OAUTH_SECRET,
-      callbackURL: 'http://localhost:3001/auth/google/callback',
+      callbackURL: process.env.GOOGLE_CALLBACK_URL,
       passReqToCallback: true,
       scope: ['email', 'profile'],
     });
@@ -26,20 +26,38 @@ export class GoogleStrategy extends PassportStrategy(Strategy, 'google') {
     refreshToken: string,
     profile: any,
   ): Promise<any> {
-    const { emails } = profile;
-    const user = await this.usersService.findByEmail(emails[0].value);
+    try {
+      const { emails } = profile;
+      let user = await this.usersService.findByEmail(emails[0].value);
 
-    if (!user) {
-      throw new NotAcceptableException('Could not find the user');
-    }
+      if (!user) {
+        const newUser = await this.usersService.createUsers({
+          firstName: profile.name.givenName,
+          lastName: profile.name.familyName,
+          email: emails[0].value,
+          phone: '0000000000',
+          profileImage: profile.photos[0].value,
+          role: 'volunteer',
+          password: '',
+        });
 
-    this.googleSerializer.serializeUser(user, (err, userSerialized) => {
-      if (err) {
-        throw err;
+        if (!newUser) {
+          throw new NotAcceptableException('Error creating user');
+        }
+
+        user = newUser;
       }
-      request.session.user = userSerialized;
-    });
 
-    return user;
+      this.googleSerializer.serializeUser(user, (err, userSerialized) => {
+        if (err) {
+          throw err;
+        }
+        request.session.user = userSerialized;
+      });
+
+      return user;
+    } catch (error) {
+      throw error;
+    }
   }
 }
