@@ -56,7 +56,7 @@ You must make a request to the `/auth/verify` endpoint to verify the session. Ch
 Initiate the Google authentication process. Redirect the user to this route.
 
 ```http
-GET /auth/google
+/auth/google
 ```
 
 **Redirect from Google**
@@ -64,7 +64,7 @@ GET /auth/google
 After Google authentication, the user will be redirected to this route.
 
 ```http
-GET /auth/google/callback
+/auth/google/callback
 ```
 
 **Successful Response (Redirect)**
@@ -82,7 +82,7 @@ You must make a request to the `/auth/verify` endpoint to verify the session. Ch
 To verify a session, make a **post** request to this endpoint with the `sessionId` and `userId` as body parameters.
 
 ```http
-GET /auth/verify
+POST /auth/verify
 ```
 
 If the session is valid, you will receive a `200 OK` response with the user object, otherwise you will receive a `401 Unauthorized` response.
@@ -112,7 +112,7 @@ POST /users
 | `phone`     | `string` | **Required**. Phone                     |
 | `password`  | `string` | **Required**. Password                  |
 | `email`     | `string` | **Required**. Email                     |
-| `role`      | `string` | **Required**. Role (volunteer or admin) |
+| `role`      | `string` | **Required**. Role (volunteer or organization) |
 
 #### Get Users
 
