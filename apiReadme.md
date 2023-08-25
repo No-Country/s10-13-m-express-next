@@ -1,11 +1,12 @@
 # API Reference
 
-All routes are prefixed with `/api/v1`.
-
-- To start the server, run `npm run start:dev` in the /server directory, then navigate to `localhost:3001/api/v1` in your browser.
+All routes are prefixed with `/api`.
 
 - Remember run `npm install` in the /server directory before starting the server and create a .env file with the necessary environment variables, you can get the values for the .env file in our Discord server.
+
 - Run `npx prisma generate` in the /server directory before starting the server to generate the Prisma client.
+
+- To start the server, run `npm run start:dev` in the /server directory, then navigate to `localhost:3001/api` in your browser.
 
 ## Auth API
 
@@ -105,13 +106,14 @@ POST /users
 
 **Request Parameters**
 
-| Field       | Type     | Description                             |
-| :---------- | :------- | :-------------------------------------- |
-| `firstName` | `string` | **Required**. First Name                |
-| `lastName`  | `string` | **Required**. Last Name                 |
-| `phone`     | `string` | **Required**. Phone                     |
-| `password`  | `string` | **Required**. Password                  |
-| `email`     | `string` | **Required**. Email                     |
+| Field       | Type     | Description                                    |
+| :---------- | :------- | :--------------------------------------------- |
+| `firstName` | `string` | **Required**. First Name                       |
+| `lastName`  | `string` | **Required**. Last Name                        |
+| `phone`     | `string` | **Required**. Phone                            |
+| `password`  | `string` | **Required**. Password                         |
+| `email`     | `string` | **Required**. Email                            |
+| `username`  | `string` | **Required**. User Name                        |
 | `role`      | `string` | **Required**. Role (volunteer or organization) |
 
 #### Get Users
@@ -138,12 +140,17 @@ GET /users/:id
     "id": "64e6db62bfaa945735cbec7c",
     "firstName": "test1",
     "lastName": "test1",
+    "birthday": null,
     "phone": "1234",
     "email": "thomasbarenghi@gmail.com",
     "role": "volunteer",
     "password": "$2b$10$2B.aBLDJcPF0vI204V5d/uNcWBKnEQO2E4F9EQxDBl.mWzh8oB23W",
+    "bannerImage": null,
+    "username": "tomasbarenghi",
     "profileImage": null,
-    "posts": []
+    "orgName": null,
+    "posts": [],
+    "reviews": []
   },
   "message": "User successfully found"
 }

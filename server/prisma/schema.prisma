@@ -11,51 +11,48 @@ datasource db {
 }
 
 model User {
-  id                String      @id @default(auto()) @map("_id") @db.ObjectId
-  firstName              String
+  id                String           @id @default(auto()) @map("_id") @db.ObjectId
+  firstName         String
   lastName          String
+  birthday          DateTime?
   phone             String
-  email             String      @unique
+  email             String           @unique
   role              role?
   password          String
+  bannerImage       String?
+  username          String
   profileImage      String?
+  orgName           String?
   posts             Posts[]
-  volunteering      Volunteers[]
-  initiatives       Initiative[] @relation(name: "UserInitiatives")
+  volunteers        Volunteers[]
+  initiatives       Initiative[] 
+  Session           Session[]
+  reviews           Review[]
 }
 
 
 model Posts {
-  id                String      @id @default(auto()) @map("_id") @db.ObjectId
-  userId            String      @db.ObjectId
-  user              User        @relation(fields: [userId], references: [id])
+  id                String          @id @default(auto()) @map("_id") @db.ObjectId
+  userId            String          @db.ObjectId
+  user              User            @relation(fields: [userId], references: [id])
   description       String 
-  createdAt         DateTime    @default(now())
+  createdAt         DateTime        @default(now())
   galery            String?
 }
 
-enum role {
-  volunteer
-  organization
-}
 
-model Session {
-  id    String      @id @default(auto()) @map("_id") @db.ObjectId
-  expires DateTime
-  session SessionInfo
-}
+ model Session {
+  id                String          @id @default(auto()) @map("_id") @db.ObjectId
+  userId            String          @db.ObjectId
+  expires           DateTime
+  User              User            @relation(fields: [userId], references: [id], onDelete: Cascade)
+    
+  }
 
-type SessionInfo {
-  user UserSession
-}
-
-type UserSession {
-  userId String
-}
 
 
 model Initiative {
-  id                String      @id @default(auto()) @map("_id") @db.ObjectId
+  id                String          @id @default(auto()) @map("_id") @db.ObjectId
   title             String
   description       String
   deadLine          DateTime
@@ -63,40 +60,43 @@ model Initiative {
   endDate           DateTime
   galery            String?
   thumbnail         String?
-
-  volunteers        Volunteers[] @relation(name: "InitiativeVolunteering")
-  //volunteers        User   @relation(name: "UserVolunteering", fields: [volunteersArr.volunteersId], references: [id])
-
-  ownerId           String @db.ObjectId
-  user              User   @relation(name: "UserInitiatives", fields: [ownerId], references: [id])
-
-  categoryId        String @db.ObjectId
-//  categories        Category   @relation(name: "InitiativeCategories", fields: [categoryId], references: [id])
-
-  reviewsId         String[] @db.ObjectId
-// review            Review   @relation(name: "InitiativeReviews", fields: [reviewsId], references: [id])
-
-  postsId           String[] @db.ObjectId
-// post              Post   @relation(name: "InitiativePosts", fields: [postsId], references: [id])
-
-  createdAt         DateTime @map("_created_at") @default(now())
-  updatedAt         DateTime @map("_updated_at") @updatedAt
+  volunteers        Volunteers[] 
+  ownerId           String         @db.ObjectId
+  user              User           @relation( fields: [ownerId], references: [id])
+  categoryId        String         @db.ObjectId
+  reviewsId         String[]       @db.ObjectId
+  postsId           String[]       @db.ObjectId
+  createdAt         DateTime       @map("_created_at") @default(now())
+  updatedAt         DateTime       @map("_updated_at") @updatedAt
 }
 
 model Volunteers{
-  id            String          @id @default(auto()) @map("_id") @db.ObjectId
-
-  volunteersId  String          @db.ObjectId
-  volunteer     Initiative      @relation(name: "InitiativeVolunteering", fields: [volunteersId], references: [id])
-  
-  user          User            @relation(fields: [userId], references: [id])
-  userId        String          @db.ObjectId
-
-  status        Status          @default(pending)
-
-  createdAt     DateTime        @map("_created_at") @default(now())
-  updatedAt     DateTime        @map("_updated_at") @updatedAt
+  id                String         @id @default(auto()) @map("_id") @db.ObjectId
+  volunteersId      String         @db.ObjectId
+  volunteer         Initiative     @relation( fields: [volunteersId], references: [id])
+  user              User           @relation(fields: [userId], references: [id])
+  userId            String         @db.ObjectId
+  status            Status         @default(pending)
+  createdAt         DateTime       @map("_created_at") @default(now())
+  updatedAt         DateTime       @map("_updated_at") @updatedAt
 }
+
+model Review {
+  id                String         @id @default(auto()) @map("_id") @db.ObjectId
+  title             String
+  body              String
+  rating            String
+  dateReview        DateTime       @default(now())
+  userIDs           String?        @db.ObjectId
+  users             User?          @relation(fields: [userIDs], references: [id])
+}
+
+
+enum role {
+  volunteer
+  organization
+}
+
 
 enum Status {
   pending

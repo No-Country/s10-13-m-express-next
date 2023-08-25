@@ -39,6 +39,10 @@ export class GoogleStrategy extends PassportStrategy(Strategy, 'google') {
           profileImage: profile.photos[0].value,
           role: 'volunteer',
           password: '',
+          birthday: undefined,
+          bannerImage: '',
+          username: '',
+          orgName: '',
         });
 
         if (!newUser) {

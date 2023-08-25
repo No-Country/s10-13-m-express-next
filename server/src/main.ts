@@ -2,17 +2,19 @@ import { NestFactory } from '@nestjs/core';
 import { AppModule } from './app.module';
 import { ValidationPipe } from '@nestjs/common';
 import { ConfigModule } from '@nestjs/config';
+import { DocumentBuilder, SwaggerModule } from '@nestjs/swagger';
 import * as passport from 'passport';
 import * as session from 'express-session';
-const MongoDBStore = require('connect-mongodb-session')(session);
-import { DocumentBuilder, SwaggerModule } from '@nestjs/swagger';
+import * as connectMongoDBSession from 'connect-mongodb-session';
+
+const MongoDBStore = connectMongoDBSession(session);
 
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);
   app.enableCors();
   ConfigModule.forRoot();
-  app.setGlobalPrefix('api/v1');
-  app.useGlobalPipes(new ValidationPipe());  
+  app.setGlobalPrefix('api/');
+  app.useGlobalPipes(new ValidationPipe());
 
   app.use(
     session({
@@ -22,7 +24,7 @@ async function bootstrap() {
       cookie: {
         maxAge: 3600000,
       },
-      store: MongoDBStore({
+      store: new MongoDBStore({
         collection: 'Session',
         uri: process.env.DATABASE_URL,
       }),

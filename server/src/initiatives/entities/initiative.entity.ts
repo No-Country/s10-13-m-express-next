@@ -4,7 +4,7 @@ import { IsNotEmpty } from 'class-validator';
 
 export class Initiative implements ModelInitiative {
   id: string;
-  
+
   @ApiProperty({
     example: 'Pintura',
   })
@@ -49,5 +49,4 @@ export class Initiative implements ModelInitiative {
 
   createdAt: Date;
   updatedAt: Date;
-
 }

@@ -69,11 +69,7 @@ export class AuthController {
   @UseGuards(GoogleOauthGuard)
   @ApiExcludeEndpoint()
   @Redirect()
-  async googleAuthRedirect(
-    @Session() session,
-    @Request() req,
-    @Res() res: Response,
-  ) {
+  async googleAuthRedirect(@Session() session, @Request() req) {
     try {
       if (req.user) {
         return {
@@ -95,7 +91,7 @@ export class AuthController {
   async verify(@Body() body, @Res() res: Response): Promise<any> {
     try {
       const userId = body.userId;
-      const session = await this.authService.findOneById(userId);
+      const session = await this.authService.findSessionById(userId);
       if (session) {
         return res.status(200).json({ verified: true });
       } else {

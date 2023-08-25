@@ -11,7 +11,9 @@ export class AuthService {
   ) {}
 
   async validateUser(username: string, password: string): Promise<any> {
-    const user = await this.usersService.findByEmail(username);
+    const user = await this.prisma.user.findUnique({
+      where: { email: username },
+    });
 
     if (!user) {
       throw new NotAcceptableException('Could not find the user');
@@ -19,35 +21,39 @@ export class AuthService {
 
     const passwordValid = await comparePasswords(password, user.password);
 
-    if (!user) {
-      throw new NotAcceptableException('Could not find the user');
+    if (!passwordValid) {
+      throw new NotAcceptableException('Invalid password');
     }
+
     if (user && passwordValid) {
+      const session = await this.prisma.session.create({
+        data: {
+          expires: new Date(),
+          userId: user.id,
+        },
+      });
+
       return {
-        id: user.id,
+        sessionId: session.id,
         email: user.email,
-        provider: 'local',
       };
     }
     return null;
   }
 
-  async findOneById(userId: string) {
+  async findSessionById(userId: string) {
     try {
-      const sessions = await this.prisma.session.findMany();
-
-      const filteredSessions = sessions.filter((session) => {
-        const sessionInfo = session.session;
-        return sessionInfo.user.userId === userId;
+      const sessions = await this.prisma.session.findMany({
+        where: { userId },
       });
 
-      if (filteredSessions && filteredSessions.length > 0) {
-        return filteredSessions;
+      if (sessions && sessions.length > 0) {
+        return sessions;
       }
 
       return null;
     } catch (error) {
-      console.error(error);
+      throw new Error('Error while fetching sessions: ' + error.message);
     }
   }
 }

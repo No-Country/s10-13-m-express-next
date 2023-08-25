@@ -1,16 +1,16 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete } from '@nestjs/common';
+import {
+  Controller,
+  Get,
+  Post,
+  Body,
+  Patch,
+  Param,
+  Delete,
+} from '@nestjs/common';
 import { InitiativesService } from './initiatives.service';
 import { CreateInitiativeDto } from './dto/create-initiative.dto';
 import { UpdateInitiativeDto } from './dto/update-initiative.dto';
-import {
-  ApiBadRequestResponse,
-  ApiBearerAuth,
-  ApiConflictResponse,
-  ApiCreatedResponse,
-  ApiNotFoundResponse,
-  ApiOkResponse,
-  ApiTags,
-} from '@nestjs/swagger';
+import { ApiBearerAuth, ApiTags } from '@nestjs/swagger';
 
 @ApiBearerAuth()
 @ApiTags('Initiatives')
@@ -34,7 +34,10 @@ export class InitiativesController {
   }
 
   @Patch(':id')
-  update(@Param('id') id: string, @Body() updateInitiativeDto: UpdateInitiativeDto) {
+  update(
+    @Param('id') id: string,
+    @Body() updateInitiativeDto: UpdateInitiativeDto,
+  ) {
     return this.initiativesService.update(id, updateInitiativeDto);
   }
 

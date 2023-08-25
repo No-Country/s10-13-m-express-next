@@ -35,7 +35,13 @@ export class UsersService {
   }
 
   async findAllUsers(): Promise<User[]> {
-    return await this.prisma.user.findMany();
+    const allUsers = await this.prisma.user.findMany({
+      include: {
+        posts: true,
+        reviews: true,
+      },
+    });
+    return allUsers;
   }
 
   async findOneById(userId: string): Promise<User | null> {
@@ -46,9 +52,11 @@ export class UsersService {
     }
 
     const result = await this.prisma.user.findUnique({
-      where: { id: userId }, include: {
-        posts: true
-      }
+      where: { id: userId },
+      include: {
+        posts: true,
+        reviews: true,
+      },
     });
 
     if (!result) {
