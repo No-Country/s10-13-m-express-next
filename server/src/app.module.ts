@@ -9,12 +9,14 @@ import { ConfigModule } from '@nestjs/config';
 import { InitiativesModule } from './initiatives/initiatives.module';
 import { PostsModule } from './posts/posts.module';
 import { ReviewsModule } from './reviews/reviews.module';
+import { CloudinaryModule } from './cloudinary/cloudinary.module';
+import { CloudinaryService } from './cloudinary/cloudinary.service';
 
 @Module({
   imports: [
     ConfigModule.forRoot({ isGlobal: true }),
-    PrismaModule, UsersModule, AuthModule, InitiativesModule, PostsModule, ReviewsModule],
+    PrismaModule, UsersModule, AuthModule, InitiativesModule, PostsModule, ReviewsModule, CloudinaryModule],
   controllers: [AppController],
-  providers: [AppService, PrismaService],
+  providers: [AppService, PrismaService, CloudinaryService],
 })
 export class AppModule {}

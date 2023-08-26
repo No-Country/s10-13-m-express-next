@@ -12,6 +12,7 @@ import {
   Redirect,
   HttpStatus,
   NotAcceptableException,
+  Query,
 } from '@nestjs/common';
 import {
   ApiBody,
@@ -40,18 +41,16 @@ export class AuthController {
   async login(
     @Request() req,
     @Session() session,
-    @Res() res: Response,
+    @Res({ passthrough: true }) response: Response,
   ): Promise<any> {
     try {
-      const user = req.user;
-      return res.status(200).json({
-        sessionId: req.sessionID,
-        user: {
-          id: user.id,
-          email: user.email,
-          provider: 'local',
-        },
-      });
+      const { user, sessionID } = req;
+      response.cookie('sessionId', sessionID);
+      response.cookie('userId', user.id);
+      req.session.destroy();
+      return {
+        message: 'Login successful',
+      };
     } catch (error) {
       throw new NotAcceptableException();
     }
@@ -63,23 +62,27 @@ export class AuthController {
     summary: 'Autenticación con Google',
     description: 'Dirijete a esta ruta para autenticarte con Google',
   })
-  async googleAuth() {}
+  async googleAuth(@Query('redirectURL') redirectURL: string) {}
 
   @Get('/google/callback')
   @UseGuards(GoogleOauthGuard)
   @ApiExcludeEndpoint()
   @Redirect()
-  async googleAuthRedirect(@Session() session, @Request() req) {
+  async googleAuthRedirect(
+    @Session() session,
+    @Request() req,
+    @Res({ passthrough: true }) response: Response,
+  ) {
     try {
-      if (req.user) {
-        return {
-          url: `${process.env.CLIENT_URL}/feed?sessionId=${req.sessionID}&userId=${req.user.id}`,
-        };
-      } else {
-        return {
-          url: `${process.env.CLIENT_URL}/login?failed=true`,
-        };
-      }
+      const { session, user, sessionID } = req;
+      const slug = session.redirectURL ?? 'feed';
+      response.cookie('sessionId', sessionID);
+      response.cookie('userId', user.id);
+      req.session.destroy();
+      const url = user
+        ? `${process.env.CLIENT_URL}/${slug}`
+        : `${process.env.CLIENT_URL}/login?failed=true`;
+      return { url };
     } catch (error) {
       throw new NotAcceptableException();
     }
@@ -90,7 +93,7 @@ export class AuthController {
   @ApiBody({ type: VerificationRequestDto })
   async verify(@Body() body, @Res() res: Response): Promise<any> {
     try {
-      const userId = body.userId;
+      const { userId } = body;
       const session = await this.authService.findSessionById(userId);
       if (session) {
         return res.status(200).json({ verified: true });

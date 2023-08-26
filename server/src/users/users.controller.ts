@@ -8,16 +8,23 @@ import {
   Delete,
   BadRequestException,
   ConflictException,
+  UseInterceptors,
+  UploadedFile,
 } from '@nestjs/common';
 import { UsersService } from './users.service';
 import { CreateUserDto } from './dto/create-user.dto';
 import { UpdateUserDto } from './dto/update-user.dto';
 import { ApiBearerAuth, ApiTags } from '@nestjs/swagger';
+import { CloudinaryService } from 'src/cloudinary/cloudinary.service';
+import { FileInterceptor } from '@nestjs/platform-express';
 @ApiBearerAuth()
 @ApiTags('Users')
 @Controller('users')
 export class UsersController {
-  constructor(private readonly usersService: UsersService) {}
+  constructor(
+    private readonly usersService: UsersService,
+    private readonly cloudinaryService: CloudinaryService,
+  ) {}
   @ApiTags('Users')
   @Post()
   async create(@Body() createUserDto: CreateUserDto) {
@@ -79,5 +86,23 @@ export class UsersController {
   async remove(@Param('id') userId: string) {
     await this.usersService.removeUser(userId);
     return 'User successfully deleted';
+  }
+
+  @Post('/testImageUpload')
+  @UseInterceptors(FileInterceptor('profileImage'))
+  async testImageUpload(
+    @Body() body,
+    @UploadedFile() profileImage: Express.Multer.File,
+  ) {
+    console.log('file', profileImage);
+    const response = await this.cloudinaryService
+      .uploadImage(profileImage)
+      .catch((error) => {
+        console.log('cloudinaryService', error);
+        throw new BadRequestException('Invalid file type.');
+      });
+
+    console.log('Final url', response.secure_url);
+    return;
   }
 }
