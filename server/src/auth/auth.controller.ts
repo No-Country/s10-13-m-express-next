@@ -75,7 +75,7 @@ export class AuthController {
   ) {
     try {
       const { session, user, sessionID } = req;
-      const slug = session.redirectURL ?? 'feed';
+      const slug = session.redirectURL ?? process.env.GOOGLE_DEFAULT_REDIRECT;
       response.cookie('sessionId', sessionID);
       response.cookie('userId', user.id);
       req.session.destroy();

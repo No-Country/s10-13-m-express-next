@@ -31,50 +31,49 @@ POST /auth/login
 
 **Successful Response**
 
-```json
-{
-  "sessionId": "your-session-id",
-  "user": {
-    "id": "your-user-id",
-    "email": "your-email",
-    "provider": "local"
-  }
-}
-```
-
-You will redirect the user to your application's URL with the `sessionId` and `userId` as query parameters.
-
-```http
-yourwebsite.com/?sessionId=your-session-id&userId=your-user-id
-```
+If authentication is successful, you will receive a `200 OK` response, then you should check cookie to get `sessionId` and `userId`.
 
 You must make a request to the `/auth/verify` endpoint to verify the session. Check the [Verify Session](#verify-session) section for more details.
 
 ### Google Authentication
 
-**Start Google Authentication**
+**Google Login**
 
-Initiate the Google authentication process. Redirect the user to this route.
+You have two options for Google authentication:
 
-```http
-/auth/google
-```
-
-**Redirect from Google**
-
-After Google authentication, the user will be redirected to this route.
+1. You can send a redirect URL to the backend and the backend will redirect the user to the redirect URL.
 
 ```http
-/auth/google/callback
+localhost:3001/api/auth/google?redirectURL=about/tech
 ```
 
-**Successful Response (Redirect)**
+Be sure of send the parameter `redirectURL` without the `/` at the beginning.
 
-The user will be redirected to your application's URL with relevant query parameters such as `sessionId` and `userId` if authentication is successful.
+**Example: `about/tech` instead of `/about/tech`.**
+
+2. You can send no parameters and the backend will redirect the user to the home page of your application or the URL you provided in the `.env` file as `GOOGLE_DEFAULT_REDIRECT`.
 
 ```http
-yourwebsite.com/?sessionId=your-session-id&userId=your-user-id
+localhost:3001/api/auth/google
 ```
+
+If authentication is successful, you should check cookies to get `sessionId` and `userId`.
+
+You must make a request to the `/auth/verify` endpoint to verify the session. Check the [Verify Session](#verify-session) section for more details.
+
+**Google Register**
+
+You can also register a user with Google. To do this, you must send the `role` and `orgName` as query parameters.
+
+- `role` can be `volunteer` or `organization`.
+- `orgName` is the name of the organization.
+- optional `redirectURL` parameter to redirect the user to a specific page after registration, if not provided, the user will be redirected to the URL you provided in the `.env` file as `GOOGLE_DEFAULT_REDIRECT`.
+
+```http
+localhost:3001/api/auth/google?redirectURL=about/tech&role=organization&orgName=example
+```
+
+If authentication is successful, you should check cookies to get `sessionId` and `userId`.
 
 You must make a request to the `/auth/verify` endpoint to verify the session. Check the [Verify Session](#verify-session) section for more details.
 
@@ -86,7 +85,7 @@ To verify a session, make a **post** request to this endpoint with the `sessionI
 POST /auth/verify
 ```
 
-If the session is valid, you will receive a `200 OK` response with the user object, otherwise you will receive a `401 Unauthorized` response.
+If the session is valid, you will receive a `200 OK` response, otherwise you will receive a `401 Unauthorized` response.
 
 ---
 
@@ -106,15 +105,17 @@ POST /users
 
 **Request Parameters**
 
-| Field       | Type     | Description                                    |
-| :---------- | :------- | :--------------------------------------------- |
-| `firstName` | `string` | **Required**. First Name                       |
-| `lastName`  | `string` | **Required**. Last Name                        |
-| `phone`     | `string` | **Required**. Phone                            |
-| `password`  | `string` | **Required**. Password                         |
-| `email`     | `string` | **Required**. Email                            |
-| `username`  | `string` | **Required**. User Name                        |
-| `role`      | `string` | **Required**. Role (volunteer or organization) |
+| Field       | Type     | Description                                           |
+| :---------- | :------- | :---------------------------------------------------- |
+| `firstName` | `string` | **Required**. First Name                              |
+| `lastName`  | `string` | **Required**. Last Name                               |
+| `phone`     | `string` | **Required**. Phone                                   |
+| `password`  | `string` | **Required**. Password                                |
+| `email`     | `string` | **Required**. Email                                   |
+| `username`  | `string` | **Required**. User Name                               |
+| `role`      | `string` | **Required**. Role (volunteer or organization)        |
+| `birthday`  | `string` | **Required**. Birthday (YYYY-MM-DD)                   |
+| `orgName`   | `string` | **Required for role organization**. Organization Name |
 
 #### Get Users
 
