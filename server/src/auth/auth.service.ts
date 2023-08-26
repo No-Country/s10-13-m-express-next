@@ -25,34 +25,27 @@ export class AuthService {
       throw new NotAcceptableException('Invalid password');
     }
 
-    if (user && passwordValid) {
-      const session = await this.prisma.session.create({
-        data: {
-          expires: new Date(),
-          userId: user.id,
-        },
-      });
-
-      return {
-        sessionId: session.id,
-        email: user.email,
-      };
-    }
-    return null;
+    return {
+      id: user.id,
+      email: user.email,
+    };
   }
 
   async findSessionById(userId: string) {
     try {
-      const sessions = await this.prisma.session.findMany({
-        where: { userId },
+      const sessions = await this.prisma.session.findMany();
+      const filteredSessions = sessions.filter((session) => {
+        const sessionInfo = session.session;
+        return sessionInfo.user.userId === userId;
       });
 
-      if (sessions && sessions.length > 0) {
-        return sessions;
+      if (filteredSessions && filteredSessions.length > 0) {
+        return filteredSessions;
       }
 
       return null;
     } catch (error) {
+      console.log('Error findSessionById', error);
       throw new Error('Error while fetching sessions: ' + error.message);
     }
   }

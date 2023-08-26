@@ -6,6 +6,7 @@ import { DocumentBuilder, SwaggerModule } from '@nestjs/swagger';
 import * as passport from 'passport';
 import * as session from 'express-session';
 import * as connectMongoDBSession from 'connect-mongodb-session';
+import * as cookieParser from 'cookie-parser';
 
 const MongoDBStore = connectMongoDBSession(session);
 
@@ -13,6 +14,7 @@ async function bootstrap() {
   const app = await NestFactory.create(AppModule);
   app.enableCors();
   ConfigModule.forRoot();
+  app.use(cookieParser());
   app.setGlobalPrefix('api/');
   app.useGlobalPipes(new ValidationPipe());
 
@@ -22,7 +24,7 @@ async function bootstrap() {
       resave: false,
       saveUninitialized: false,
       cookie: {
-        maxAge: 3600000,
+        maxAge: 3600000 ,
       },
       store: new MongoDBStore({
         collection: 'Session',
