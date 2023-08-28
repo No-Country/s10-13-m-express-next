@@ -229,7 +229,7 @@ PATCH /posts/:id
 }
 ```
 
-#### Update Posts
+#### Delete Post
 
 To delete a post of a user, make a **delete** request to this endpoint with the post's id as a parameter.
 
@@ -248,5 +248,156 @@ DELETE /posts/:id
 		"galery": "image.jpg"
 	},
 	"message": "Post delete Successfully"
+}
+```
+
+## Reviews API
+
+The Reviews API provides endpoints for reviews management.
+
+**This API is currently under development and is subject to change. We recommend just use the `POST` endpoint for now.**
+
+#### Create a review
+
+To create a review, make a **post** request to this endpoint with the review's details as body parameters.
+
+```http
+POST /reviews
+```
+
+**Request Parameters**
+
+| Field       | Type     | Description                             |
+| :---------- | :------- | :-------------------------------------- |
+| `title`    | `string` | **Required**. Review title            |
+| `body`  | `string` | **Required**. Review body              |
+| `rating`      | `string` | **Required**. Review rating |
+| `userIDs`      | `string` | **Required**. Review user id |
+
+**Successful Response**
+
+```json
+{
+	"newReview": {
+		"id": "64ec9ad65388ee778b2ef219",
+		"title": "primer review",
+		"body": "body review",
+		"rating": "Buena",
+		"dateReview": "2023-08-28T13:02:14.908Z",
+		"userIDs": "64ec74df1c7cb25833355d33"
+	},
+	"message": "Review created Successfully"
+}
+```
+
+#### Get Reviews
+
+To get all reviews, make a **get** request to this endpoint.
+
+```http
+GET /reviews/
+```
+
+**Successful Response**
+
+```json
+{
+	"reviews": [
+		{
+			"id": "64ec95daaf8723707266cc8d",
+			"title": "Primer review",
+			"body": "body review",
+			"rating": "Excelente",
+			"dateReview": "2023-08-28T12:40:58.953Z",
+			"userIDs": "64ec74df1c7cb25833355d33"
+		},
+		{
+			"id": "64ec9ad65388ee778b2ef219",
+			"title": "segundo review",
+			"body": "body review",
+			"rating": "Buena",
+			"dateReview": "2023-08-28T13:02:14.908Z",
+			"userIDs": "64ec74df1c7cb25833355d33"
+		}
+	],
+	"message": "Reviews found Successfully"
+}
+```
+
+#### Get Review
+
+To get a review by review id, make a **get** request to this endpoint with the review's id as a parameter.
+
+```http
+GET /reviews/:id
+```
+
+**Successful Response**
+
+```json
+{
+	"review": {
+		"id": "64ec9ad65388ee778b2ef219",
+		"title": "segundo review",
+		"body": "body review",
+		"rating": "Buena",
+		"dateReview": "2023-08-28T13:02:14.908Z",
+		"userIDs": "64ec74df1c7cb25833355d33"
+	},
+	"message": "Review found Successfully"
+}
+```
+
+#### Update Review
+
+To update a review, make a **patch** request to this endpoint with the review's id as a parameter and  the update details in the body.
+
+```http
+PATCH /review/:id
+```
+**Request Parameters**
+
+| Field       | Type     | Description                             |
+| :---------- | :------- | :-------------------------------------- |
+| `title`  | `string` | **Required**. Review title   |
+| `body`      | `string` | **Required**. Review body |
+| `rating`      | `string` | **Required**. Review rating |
+
+**Successful Response**
+
+```json
+{
+	"updateReview": {
+		"id": "64ec9ad65388ee778b2ef219",
+		"title": "segundo review",
+		"body": "body review",
+		"rating": "Genial",
+		"dateReview": "2023-08-28T13:02:14.908Z",
+		"userIDs": "64ec74df1c7cb25833355d33"
+	},
+	"message": "Review update Successfully"
+}
+```
+
+#### Delete Review
+
+To delete a review, make a **delete** request to this endpoint with the review's id as a parameter.
+
+```http
+DELETE /reviews/:id
+```
+**Successful Response**
+
+```json
+{
+	"deleteReview": {
+		"id": "64ec95daaf8723707266cc8d",
+		"title": "Primer review",
+		"body": "body review",
+		"rating": "Excelente",
+		"dateReview": "2023-08-28T12:40:58.953Z",
+		"userIDs": "64ec74df1c7cb25833355d33"
+	},
+	"message": "Reviews delete Successfully"
 }
 ```

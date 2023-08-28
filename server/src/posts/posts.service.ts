@@ -1,7 +1,7 @@
 import { Injectable, BadRequestException, ConflictException, NotFoundException } from '@nestjs/common';
 import { PrismaService } from 'src/prisma/prisma.service';
 import { CreatePostsDto } from './dto/create-posts.dto';
-import { UpdatePostDto } from './dto/update-initiative.dto';
+import { UpdatePostDto } from './dto/update-posts.dto';
 import { validate } from 'class-validator';
 import { Posts} from '@prisma/client';
 
