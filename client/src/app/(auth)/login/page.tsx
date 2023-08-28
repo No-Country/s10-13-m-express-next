@@ -1,17 +1,19 @@
-"use client"
-import axios from "axios"
-import React, { useEffect } from "react"
+'use client'
+import axios from 'axios'
+import React, { useEffect } from 'react'
 
 export default function LoginPage() {
-
   const handleLogin = async () => {
-    const response = await axios.post(`${process.env.NEXT_PUBLIC_BACK}api/auth/login`, {
-      email: "thomasbarenghi2@gmail.com",
-      password: "test1"
-    },
-    {
-      withCredentials: true
-    })
+    const response = await axios.post(
+      `${process.env.NEXT_PUBLIC_BACK}api/auth/login`,
+      {
+        email: 'thomasbarenghi2@gmail.com',
+        password: 'test1'
+      },
+      {
+        withCredentials: true
+      }
+    )
     console.log(response)
   }
 
@@ -21,13 +23,6 @@ export default function LoginPage() {
     })
     console.log(response)
   }
-
-  useEffect(() => {
-    if(document.cookie) {
-    const cookies = document.cookie;
-    console.log(cookies);
-    }
-  }, [document]);
 
   return (
     <div>
