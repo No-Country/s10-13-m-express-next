@@ -50,6 +50,7 @@ export class AuthController {
         secure: true,
         sameSite: 'none',
         httpOnly: false,
+        domain: '127.0.0.1',
       });
 
       response.cookie('userId', user.id, {
@@ -57,6 +58,7 @@ export class AuthController {
         secure: true,
         sameSite: 'none',
         httpOnly: false,
+        domain: '127.0.0.1',
       });
       req.session.destroy();
       return {

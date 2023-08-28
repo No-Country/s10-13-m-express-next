@@ -5,7 +5,7 @@ import React, { useEffect } from "react"
 export default function LoginPage() {
 
   const handleLogin = async () => {
-    const response = await axios.post("http://127.0.0.1:3001/api/auth/login", {
+    const response = await axios.post(`${process.env.NEXT_PUBLIC_BACK}api/auth/login`, {
       email: "thomasbarenghi2@gmail.com",
       password: "test1"
     },
@@ -16,7 +16,7 @@ export default function LoginPage() {
   }
 
   const handleTest = async () => {
-    const response = await axios.get("http://127.0.0.1:3001/api/auth/test", {
+    const response = await axios.get(`${process.env.NEXT_PUBLIC_BACK}api/auth/test`, {
       withCredentials: true
     })
     console.log(response)
