@@ -131,3 +131,122 @@ GET /users/:id
   "message": "User successfully found"
 }
 ```
+
+## Posts API
+
+The Posts API provides endpoints for posts management.
+
+**This API is currently under development and is subject to change. We recommend just use the `POST` endpoint for now.**
+
+#### Create a post
+
+To create a post, make a **post** request to this endpoint with the post's details as body parameters.
+
+```http
+POST /posts
+```
+
+**Request Parameters**
+
+| Field       | Type     | Description                             |
+| :---------- | :------- | :-------------------------------------- |
+| `userId`    | `string` | **Required**. User Id             |
+| `description`  | `string` | **Required**. Description of post                |
+| `galery`      | `string` | **Required**. Galery image url |
+
+**Successful Response**
+
+```json
+{
+	"newPost": {
+		"id": "64ec7d59bf2050a701c8cefe",
+		"userId": "64ec74df1c7cb25833355d33",
+		"description": "Mi primer post",
+		"createdAt": "2023-08-28T10:56:25.202Z",
+		"galery": "image.jpg"
+	},
+	"message": "Post created Successfully"
+}
+```
+#### Get Posts
+
+To get all posts of a user, make a **get** request to this endpoint with the user's id as a parameter.
+
+```http
+GET /posts/:id
+```
+
+**Successful Response**
+
+```json
+{
+	"posts": [
+		{
+			"id": "64ec7564e07c41c767643f39",
+			"userId": "64ec74df1c7cb25833355d33",
+			"description": "Mi mi post",
+			"createdAt": "2023-08-28T10:22:28.872Z",
+			"galery": "xk"
+		},
+		{
+			"id": "64ec7d59bf2050a701c8cefe",
+			"userId": "64ec74df1c7cb25833355d33",
+			"description": "Mi segundo post",
+			"createdAt": "2023-08-28T10:56:25.202Z",
+			"galery": "pasd"
+		}
+	],
+	"message": "Posts successfully found"
+}
+```
+
+#### Update Posts
+
+To update a post of a user, make a **patch** request to this endpoint with the user's id as a parameter and  the update details in the body.
+
+```http
+PATCH /posts/:id
+```
+**Request Parameters**
+
+| Field       | Type     | Description                             |
+| :---------- | :------- | :-------------------------------------- |
+| `description`  | `string` | **Required**. Description of post    |
+| `galery`      | `string` | **Required**. Galery image url |
+
+**Successful Response**
+
+```json
+{
+	"newPost": {
+		"id": "64ec7d59bf2050a701c8cefe",
+		"userId": "64ec74df1c7cb25833355d33",
+		"description": "Mi primer post",
+		"createdAt": "2023-08-28T10:56:25.202Z",
+		"galery": "image.jpg"
+	},
+	"message": "Post update Successfully"
+}
+```
+
+#### Update Posts
+
+To delete a post of a user, make a **delete** request to this endpoint with the post's id as a parameter.
+
+```http
+DELETE /posts/:id
+```
+**Successful Response**
+
+```json
+{
+	"newPost": {
+		"id": "64ec7d59bf2050a701c8cefe",
+		"userId": "64ec74df1c7cb25833355d33",
+		"description": "Mi primer post",
+		"createdAt": "2023-08-28T10:56:25.202Z",
+		"galery": "image.jpg"
+	},
+	"message": "Post delete Successfully"
+}
+```
