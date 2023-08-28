@@ -1,6 +1,7 @@
-import { Injectable, BadRequestException, ConflictException } from '@nestjs/common';
+import { Injectable, BadRequestException, ConflictException, NotFoundException } from '@nestjs/common';
 import { PrismaService } from 'src/prisma/prisma.service';
 import { CreatePostsDto } from './dto/create-posts.dto';
+import { UpdatePostDto } from './dto/update-initiative.dto';
 import { validate } from 'class-validator';
 import { Posts} from '@prisma/client';
 
@@ -27,7 +28,7 @@ export class PostsService {
         return newPost
     }
 
-    async getPostsByUserId(userId: string) {
+    async getPostsByUserId(userId: string): Promise<Posts[]> {
         try {
             const userPosts = await this.prisma.posts.findMany({
                 where: { userId: userId }
@@ -37,6 +38,35 @@ export class PostsService {
             } else {
                 return userPosts;
             }
+        } catch (error) {
+            throw error;
+        }
+    }
+
+    async deletePostByPostId(postId: string): Promise<Posts>{
+        try {
+            const deletePost = await this.prisma.posts.delete({
+                where: { id : postId}
+            })
+            if(!deletePost){
+                throw new NotFoundException(`Post ${postId} not found`)
+            }
+            return deletePost
+        } catch (error) {
+            throw error;
+        }
+    }
+
+    async updatePostByPostId(postId: string, updatePostDto: UpdatePostDto): Promise<Posts>{
+        try {
+            const updatePost = await this.prisma.posts.update({
+                where: { id : postId},
+                data: updatePostDto
+            })
+            if(!updatePost){
+                throw new NotFoundException(`Post ${postId} not found`)
+            }
+            return updatePost
         } catch (error) {
             throw error;
         }
