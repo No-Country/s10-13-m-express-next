@@ -251,6 +251,12 @@ DELETE /posts/:id
 }
 ```
 
+## Reviews API
+
+The Reviews API provides endpoints for reviews management.
+
+**This API is currently under development and is subject to change. We recommend just use the `POST` endpoint for now.**
+
 #### Create a review
 
 To create a review, make a **post** request to this endpoint with the review's details as body parameters.
