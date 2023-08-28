@@ -38,7 +38,7 @@ export class UsersService {
     const allUsers = await this.prisma.user.findMany({
       include: {
         posts: true,
-        //reviews: true,
+        reviews: true,
       },
     });
     return allUsers;
@@ -55,7 +55,7 @@ export class UsersService {
       where: { id: userId },
       include: {
         posts: true,
-        //reviews: true,
+        reviews: true,
       },
     });
 
