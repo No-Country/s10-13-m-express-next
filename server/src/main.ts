@@ -12,7 +12,11 @@ const MongoDBStore = connectMongoDBSession(session);
 
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);
-  app.enableCors();
+  app.enableCors({
+    credentials: true,
+    origin: process.env.CLIENT_URL,
+  });
+  
   ConfigModule.forRoot();
   app.use(cookieParser());
   app.setGlobalPrefix('api/');

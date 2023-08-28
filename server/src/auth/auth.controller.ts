@@ -29,6 +29,13 @@ import { LocalRequestDto } from './dto/localRequest.dto';
 import { VerificationResponseDto } from './dto/verificationResponse.dto';
 import { VerificationRequestDto } from './dto/verificationRequest.dto';
 
+const cookieConfig: any = {
+  expires: new Date(Date.now() + process.env.SESSION_MAX_AGE),
+  httpOnly: true,
+  secure: true,
+  sameSite: 'none',
+};
+
 @ApiTags('Auth')
 @Controller('auth')
 export class AuthController {
@@ -45,10 +52,24 @@ export class AuthController {
   ): Promise<any> {
     try {
       const { user, sessionID } = req;
-      response.cookie('sessionId', sessionID);
-      response.cookie('userId', user.id);
+
+      response.cookie('sessionId', sessionID, {
+        expires: new Date(Date.now() + process.env.SESSION_MAX_AGE),
+        httpOnly: true,
+        secure: true,
+        sameSite: 'none',
+      });
+
+      response.cookie('userId', user.id, {
+        expires: new Date(Date.now() + process.env.SESSION_MAX_AGE),
+        httpOnly: true,
+        secure: true,
+        sameSite: 'none',
+      });
+
       req.session.destroy();
       return {
+        userId: user.id,
         message: 'Login successful',
       };
     } catch (error) {
@@ -76,11 +97,24 @@ export class AuthController {
     try {
       const { session, user, sessionID } = req;
       const slug = session.redirectURL ?? process.env.GOOGLE_DEFAULT_REDIRECT;
-      response.cookie('sessionId', sessionID);
-      response.cookie('userId', user.id);
+
+      response.cookie('sessionId', sessionID, {
+        expires: new Date(Date.now() + process.env.SESSION_MAX_AGE),
+        httpOnly: true,
+        secure: true,
+        sameSite: 'none',
+      });
+
+      response.cookie('userId', user.id, {
+        expires: new Date(Date.now() + process.env.SESSION_MAX_AGE),
+        httpOnly: true,
+        secure: true,
+        sameSite: 'none',
+      });
+
       req.session.destroy();
       const url = user
-        ? `${process.env.CLIENT_URL}/${slug}`
+        ? `${process.env.CLIENT_URL}/${slug}?userId=${user.id}`
         : `${process.env.CLIENT_URL}/login?failed=true`;
       return { url };
     } catch (error) {
