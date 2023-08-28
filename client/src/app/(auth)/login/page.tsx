@@ -15,9 +15,17 @@ export default function LoginPage() {
   }
 
   const handleTest = async () => {
-    const response = await axios.get("http://127.0.0.1:3001/api/auth/test", {
+    const response = await axios.get("http://127.0.0.1:3001/api/auth/verify", {
       withCredentials: true
     })
+    console.log(response)
+  }
+
+  const handleLogout = async () => {
+    const response = await axios.get("http://127.0.0.1:3001/api/auth/logout", {
+      withCredentials: true
+    })  
+
     console.log(response)
   }
 
@@ -25,6 +33,7 @@ export default function LoginPage() {
     <div>
       <button onClick={handleLogin}>Login</button>
       <button onClick={handleTest}>Test</button>
+      <button onClick={handleLogout}>Logout</button>
     </div>
   )
 }

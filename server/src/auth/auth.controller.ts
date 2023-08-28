@@ -31,7 +31,7 @@ import { VerificationRequestDto } from './dto/verificationRequest.dto';
 
 const cookieConfig: any = {
   expires: new Date(Date.now() + process.env.SESSION_MAX_AGE),
-  httpOnly: true,
+  httpOnly: false,
   secure: true,
   sameSite: 'none',
 };
@@ -54,15 +54,15 @@ export class AuthController {
       const { user, sessionID } = req;
 
       response.cookie('sessionId', sessionID, {
-        expires: new Date(Date.now() + process.env.SESSION_MAX_AGE),
-        httpOnly: true,
+        maxAge: process.env.SESSION_MAX_AGE as any,
+        httpOnly: false,
         secure: true,
         sameSite: 'none',
       });
 
       response.cookie('userId', user.id, {
-        expires: new Date(Date.now() + process.env.SESSION_MAX_AGE),
-        httpOnly: true,
+        maxAge: process.env.SESSION_MAX_AGE as any,
+        httpOnly: false,
         secure: true,
         sameSite: 'none',
       });
@@ -73,6 +73,7 @@ export class AuthController {
         message: 'Login successful',
       };
     } catch (error) {
+      console.log('error', error);
       throw new NotAcceptableException();
     }
   }
@@ -99,15 +100,15 @@ export class AuthController {
       const slug = session.redirectURL ?? process.env.GOOGLE_DEFAULT_REDIRECT;
 
       response.cookie('sessionId', sessionID, {
-        expires: new Date(Date.now() + process.env.SESSION_MAX_AGE),
-        httpOnly: true,
+        maxAge: process.env.SESSION_MAX_AGE as any,
+        httpOnly: false,
         secure: true,
         sameSite: 'none',
       });
 
       response.cookie('userId', user.id, {
-        expires: new Date(Date.now() + process.env.SESSION_MAX_AGE),
-        httpOnly: true,
+        maxAge: process.env.SESSION_MAX_AGE as any,
+        httpOnly: false,
         secure: true,
         sameSite: 'none',
       });
@@ -122,18 +123,46 @@ export class AuthController {
     }
   }
 
-  @Post('/verify')
+  @Get('/verify')
   @ApiResponse({ status: HttpStatus.OK, type: VerificationResponseDto })
   @ApiBody({ type: VerificationRequestDto })
-  async verify(@Body() body, @Res() res: Response): Promise<any> {
+  async verify(@Body() body, @Res() res: Response, @Request() req): Promise<any> {
     try {
-      const { userId } = body;
+      const { userId, sessionId } = req.cookies;
+      console.log(req);
       const session = await this.authService.findSessionById(userId);
       if (session) {
         return res.status(200).json({ verified: true });
       } else {
         throw new UnauthorizedException();
       }
+    } catch (error) {
+      throw new UnauthorizedException();
+    }
+  }
+
+  @Get('/test')
+  async test(@Res() res: Response): Promise<any> {
+    try {
+      return res.status(200).json({ message: 'test' });
+    } catch (error) {
+      throw new UnauthorizedException();
+    }
+  }
+
+  @Get('/logout')
+  async logout(@Res() res: Response): Promise<any> {
+    try {
+      res.clearCookie('sessionId', {
+        sameSite: 'none',
+        secure: true,
+      });
+      
+      res.clearCookie('userId', {
+        sameSite: 'none',
+        secure: true,
+      });
+      return res.status(200).json({ message: 'Logout successful' });
     } catch (error) {
       throw new UnauthorizedException();
     }
