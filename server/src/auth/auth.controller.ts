@@ -45,8 +45,19 @@ export class AuthController {
   ): Promise<any> {
     try {
       const { user, sessionID } = req;
-      response.cookie('sessionId', sessionID);
-      response.cookie('userId', user.id);
+      response.cookie('sessionId', sessionID, {
+        expires: new Date(Date.now() + 3600000),
+        secure: true,
+        sameSite: 'none',
+        httpOnly: false,
+      });
+
+      response.cookie('userId', user.id, {
+        expires: new Date(Date.now() + 3600000),
+        secure: true,
+        sameSite: 'none',
+        httpOnly: false,
+      });
       req.session.destroy();
       return {
         message: 'Login successful',
@@ -102,6 +113,17 @@ export class AuthController {
       }
     } catch (error) {
       throw new UnauthorizedException();
+    }
+  }
+
+  @Get('/test')
+  async test(@Res() res: Response, @Request() req): Promise<any> {
+    try {
+      const { userId, sessionId } = req.cookies;
+      console.log('userId', userId, 'sessionID', sessionId);
+      return res.status(200).json({ message: 'Login successful' });
+    } catch (error) {
+      throw new NotAcceptableException();
     }
   }
 }

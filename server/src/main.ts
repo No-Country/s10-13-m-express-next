@@ -12,7 +12,11 @@ const MongoDBStore = connectMongoDBSession(session);
 
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);
-  app.enableCors();
+  app.enableCors({
+    origin: ['http://localhost:3000', 'http://127.0.0.1:3000'],
+    credentials: true,
+  });
+
   ConfigModule.forRoot();
   app.use(cookieParser());
   app.setGlobalPrefix('api/');
@@ -24,7 +28,7 @@ async function bootstrap() {
       resave: false,
       saveUninitialized: false,
       cookie: {
-        maxAge: 3600000 ,
+        maxAge: 3600000,
       },
       store: new MongoDBStore({
         collection: 'Session',
