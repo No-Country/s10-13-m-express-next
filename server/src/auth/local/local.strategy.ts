@@ -37,7 +37,7 @@ export class LocalStrategy extends PassportStrategy(Strategy, 'local') {
         }
         request.session.user = userSerialized;
       });
-
+console.log('user', user, request.session);
       return user;
     } catch (error) {
       console.log('Error validate local', error);
