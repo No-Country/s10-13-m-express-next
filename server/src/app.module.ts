@@ -40,9 +40,9 @@ export class AppModule {
       .apply(UserMiddleware)
       .exclude(
         { path: 'users/(.*)', method: RequestMethod.GET },
-        { path: 'users/(.*)', method: RequestMethod.GET },
+        { path: 'users/(.*)', method: RequestMethod.POST },
         'users',
-      )
+              )
       .forRoutes('users');
     //EXCEPCION EN POST, GET, GET ID
     //APLICADO A USERS EN DELETE, PUT
