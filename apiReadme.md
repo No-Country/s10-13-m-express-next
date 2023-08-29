@@ -176,7 +176,7 @@ The Users API provides endpoints for user management.
 
 **This API is currently under development and is subject to change. We recommend just use the `POST` endpoint for now.**
 
-#### Create User
+### Create User
 
 To create a user, make a **post** request to this endpoint with the user's details as body parameters.
 
@@ -200,7 +200,7 @@ POST /users
 
 **You dont need use `withCredentials: true` for this endpoint.**
 
-#### Get Users
+### Get Users
 
 To get all users, make a **get** request to this endpoint.
 
@@ -210,7 +210,7 @@ GET /users
 
 **You dont need use `withCredentials: true` for this endpoint.**
 
-#### Get User
+### Get User
 
 To get a user, make a **get** request to this endpoint with the user's id as a parameter.
 
@@ -220,7 +220,7 @@ GET /users/:id
 
 **You dont need use `withCredentials: true` for this endpoint.**
 
-#### Delete User
+### Delete User
 
 To delete a user, make a **delete** request to this endpoint with the user's id as a parameter.
 
