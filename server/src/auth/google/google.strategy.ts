@@ -64,7 +64,7 @@ export class GoogleStrategy extends PassportStrategy(Strategy, 'google') {
         }
         request.session.user = userSerialized;
       });
-      console.log('userSerialized', request.session);
+
       return user;
     } catch (error) {
       throw error;

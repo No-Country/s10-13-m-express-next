@@ -16,7 +16,7 @@ async function bootstrap() {
     credentials: true,
     origin: process.env.CLIENT_URL,
   });
-  
+
   ConfigModule.forRoot();
   app.use(cookieParser());
   app.setGlobalPrefix('api/');
@@ -28,7 +28,7 @@ async function bootstrap() {
       resave: false,
       saveUninitialized: false,
       cookie: {
-        maxAge: 3600000 ,
+        maxAge: 3600000,
       },
       store: new MongoDBStore({
         collection: 'Session',

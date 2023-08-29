@@ -90,7 +90,7 @@ export class AuthController {
   ) {
     try {
       const { session, user, sessionID } = req;
-      console.log('session', session);
+
       const slug = session.redirectURL ?? process.env.GOOGLE_DEFAULT_REDIRECT;
 
       response.cookie('sessionId', sessionID, {
@@ -127,9 +127,7 @@ export class AuthController {
   ): Promise<any> {
     try {
       const { userId, sessionId } = req.cookies;
-      console.log('req.cookies', req.cookies);
       const session = await this.authService.findSessionById(userId);
-      console.log('session', session);
       if (session) {
         return res.status(200).json({ verified: true });
       } else {
