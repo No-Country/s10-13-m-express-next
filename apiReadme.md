@@ -14,9 +14,7 @@ The Auth API provides endpoints for user authentication and session management.
 
 ### Local Authentication
 
-**Get Session ID**
-
-Obtain an Session ID after authenticating the user locally.
+To login with email and password, make a **post** request to this endpoint.
 
 ```http
 POST /auth/login
