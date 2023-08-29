@@ -126,9 +126,8 @@ export class AuthController {
   ): Promise<any> {
     try {
       const { userId, sessionId } = req.cookies;
-      console.log(req.cookies);
+      console.log("req.cookies", req.cookies);
       const session = await this.authService.findSessionById(userId);
-      console.log(session);
       if (session) {
         return res.status(200).json({ verified: true });
       } else {

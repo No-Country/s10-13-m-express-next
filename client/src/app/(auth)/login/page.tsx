@@ -4,7 +4,7 @@ import axios from "axios"
 export default function LoginPage() {
 
   const handleLogin = async () => {
-    const response = await axios.post("http://127.0.0.1:3001/api/auth/login", {
+    const response = await axios.post("http://localhost:3001/api/auth/login", {
       email: "thomasbarenghi2@gmail.com",
       password: "test1"
     },
@@ -15,14 +15,14 @@ export default function LoginPage() {
   }
 
   const handleTest = async () => {
-    const response = await axios.get("http://127.0.0.1:3001/api/auth/verify", {
+    const response = await axios.get("http://localhost:3001/api/auth/verify", {
       withCredentials: true
     })
     console.log(response)
   }
 
   const handleLogout = async () => {
-    const response = await axios.get("http://127.0.0.1:3001/api/auth/logout", {
+    const response = await axios.get("http://localhost:3001/api/auth/logout", {
       withCredentials: true
     })  
 

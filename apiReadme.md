@@ -254,7 +254,7 @@ Postman Interceptor is a Chrome/Edge/Others extension that works with the Postma
 
 ![App Screenshot](https://i.ibb.co/sVSB4rx/interceptor-1.png)
 
-3. Click "Sync Cookies", add the domain of your backend application and click "Start Syncing".
+3. Click "Sync Cookies", add the domain of your backend application (use **localhost**) and click "Start Syncing".
 
 ![App Screenshot](https://i.ibb.co/GsFcMfr/interceptor-2.png)
 
