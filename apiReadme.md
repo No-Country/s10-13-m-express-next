@@ -8,6 +8,8 @@ All routes are prefixed with `/api`.
 
 - To start the server, run `npm run start:dev` in the /server directory, then navigate to `localhost:3001/api` in your browser.
 
+**Important:** run backend in `localhost` and frontend in `127.0.0.1`, this is necessary to prevent problems with the cookies and other things.
+
 ## Auth API
 
 The Auth API provides endpoints for user authentication and session management.
