@@ -44,23 +44,7 @@ export class AuthController {
     @Res({ passthrough: true }) response: Response,
   ): Promise<any> {
     try {
-      const { user, sessionID } = req;
-
-      response.cookie('sessionId', sessionID, {
-        maxAge: process.env.SESSION_MAX_AGE as any,
-        httpOnly: false,
-        secure: true,
-        sameSite: 'none',
-      });
-
-      response.cookie('userId', user.id, {
-        maxAge: process.env.SESSION_MAX_AGE as any,
-        httpOnly: false,
-        secure: true,
-        sameSite: 'none',
-      });
-
-      //req.session.destroy();
+      const { user } = req;
       return {
         userId: user.id,
         message: 'Login successful',
@@ -89,23 +73,9 @@ export class AuthController {
     @Res({ passthrough: true }) response: Response,
   ) {
     try {
-      const { session, user, sessionID } = req;
+      const { session, user } = req;
 
       const slug = session.redirectURL ?? process.env.GOOGLE_DEFAULT_REDIRECT;
-
-      response.cookie('sessionId', sessionID, {
-        maxAge: process.env.SESSION_MAX_AGE as any,
-        httpOnly: false,
-        secure: true,
-        sameSite: 'none',
-      });
-
-      response.cookie('userId', user.id, {
-        maxAge: process.env.SESSION_MAX_AGE as any,
-        httpOnly: false,
-        secure: true,
-        sameSite: 'none',
-      });
 
       delete req.session.redirectURL;
       const url = user
@@ -126,9 +96,8 @@ export class AuthController {
     @Request() req,
   ): Promise<any> {
     try {
-      const { userId, sessionId } = req.cookies;
-      const session = await this.authService.findSessionById(userId);
-      console.log('session', session, userId, sessionId);
+      const { userid } = req.headers;
+      const session = await this.authService.findSessionById(userid);
       if (session) {
         return res.status(200).json({ verified: true });
       } else {
@@ -140,19 +109,8 @@ export class AuthController {
   }
 
   @Get('/logout')
-  async logout(@Res() res: Response, @Request() req): Promise<any> {
+  async logout(@Res() res: Response): Promise<any> {
     try {
-      res.clearCookie('sessionId', {
-        sameSite: 'none',
-        secure: true,
-      });
-
-      res.clearCookie('userId', {
-        sameSite: 'none',
-        secure: true,
-      });
-
-      req.session.destroy();
       return res.status(200).json({ message: 'Logout successful' });
     } catch (error) {
       throw new UnauthorizedException();

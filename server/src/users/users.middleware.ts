@@ -12,10 +12,10 @@ export class UserMiddleware implements NestMiddleware {
   async use(req: Request, res: Response, next: Function) {
     console.log('UserMiddleware');
     try {
-      const { userId } = req.cookies;
+      const { userid } = req.headers;
       const { id: idBody } = req.body;
       const idParams = req.originalUrl.split('/')[3];
-      const sameUser = userId === idBody || userId === idParams;
+      const sameUser = userid === idBody || userid === idParams;
       if (sameUser) {
         next();
       } else {
