@@ -107,7 +107,7 @@ export class AuthController {
         sameSite: 'none',
       });
 
-    //  delete req.session.redirectURL;
+      delete req.session.redirectURL;
       const url = user
         ? `${process.env.CLIENT_URL}/${slug}?userId=${user.id}`
         : `${process.env.CLIENT_URL}/login?failed=true`;
