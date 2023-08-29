@@ -107,7 +107,7 @@ export class AuthController {
         sameSite: 'none',
       });
 
-      delete req.session.redirectURL;
+    //  delete req.session.redirectURL;
       const url = user
         ? `${process.env.CLIENT_URL}/${slug}?userId=${user.id}`
         : `${process.env.CLIENT_URL}/login?failed=true`;
@@ -128,6 +128,7 @@ export class AuthController {
     try {
       const { userId, sessionId } = req.cookies;
       const session = await this.authService.findSessionById(userId);
+      console.log('session', session, userId, sessionId);
       if (session) {
         return res.status(200).json({ verified: true });
       } else {
