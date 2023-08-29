@@ -29,13 +29,6 @@ import { LocalRequestDto } from './dto/localRequest.dto';
 import { VerificationResponseDto } from './dto/verificationResponse.dto';
 import { VerificationRequestDto } from './dto/verificationRequest.dto';
 
-const cookieConfig: any = {
-  expires: new Date(Date.now() + process.env.SESSION_MAX_AGE),
-  httpOnly: false,
-  secure: true,
-  sameSite: 'none',
-};
-
 @ApiTags('Auth')
 @Controller('auth')
 export class AuthController {
@@ -67,7 +60,7 @@ export class AuthController {
         sameSite: 'none',
       });
 
-      req.session.destroy();
+    //  req.session.destroy();
       return {
         userId: user.id,
         message: 'Login successful',
@@ -126,11 +119,16 @@ export class AuthController {
   @Get('/verify')
   @ApiResponse({ status: HttpStatus.OK, type: VerificationResponseDto })
   @ApiBody({ type: VerificationRequestDto })
-  async verify(@Body() body, @Res() res: Response, @Request() req): Promise<any> {
+  async verify(
+    @Body() body,
+    @Res() res: Response,
+    @Request() req,
+  ): Promise<any> {
     try {
       const { userId, sessionId } = req.cookies;
-      console.log(req);
+      console.log(req.cookies);
       const session = await this.authService.findSessionById(userId);
+      console.log(session);
       if (session) {
         return res.status(200).json({ verified: true });
       } else {
@@ -141,27 +139,20 @@ export class AuthController {
     }
   }
 
-  @Get('/test')
-  async test(@Res() res: Response): Promise<any> {
-    try {
-      return res.status(200).json({ message: 'test' });
-    } catch (error) {
-      throw new UnauthorizedException();
-    }
-  }
-
   @Get('/logout')
-  async logout(@Res() res: Response): Promise<any> {
+  async logout(@Res() res: Response, @Request() req): Promise<any> {
     try {
       res.clearCookie('sessionId', {
         sameSite: 'none',
         secure: true,
       });
-      
+
       res.clearCookie('userId', {
         sameSite: 'none',
         secure: true,
       });
+
+      req.session.destroy();
       return res.status(200).json({ message: 'Logout successful' });
     } catch (error) {
       throw new UnauthorizedException();

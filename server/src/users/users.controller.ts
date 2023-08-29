@@ -75,17 +75,28 @@ export class UsersController {
     @Param('id') userId: string,
     @Body() updateUserDto: UpdateUserDto,
   ) {
-    const updatedUser = await this.usersService.updateUser(
-      userId,
-      updateUserDto,
-    );
-    return { user: updatedUser, message: 'User correctly updated' };
+    try {
+      const updatedUser = await this.usersService.updateUser(
+        userId,
+        updateUserDto,
+      );
+      return { user: updatedUser, message: 'User correctly updated' };
+    } catch (error) {
+      console.log('error', error);
+      throw error;
+    }
   }
 
   @Delete(':id')
   async remove(@Param('id') userId: string) {
-    await this.usersService.removeUser(userId);
-    return 'User successfully deleted';
+    try {
+      await this.usersService.removeUser(userId);
+      console.log('remove', userId);
+      return 'User successfully deleted';
+    } catch (error) {
+      console.log('error', error);
+      throw error;
+    }
   }
 
   @Post('/testImageUpload')
