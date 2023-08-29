@@ -55,13 +55,16 @@ export class GoogleStrategy extends PassportStrategy(Strategy, 'google') {
         user = newUser;
       }
 
+      delete request.session.orgName;
+      delete request.session.role;
+
       this.googleSerializer.serializeUser(user, (err, userSerialized) => {
         if (err) {
           throw err;
         }
         request.session.user = userSerialized;
       });
-
+      console.log('userSerialized', request.session);
       return user;
     } catch (error) {
       throw error;
