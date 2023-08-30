@@ -1,3 +1,5 @@
+export { default as Submit } from './buttons/Submit'
+export { default as FormInput } from './form-input/FormInput'
 export { default as DonationIcon } from './icons/DonationIcon'
 export { default as EditProfileIcon } from './icons/EditProfileIcon'
 export { default as LogoutIcon } from './icons/LogoutIcon'
