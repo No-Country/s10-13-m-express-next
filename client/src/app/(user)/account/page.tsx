@@ -1,3 +1,11 @@
-export default function EditPage() {
-  return <h1>Edit Page</h1>
+import { ConfigOptions } from '@/app/(user)/account/components'
+
+function AccountPage() {
+  return (
+    <main>
+      <ConfigOptions />
+    </main>
+  )
 }
+
+export default AccountPage
