@@ -17,6 +17,7 @@ export class InitiativesService {
       if (errors.length > 0) {
         throw new BadRequestException(errors);
       }
+
       const newInitiative = await this.prisma.initiative.create({
         data: createInitiativeDto,
       });

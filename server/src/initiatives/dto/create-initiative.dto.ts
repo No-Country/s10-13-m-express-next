@@ -65,21 +65,40 @@ export class CreateInitiativeDto  {
   @IsString()
   @IsOptional()
   thumbnail?: string;
+  
+  @ApiProperty({
+    description: 'Initiative categories',
+    nullable: false, 
+    example: "['Agricultura', 'Educación']",})
+  @IsNotEmpty({ message: 'Categories are required' })
+  categories: string[];
+
+  @ApiProperty({
+    description: 'Initiative opportunities',
+    nullable: false, 
+    example: "['Comunicación y Marketing', 'Enseñar y Compartir']",})
+  @IsNotEmpty({ message: 'Opportunities are required' })
+  opportunities: string[];
+
+  @ApiProperty({
+    description: 'Initiative Locations (Country)',
+    nullable: false, 
+    example: 'Colombia',})
+  @IsNotEmpty({ message: 'Locations are required' })
+  locations: string;
+
+  @ApiProperty({
+    description: 'Initiative languages',
+    nullable: false, 
+    example: "['Español', 'Guaraní']",})
+  @IsNotEmpty({ message: 'Languages are required' })
+  languages: string[];
 
   @ApiProperty({    
     description: 'Initiative ownerId (mongo _id format)',
     nullable: false, 
-    example: '64e1bb0cb3ca40c582add154',
-  })
+    example: '64e1bb0cb3ca40c582add154',})
   @IsNotEmpty({ message: 'ownerId is required' })
   @IsMongoId()
   ownerId: string;
-
-  @ApiProperty({
-    description: 'Initiative categoryId (mongo _id format)',
-    nullable: false, 
-    example: '64e1bb0cb3ca40c582add154',})
-  @IsNotEmpty({ message: 'categoryId is required' })
-  @IsMongoId()
-  categoryId: string;
 }
