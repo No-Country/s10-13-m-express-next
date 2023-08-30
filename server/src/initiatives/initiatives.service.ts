@@ -17,6 +17,7 @@ export class InitiativesService {
       if (errors.length > 0) {
         throw new BadRequestException(errors);
       }
+
       const newInitiative = await this.prisma.initiative.create({
         data: createInitiativeDto,
       });
@@ -67,7 +68,7 @@ export class InitiativesService {
     return initiativeUpdated;
   }
 
-  async remove(id: string): Promise<Initiative | null> {
+  async remove(id: string): Promise<{ message: string; status: HttpStatus; } | null> {
 
     try {
       if(!isMongoId(id)){
@@ -77,7 +78,10 @@ export class InitiativesService {
       if (!removed) {
         throw new NotFoundException(`Initiative ${id} not found`);
       }
-      return removed;
+      return {
+        message: `Initiative #${id} was successfully removed.`,
+        status: HttpStatus.OK,
+      };
     } catch (error) {
       throw new HttpException(
         `Can't delete or not found ${id}.`,
