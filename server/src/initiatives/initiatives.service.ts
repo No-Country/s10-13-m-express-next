@@ -68,7 +68,7 @@ export class InitiativesService {
     return initiativeUpdated;
   }
 
-  async remove(id: string): Promise<Initiative | null> {
+  async remove(id: string): Promise<{ message: string; status: HttpStatus; } | null> {
 
     try {
       if(!isMongoId(id)){
@@ -78,7 +78,10 @@ export class InitiativesService {
       if (!removed) {
         throw new NotFoundException(`Initiative ${id} not found`);
       }
-      return removed;
+      return {
+        message: `Initiative #${id} was successfully removed.`,
+        status: HttpStatus.OK,
+      };
     } catch (error) {
       throw new HttpException(
         `Can't delete or not found ${id}.`,
