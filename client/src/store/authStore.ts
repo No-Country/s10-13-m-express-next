@@ -12,8 +12,8 @@ const useAuthStore = create<AuthState>()((set) => ({
     const res = await fetch('')
   },
   verifySession: async (body) => {
-    const res = await fetch('') 
-    set({ isLogged: true})
+    const res = await fetch('')
+    set({ isLogged: true })
   }
 }))
 
