@@ -8,6 +8,7 @@ const config: Config = {
       current: 'currentColor',
       black: '#212121',
       white: '#F8F8F8',
+      whiteSecondary: '#f3f3f3',
       gray: {
         50: '#f7f7f7',
         100: '#ededed',
