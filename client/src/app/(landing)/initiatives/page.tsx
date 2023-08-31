@@ -1,22 +1,3 @@
-import HeroSec from './components/hero'
-import FeaturedSec from './components/featured'
-import RecentSec from './components/recent'
-import type { Metadata } from 'next'
-
-export const metadata: Metadata = {
-  title: 'Iniciativas',
-  description: '...',
-  themeColor: '#000000'
+export default function InitiativesPage() {
+  return <h1>Initiatives Page</h1>
 }
-
-function InitiativesPage() {
-  return (
-    <main className='flex flex-col gap-10 py-7'>
-      <HeroSec />
-      <FeaturedSec />
-      <RecentSec />
-    </main>
-  )
-}
-
-export default InitiativesPage
