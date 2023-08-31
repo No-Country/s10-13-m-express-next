@@ -1,7 +1,20 @@
+import HeroSec from './components/hero'
+import PromoSec from './components/promo'
+import InitiativesSec from './components/initiatives'
+import type { Metadata } from 'next'
+
+export const metadata: Metadata = {
+  title: 'Home',
+  description: '...',
+  themeColor: '#000000'
+}
+
 function Home() {
   return (
-    <main>
-      <h1 className='text-center text-9xl'>Home Page</h1>
+    <main className='flex flex-col items-start gap-10 py-7'>
+      <HeroSec />
+      <PromoSec />
+      <InitiativesSec />
     </main>
   )
 }
