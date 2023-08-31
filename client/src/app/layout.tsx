@@ -12,7 +12,7 @@ interface Props {
 function RootLayout({ children }: Props) {
   return (
     <html lang='en'>
-      <body className='grid min-h-screen grid-rows-[auto_1fr_auto]'>{children}</body>
+      <body className='min-h-screen'>{children}</body>
     </html>
   )
 }
