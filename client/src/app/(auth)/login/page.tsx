@@ -4,55 +4,15 @@ import axios from 'axios'
 import Cookies from 'js-cookie'
 import Image from 'next/image'
 import { useRouter, useSearchParams } from 'next/navigation'
-import { useEffect, useState } from 'react'
+import { useState } from 'react'
 import { LoginForm, ModalContent } from './components'
 import { AnimatePresence } from 'framer-motion';
 
-const credentials = {
-  email: 'thomasbarenghi2@gmail.com',
-  password: 'test1'
-}
-
-const serverUrl = process.env.NEXT_PUBLIC_SERVER_URL
-
 export default function LoginPage() {
-  const router = useRouter()
-  const searchParams = useSearchParams()
   const [modalOpen, setModalOpen] = useState(false);
 
   const close = () => setModalOpen(false);
   const open = () => setModalOpen(true);
-
-  useEffect(() => {
-    const search = searchParams.get('userId')
-    if (search) {
-      Cookies.set('userId', search, { expires: 1 })
-    }
-  }, [searchParams])
-
-  const handleLoginLocal = async () => {
-    const { data } = await axios.post(`${serverUrl}/auth/login`, credentials)
-    Cookies.set('userId', data.userId, { expires: 1 })
-  }
-
-  const handleVerify = async () => {
-    try {
-      await axios.get(`${serverUrl}/auth/verify`, {
-        headers: {
-          userId: `${Cookies.get('userId')}`
-        }
-      })
-    } catch (err) {
-      Cookies.remove('userId')
-      console.log(err)
-    }
-  }
-
-  const handleLogout = async () => {
-    Cookies.remove('userId')
-    await axios.get(`${serverUrl}/auth/logout`)
-  }
-
 
   return (
     <section className='h-screen w-screen flex items-center  bg-[#f5f5fa]'>
