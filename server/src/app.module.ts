@@ -13,6 +13,7 @@ import { CloudinaryModule } from './cloudinary/cloudinary.module';
 import { CloudinaryService } from './cloudinary/cloudinary.service';
 import { AuthMiddleware } from './auth/auth.middleware';
 import { UserMiddleware } from './users/users.middleware';
+import { UuidService } from './uuid/uuid.service';
 
 @Module({
   imports: [
@@ -26,7 +27,7 @@ import { UserMiddleware } from './users/users.middleware';
     CloudinaryModule,
   ],
   controllers: [AppController],
-  providers: [AppService, PrismaService, CloudinaryService],
+  providers: [AppService, PrismaService, CloudinaryService, UuidService],
 })
 export class AppModule {
   configure(consumer: MiddlewareConsumer) {

@@ -47,6 +47,7 @@ export class AuthController {
       const { user } = req;
       return {
         userId: user.id,
+        sessionId: session.sessionId,
         message: 'Login successful',
       };
     } catch (error) {
@@ -79,7 +80,7 @@ export class AuthController {
 
       delete req.session.redirectURL;
       const url = user
-        ? `${process.env.CLIENT_URL}/${slug}?userId=${user.id}`
+        ? `${process.env.CLIENT_URL}/${slug}?userId=${user.id}&sessionId=${session.sessionId}`
         : `${process.env.CLIENT_URL}/login?failed=true`;
       return { url };
     } catch (error) {
@@ -96,8 +97,8 @@ export class AuthController {
     @Request() req,
   ): Promise<any> {
     try {
-      const { userid } = req.headers;
-      const session = await this.authService.findSessionById(userid);
+      const { userid, sessionid } = req.headers;
+      const session = await this.authService.findSessionById(sessionid);
       if (session) {
         return res.status(200).json({ verified: true });
       } else {
