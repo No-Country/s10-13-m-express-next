@@ -49,6 +49,7 @@ model Session {
 
 type SessionInfo {
   user UserSession
+  sessionId String
 }
 
 type UserSession {

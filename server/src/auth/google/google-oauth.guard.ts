@@ -1,10 +1,10 @@
 import { ExecutionContext, HttpException, Injectable } from '@nestjs/common';
 import { AuthGuard } from '@nestjs/passport';
-import { Observable } from 'rxjs';
+import { UuidService } from '../../uuid/uuid.service';
 
 @Injectable()
 export class GoogleOauthGuard extends AuthGuard('google') {
-  constructor() {
+  constructor(private readonly uuidService: UuidService) {
     super();
   }
 
@@ -20,10 +20,11 @@ export class GoogleOauthGuard extends AuthGuard('google') {
     const redirectURL = rUrlQ ?? rUrlS;
     const role = roleQ ?? roleS;
     const orgName = oNameQ ?? oNameS;
-
+    const uuid = this.uuidService.generateUuid();
     request.session.redirectURL = redirectURL;
     request.session.role = role;
     request.session.orgName = orgName;
+    request.session.sessionId = uuid;
 
     return super.canActivate(context);
   }

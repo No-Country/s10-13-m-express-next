@@ -31,19 +31,20 @@ POST /auth/login
 
 **Successful Response**
 
-If authentication is successful, you will receive a `200 OK` response, `userId` in the response body.
+If authentication is successful, you will receive a `200 OK` response, `userId` and `sessionId` in the response body.
 
 ```json
 {
   "userId": "64e6db62bfaa945735cbec7c"
+  "sessionId": "870cba88-9201-4bc8-b57d-82640b348909"
 }
 ```
 
-You can use the `userId` to make request to the [Users API](#users-api) to get the user's details.
+You can use the `sessionId` to make request to the [Users API](#users-api) to get the user's details.
 
 You must make a request to the `/auth/verify` endpoint to verify the session. Check the [Verify Session](#verify-session) section for more details.
 
-**Important:** in determine cases, you have to send userId in headers to pass a verification middleware.
+**Important:** in determine cases, you have to send sessionId in headers to pass a verification middleware.
 
 **Axios example login and test request:**
 
@@ -51,17 +52,18 @@ You must make a request to the `/auth/verify` endpoint to verify the session. Ch
 const handleLoginLocal = async () => {
   const { data } = await axios.post(`${serverUrl}/auth/login`, credentials);
   Cookies.set("userId", data.userId, { expires: 1 });
-};
+Cookies.set("sessionId", data.sessionId, { expires: 1 });
+  };
 
 const handleTest = async () => {
   try {
     await axios.get(`${serverUrl}/auth/verify`, {
       headers: {
-        userId: `${Cookies.get("userId")}`,
+        sessionId: `${Cookies.get("sessionId")}`,
       },
     });
   } catch (err) {
-    Cookies.remove("userId");
+    Cookies.remove("sessionId");
     console.log(err);
   }
 };
@@ -89,13 +91,13 @@ Be sure of send the parameter `redirectURL` without the `/` at the beginning.
 localhost:3001/api/auth/google
 ```
 
-If authentication is successful, the user will be redirected to the client application and in the url you will see `userId` as query parameters.
+If authentication is successful, the user will be redirected to the client application and in the url you will see `userId` and `sessionId` as query parameters.
 
-You can use the `userId` to make request to the [Users API](#users-api) to get the user's details.
+You can use the `sessionId` to make request to the [Users API](#users-api) to get the user's details.
 
 You must make a request to the `/auth/verify` endpoint to verify the session. Check the [Verify Session](#verify-session) section for more details.
 
-**Important:** in determine cases, you have to send userId in headers to pass a verification middleware.
+**Important:** in determine cases, you have to send sessionId in headers to pass a verification middleware.
 
 **Axios example test request:**
 
@@ -104,11 +106,11 @@ const handleTest = async () => {
   try {
     await axios.get(`${serverUrl}/auth/verify`, {
       headers: {
-        userId: `${Cookies.get("userId")}`,
+        sessionId: `${Cookies.get("sessionId")}`,
       },
     });
   } catch (err) {
-    Cookies.remove("userId");
+    Cookies.remove("sessionId");
     console.log(err);
   }
 };
@@ -126,13 +128,13 @@ You can also register a user with Google. To do this, you must send the `role` a
 localhost:3001/api/auth/google?redirectURL=about/tech&role=organization&orgName=example
 ```
 
-If authentication is successful, the user will be redirected to the client application and in the url you will see `userId` as query parameters.
+If authentication is successful, the user will be redirected to the client application and in the url you will see `userId` and `sessionId` as query parameters.
 
-You can use the `userId` to make request to the [Users API](#users-api) to get the user's details.
+You can use the `sessionId` to make request to the [Users API](#users-api) to get the user's details.
 
 You must make a request to the `/auth/verify` endpoint to verify the session. Check the [Verify Session](#verify-session) section for more details.
 
-**Important:** in determine cases, you have to send userId in headers to pass a verification middleware.
+**Important:** in determine cases, you have to send sessionId in headers to pass a verification middleware.
 
 **Axios example test request:**
 
@@ -141,11 +143,11 @@ const handleTest = async () => {
   try {
     await axios.get(`${serverUrl}/auth/verify`, {
       headers: {
-        userId: `${Cookies.get("userId")}`,
+        sessionId: `${Cookies.get("sessionId")}`,
       },
     });
   } catch (err) {
-    Cookies.remove("userId");
+    Cookies.remove("sessionId");
     console.log(err);
   }
 };
@@ -153,7 +155,7 @@ const handleTest = async () => {
 
 ### Verify Session
 
-To verify a session, make a **get** request to this endpoint with the `userId` in the headers.
+To verify a session, make a **get** request to this endpoint with the `sessionId` in the headers.
 
 ```http
 GET /auth/verify
@@ -166,11 +168,11 @@ const handleVerify = async () => {
   try {
     await axios.get(`${serverUrl}/auth/verify`, {
       headers: {
-        userId: `${Cookies.get("userId")}`,
+        sessionId: `${Cookies.get("sessionId")}`,
       },
     });
   } catch (err) {
-    Cookies.remove("userId");
+    Cookies.remove("sessionId");
     console.log(err);
   }
 };
@@ -218,7 +220,7 @@ POST /users
 | `birthday`  | `string` | **Required**. Birthday (YYYY-MM-DD)                   |
 | `orgName`   | `string` | **Required for role organization**. Organization Name |
 
-**You dont need to send `userId` in the headers for this endpoint.**
+**You dont need to send `sessionId` in the headers for this endpoint.**
 
 ### Get Users
 
@@ -228,7 +230,7 @@ To get all users, make a **get** request to this endpoint.
 GET /users
 ```
 
-**You dont need to send `userId` in the headers for this endpoint.**
+**You dont need to send `sessionId` in the headers for this endpoint.**
 
 ### Get User
 
@@ -238,7 +240,7 @@ To get a user, make a **get** request to this endpoint with the user's id as a p
 GET /users/:id
 ```
 
-**You dont need to send `userId` in the headers for this endpoint.**
+**You dont need to send `sessionId` in the headers for this endpoint.**
 
 ### Delete User
 
@@ -252,7 +254,7 @@ You can only delete your own user.
 
 **Explanation of the system:** A middleware checks if the id sent in the request parameters is the same as userId in the headers, if it is, the request is allowed, otherwise it is rejected.
 
-**You need to send `userId` in the headers for this endpoint.**
+**You need to send `userId` and `sessionId` in the headers for this endpoint.**
 
 ---
 
