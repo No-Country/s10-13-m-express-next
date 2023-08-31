@@ -44,14 +44,13 @@ export class AuthController {
     @Res({ passthrough: true }) response: Response,
   ): Promise<any> {
     try {
-      const { user, sessionID } = req;
-      response.cookie('sessionId', sessionID);
-      response.cookie('userId', user.id);
-      req.session.destroy();
+      const { user } = req;
       return {
+        userId: user.id,
         message: 'Login successful',
       };
     } catch (error) {
+      console.log('error', error);
       throw new NotAcceptableException();
     }
   }
@@ -74,13 +73,13 @@ export class AuthController {
     @Res({ passthrough: true }) response: Response,
   ) {
     try {
-      const { session, user, sessionID } = req;
+      const { session, user } = req;
+
       const slug = session.redirectURL ?? process.env.GOOGLE_DEFAULT_REDIRECT;
-      response.cookie('sessionId', sessionID);
-      response.cookie('userId', user.id);
-      req.session.destroy();
+
+      delete req.session.redirectURL;
       const url = user
-        ? `${process.env.CLIENT_URL}/${slug}`
+        ? `${process.env.CLIENT_URL}/${slug}?userId=${user.id}`
         : `${process.env.CLIENT_URL}/login?failed=true`;
       return { url };
     } catch (error) {
@@ -88,18 +87,31 @@ export class AuthController {
     }
   }
 
-  @Post('/verify')
+  @Get('/verify')
   @ApiResponse({ status: HttpStatus.OK, type: VerificationResponseDto })
   @ApiBody({ type: VerificationRequestDto })
-  async verify(@Body() body, @Res() res: Response): Promise<any> {
+  async verify(
+    @Body() body,
+    @Res() res: Response,
+    @Request() req,
+  ): Promise<any> {
     try {
-      const { userId } = body;
-      const session = await this.authService.findSessionById(userId);
+      const { userid } = req.headers;
+      const session = await this.authService.findSessionById(userid);
       if (session) {
         return res.status(200).json({ verified: true });
       } else {
         throw new UnauthorizedException();
       }
+    } catch (error) {
+      throw new UnauthorizedException();
+    }
+  }
+
+  @Get('/logout')
+  async logout(@Res() res: Response): Promise<any> {
+    try {
+      return res.status(200).json({ message: 'Logout successful' });
     } catch (error) {
       throw new UnauthorizedException();
     }

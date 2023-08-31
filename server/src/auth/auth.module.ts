@@ -21,5 +21,6 @@ import { LocalSerializer } from './local/local.serializer';
     LocalSerializer,
   ],
   controllers: [AuthController],
+  exports: [AuthService],
 })
 export class AuthModule {}

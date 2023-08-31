@@ -56,22 +56,25 @@ type UserSession {
 }
 
 model Initiative {
-  id          String       @id @default(auto()) @map("_id") @db.ObjectId
-  title       String
-  description String
-  deadLine    DateTime
-  startDate   DateTime
-  endDate     DateTime
-  galery      String?
-  thumbnail   String?
-  volunteers  Volunteers[]
-  ownerId     String       @db.ObjectId
-  user        User         @relation(fields: [ownerId], references: [id])
-  categoryId  String       @db.ObjectId
-  reviewsId   String[]     @db.ObjectId
-  postsId     String[]     @db.ObjectId
-  createdAt   DateTime     @default(now()) @map("_created_at")
-  updatedAt   DateTime     @updatedAt @map("_updated_at")
+  id            String       @id @default(auto()) @map("_id") @db.ObjectId
+  title         String
+  description   String
+  deadLine      DateTime
+  startDate     DateTime
+  endDate       DateTime
+  galery        String?
+  thumbnail     String?
+  volunteers    Volunteers[]
+  categories    String[]
+  opportunities String[]
+  locations     String
+  languages     String[]
+  reviewsId     String[]     @db.ObjectId
+  postsId       String[]     @db.ObjectId
+  ownerId       String       @db.ObjectId
+  user          User         @relation(fields: [ownerId], references: [id])
+  createdAt     DateTime     @default(now()) @map("_created_at")
+  updatedAt     DateTime     @updatedAt @map("_updated_at")
 }
 
 model Volunteers {

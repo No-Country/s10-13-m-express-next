@@ -4,9 +4,12 @@ import GoogleButton from './google'
 export default function LoginPage() {
   return (
     <>
-      <h1>Login page</h1>
-      <GoogleButton />
-      <Link href='/register'>Register</Link>
+      <form>
+        <input className='border border-black' type='text' />
+        <input className='border border-black' type='password' />
+        <button>Iniciar sesión</button>
+      </form>
+      <button>Google</button>
     </>
   )
 }

@@ -401,3 +401,253 @@ DELETE /reviews/:id
 	"message": "Reviews delete Successfully"
 }
 ```
+
+## Initiatives API
+
+The Initiatives API provides endpoints for Initiatives management.
+
+**This API is currently under development and is subject to change. We recommend just use the `POST` endpoint for now.**
+
+#### Create a Initiative
+
+To create a Initiatives, make a **post** request to this endpoint with the initiatives's details as body parameters.
+
+```http
+POST /initiatives
+```
+
+**Request Parameters**
+
+| Field       | Type     | Description                             |
+| :---------- | :------- | :-------------------------------------- |
+| `title`    | `string` | **Required**. Initiative title            |
+| `description`  | `string` | **Required**. Initiative description              |
+| `deadLine`      | `Date` | **Required**. Initiative deadLine |
+| `startDate`      | `Date` | **Required**. Initiative startDate |
+| `endDate`      | `Date` | **Required**. Initiative endDate |
+| `galery`      | `string` | **Optional**. Initiative url galery |
+| `thumbnail`      | `string` | **Optional**. Initiative thumbnail |
+| `categories`      | `array` | **Required**. Initiative categories array |
+| `opportunities`      | `array` | **Required**. Initiative opportunities array |
+| `locations`      | `string` | **Required**. Initiative locations |
+| `languages`      | `array` | **Required**. Initiative languages array |
+| `ownerId`      | `string` | **Required**. Initiative ownerId |
+
+
+**Successful Response**
+
+```json
+{
+    "id": "64ef6306ccf3711314014e5e",
+    "title": "Pintar paredes del barrio",
+    "description": "Pintar paredes del barrio sucias de tu barrio",
+    "deadLine": "2023-12-05T19:23:33.479Z",
+    "startDate": "2023-12-05T19:23:33.479Z",
+    "endDate": "2023-12-05T19:23:33.479Z",
+    "galery": null,
+    "thumbnail": null,
+    "categories": [
+        "Educación",
+        "Agricultura"
+    ],
+    "opportunities": [
+        "Comunicación y Marketing",
+        "Enseñar y Compartir"
+    ],
+    "locations": "Argentina",
+    "languages": [
+        "Español",
+        "Guaraní"
+    ],
+    "reviewsId": [],
+    "postsId": [],
+    "ownerId": "64e1bb0cb3ca40c582add154",
+    "createdAt": "2023-08-30T15:40:54.699Z",
+    "updatedAt": "2023-08-30T15:40:54.699Z"
+}
+```
+
+#### Get initiatives
+
+To get all initiatives, make a **get** request to this endpoint.
+
+```http
+GET /initiatives/
+```
+
+**Successful Response**
+
+```json
+[
+    {
+        "id": "64ef5fbdcea482be494ec01d",
+        "title": "Pintar paredes del barrio",
+        "description": "Pintar paredes del barrio sucias de tu barrio",
+        "deadLine": "2023-12-05T19:23:33.479Z",
+        "startDate": "2023-12-05T19:23:33.479Z",
+        "endDate": "2023-12-05T19:23:33.479Z",
+        "galery": null,
+        "thumbnail": null,
+        "categories": [
+            "Educación",
+            "Agricultura"
+        ],
+        "opportunities": [
+            "Comunicación y Marketing",
+            "Enseñar y Compartir"
+        ],
+        "locations": "Argentina",
+        "languages": [
+            "Español",
+            "Guaraní"
+        ],
+        "reviewsId": [],
+        "postsId": [],
+        "ownerId": "64e1bb0cb3ca40c582add154",
+        "createdAt": "2023-08-30T15:26:52.498Z",
+        "updatedAt": "2023-08-30T15:26:52.498Z"
+    },
+    {
+        "id": "64ef603fcea482be494ec01f",
+        "title": "Pintar paredes del barrio",
+        "description": "Pintar paredes del barrio sucias de tu barrio",
+        "deadLine": "2023-12-05T19:23:33.479Z",
+        "startDate": "2023-12-05T19:23:33.479Z",
+        "endDate": "2023-12-05T19:23:33.479Z",
+        "galery": null,
+        "thumbnail": null,
+        "categories": [
+            "Educación",
+            "Agricultura"
+        ],
+        "opportunities": [
+            "Comunicación y Marketing",
+            "Enseñar y Compartir"
+        ],
+        "locations": "Argentina",
+        "languages": [
+            "Español",
+            "Guaraní"
+        ],
+        "reviewsId": [],
+        "postsId": [],
+        "ownerId": "64e1bb0cb3ca40c582add154",
+        "createdAt": "2023-08-30T15:29:01.206Z",
+        "updatedAt": "2023-08-30T15:29:01.206Z"
+    }
+]
+```
+
+#### Get initiative
+
+To get a initiative by initiative id, make a **get** request to this endpoint with the initiatives's id as a parameter.
+
+```http
+GET /initiatives/:id
+```
+
+**Successful Response**
+
+```json
+{
+    "id": "64ef6306ccf3711314014e5e",
+    "title": "Pintar paredes del barrio",
+    "description": "Pintar paredes sucias de tu barrio",
+    "deadLine": "2023-12-05T19:23:33.479Z",
+    "startDate": "2023-12-05T19:23:33.479Z",
+    "endDate": "2023-12-05T19:23:33.479Z",
+    "galery": null,
+    "thumbnail": null,
+    "categories": [
+        "Educación",
+        "Agricultura"
+    ],
+    "opportunities": [
+        "Comunicación y Marketing",
+        "Enseñar y Compartir"
+    ],
+    "locations": "Argentina",
+    "languages": [
+        "Español",
+        "Guaraní"
+    ],
+    "reviewsId": [],
+    "postsId": [],
+    "ownerId": "64e1bb0cb3ca40c582add154",
+    "createdAt": "2023-08-30T15:40:54.699Z",
+    "updatedAt": "2023-08-30T15:45:57.715Z"
+}
+```
+
+#### Update Initiatives
+
+To update an initiative, make a **patch** request to this endpoint with the initiatives's id as a parameter and  the update details in the body.
+
+```http
+PATCH /initiatives/:id
+```
+**Request Parameters**
+
+| Field       | Type     | Description                             |
+| :---------- | :------- | :-------------------------------------- |
+| `title`    | `string` | **Required**. Initiative title            |
+| `description`  | `string` | **Required**. Initiative description              |
+| `deadLine`      | `Date` | **Required**. Initiative deadLine |
+| `startDate`      | `Date` | **Required**. Initiative startDate |
+| `endDate`      | `Date` | **Required**. Initiative endDate |
+| `galery`      | `string` | **Optional**. Initiative url galery |
+| `thumbnail`      | `string` | **Optional**. Initiative thumbnail |
+| `categories`      | `array` | **Required**. Initiative categories array |
+| `opportunities`      | `array` | **Required**. Initiative opportunities array |
+| `locations`      | `string` | **Required**. Initiative locations |
+| `languages`      | `array` | **Required**. Initiative languages array |
+| `ownerId`      | `string` | **Required**. Initiative ownerId |
+
+**Successful Response**
+
+```json
+{
+    "id": "64ef6306ccf3711314014e5e",
+    "title": "Pintar paredes del barrio",
+    "description": "Pintar paredes del barrio sucias de tu barrio",
+    "deadLine": "2023-12-05T19:23:33.479Z",
+    "startDate": "2023-12-05T19:23:33.479Z",
+    "endDate": "2023-12-05T19:23:33.479Z",
+    "galery": null,
+    "thumbnail": null,
+    "categories": [
+        "Educación",
+        "Agricultura"
+    ],
+    "opportunities": [
+        "Comunicación y Marketing",
+        "Enseñar y Compartir"
+    ],
+    "locations": "Argentina",
+    "languages": [
+        "Español",
+        "Guaraní"
+    ],
+    "reviewsId": [],
+    "postsId": [],
+    "ownerId": "64e1bb0cb3ca40c582add154",
+    "createdAt": "2023-08-30T15:40:54.699Z",
+    "updatedAt": "2023-08-30T15:40:54.699Z"
+}
+```
+
+#### Delete an initiative
+
+To delete an initiative, make a **delete** request to this endpoint with the initiative's id as a parameter.
+
+```http
+DELETE /initiatives/:id
+```
+**Successful Response**
+
+```json
+{
+    "message": "Initiative #64ef6301ccf3711314014e5d was successfully removed.",
+    "status": 200
+}
+```
