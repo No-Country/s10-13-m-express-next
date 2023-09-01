@@ -1,36 +1,15 @@
-import { NextRequest, NextResponse } from 'next/server'
-import { googleSearchParams } from '@/utils/constants/auth.const'
+import { checkLoginQueryParams, handleLoginRedirect } from '@/utils/middleware/login.middle'
+import { NextRequest } from 'next/server'
 
 export function middleware(req: NextRequest) {
-  console.log('-'.repeat(150))
-  const { SESSION_ID, USER_ID } = googleSearchParams
-  const sid = req.nextUrl.searchParams.get(SESSION_ID)
-  const uid = req.nextUrl.searchParams.get(USER_ID)
+  const { hasLoginQueryParams, sid, uid } = checkLoginQueryParams(req.nextUrl.searchParams)
 
-  if (sid !== null && uid !== null) {
-    console.log('sessionId: ', sid)
-    console.log('userId: ', uid)
-    const url = req.nextUrl.clone()
-    url.searchParams.delete(SESSION_ID)
-    url.searchParams.delete(USER_ID)
-    url.pathname = '/feed'
-
-    const res = NextResponse.redirect(url)
-    res.cookies.set({
-      name: SESSION_ID,
-      value: sid,
-      path: '/'
-    })
-    res.cookies.set({
-      name: USER_ID,
-      value: uid,
-      path: '/'
-    })
-
-    return res
+  // if the query params are found, it's assumed that the login is through google
+  if (hasLoginQueryParams) {
+    return handleLoginRedirect(req.nextUrl, sid, uid)
   }
 }
 
 export const config = {
-  matcher: '/feed'
+  matcher: ['/account', '/dashboard', '/feed', '/login', '/register']
 }

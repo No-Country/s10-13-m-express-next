@@ -1,4 +1,4 @@
-export enum googleSearchParams {
+export enum googleLoginQueryParams {
   SESSION_ID = 'sessionId',
   USER_ID = 'userId'
 }
