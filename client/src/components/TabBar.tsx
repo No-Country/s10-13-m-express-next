@@ -2,36 +2,34 @@
 
 import { useState } from 'react'
 
-function TabBar({ content }) {
+interface TabContentItem {
+  title: string
+  content: JSX.Element
+}
+
+interface TabProps {
+  content: TabContentItem[]
+}
+
+function TabBar({ content }: TabProps) {
+  const [activeTab, setActiveTab] = useState(0)
+
   return (
-    <main className='flex justify-center '>
-      <Tab content={content} />
-    </main>
+    <div className='mx-auto w-11/12'>
+      <div className='mb-1 flex justify-around gap-10 bg-[#f2e9f2]  text-blue-500 p-2'>
+        {content.map((cont, i) => (
+          <button
+            key={i}
+            onClick={() => setActiveTab(i)}
+            className={activeTab === i ? '  border-blue-500 border-b-2' : ' bg-[#f2e9f2]'}
+          >
+            {cont.title}
+          </button>
+        ))}
+      </div>
+      <div className='bg-[#f2e9f2]'>{content[activeTab].content}</div>
+    </div>
   )
 }
 
 export default TabBar
-
-interface TabProps {
-  content: any
-}
-
-function Tab({ content }: TabProps) {
-  const [activeTab, setActiveTab] = useState(0)
-  return (
-    <div className=''>
-      <div className='flex gap-10'>
-        {content.map((cont: any, i: any) => {
-          return (
-            <div key={i}>
-              <button onClick={() => setActiveTab(i)} className={activeTab === i ? 'bg-gray-200' : 'bg-blue-300'}>
-                {cont.title}
-              </button>
-            </div>
-          )
-        })}
-      </div>
-      {content[activeTab].content}
-    </div>
-  )
-}
