@@ -6,7 +6,8 @@ export { default as NominationIcon } from './icons/NominationIcon'
 export { default as NotificationIcon } from './icons/NotificationIcon'
 export { default as GoogleIcon } from './icons/GoogleIcon'
 export { default as FacebookIcon } from './icons/FacebookIcon'
-
+export { default as EyeOpenIcon } from './icons/EyeOpenIcon'
+export { default as EyeCloseIcon } from './icons/EyeCloseIcon'
 
 export { default as PrimaryButton } from './ui/PrimaryButton'
 export { default as Backdrop } from './ui/Backdrop'

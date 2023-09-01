@@ -1,37 +1,34 @@
 'use client'
 import { FacebookIcon, GoogleIcon, Modal } from '@/components'
-import axios from 'axios'
-import Cookies from 'js-cookie'
 import Image from 'next/image'
-import { useRouter, useSearchParams } from 'next/navigation'
 import { useState } from 'react'
-import { LoginForm, ModalContent } from './components'
-import { AnimatePresence } from 'framer-motion';
+import { LoginForm, ModalContent } from '@/app/(auth)/login/components'
+import { AnimatePresence } from 'framer-motion'
 
 export default function LoginPage() {
-  const [modalOpen, setModalOpen] = useState(false);
+  const [modalOpen, setModalOpen] = useState(false)
 
-  const close = () => setModalOpen(false);
-  const open = () => setModalOpen(true);
+  const close = () => setModalOpen(false)
+  const open = () => setModalOpen(true)
 
   return (
-    <section className='h-screen w-screen flex items-center  bg-[#f5f5fa]'>
-      <div className='p-6 w-full'>
+    <main className='h-screen w-screen flex items-center  bg-[#f5f5fa]'>
+      <section className='p-6 w-full'>
         <div className='flex py-10 items-center justify-center mb-12'>
           <Image src='Logo.svg' width={130} height={130} alt='Logo Unión Solidaria' />
           <h1 className='text-3xl'>
-            <span className='text-[#D87CAC]'>Unión</span>
+            <span className='text-pink-500'>Unión</span>
             <br />
-            <span className='text-[#5271FF]'>Solidaria</span>
+            <span className='text-blue-500'>Solidaria</span>
           </h1>
         </div>
 
         <LoginForm />
 
-        <div className="mt-6 text-center">
+        <div className='mt-6 text-center'>
           <p>¿No tenés cuenta?</p>
           <button
-            className='font-bold text-[#5271FF] mt-2'
+            className='font-bold text-blue-500 mt-2'
             onClick={() => (modalOpen ? close() : open())}
           >
             Registrate
@@ -39,18 +36,18 @@ export default function LoginPage() {
         </div>
 
         <div className='mt-6 mb-6 text-center'>
-          <p className='font-bold text-[#212121]'>Iniciar sesión con:</p>
+          <p className='font-bold text-black'>Iniciar sesión con:</p>
           <div className='flex py-4 justify-center gap-14'>
-            <div className='h-14 w-14 bg-white rounded-full flex justify-center items-center drop-shadow-md'>
+            <button className='h-14 w-14 bg-white rounded-full flex justify-center items-center drop-shadow-md'>
               <GoogleIcon />
-            </div>
-            <div className='h-14 w-14 bg-[#1878F3] rounded-full flex justify-center items-center drop-shadow-md'>
+            </button>
+            <button className='h-14 w-14 bg-[#1878F3] rounded-full flex justify-center items-center drop-shadow-md'>
               <FacebookIcon />
-            </div>
+            </button>
           </div>
         </div>
 
-      </div>
+      </section>
 
       <AnimatePresence
         initial={false}
@@ -65,6 +62,6 @@ export default function LoginPage() {
             <ModalContent />
           </Modal>}
       </AnimatePresence>
-    </section>
+    </main>
   )
 }
