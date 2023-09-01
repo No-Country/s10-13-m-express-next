@@ -6,4 +6,4 @@ function VisibilityOnIcon() {
   )
 }
 
-export default VisibilityOn
+export default VisibilityOnIcon
