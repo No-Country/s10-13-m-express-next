@@ -1,3 +1,5 @@
+import GoogleButton from './google'
+
 export default function LoginPage() {
   return (
     <>
@@ -6,7 +8,7 @@ export default function LoginPage() {
         <input className='border border-black' type='password' />
         <button>Iniciar sesión</button>
       </form>
-      <button>Google</button>
+      <GoogleButton />
     </>
   )
 }
