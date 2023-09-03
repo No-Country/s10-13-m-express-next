@@ -29,9 +29,6 @@ const Volunteer = () => {
                     <p>
                       Nombre de organizacion
                     </p>
-                    <p className='font-medium text-sm text-indigo-600 mt-2'>
-                      Read more <span className='text-indigo-600' />
-                    </p>
                   </div>
                 </div>
               </a>
