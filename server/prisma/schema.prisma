@@ -64,7 +64,7 @@ model Initiative {
   startDate     DateTime
   endDate       DateTime
   galery        String?
-  thumbnail     String?
+  thumbnail     String?     @default("https://res.cloudinary.com/dygpgsiei/image/upload/v1693699459/y48ke3c8mlgwjuksqmi1.webp")
   volunteers    Volunteers[]
   categories    String[]
   opportunities String[]
