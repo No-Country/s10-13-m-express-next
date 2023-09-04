@@ -11,7 +11,7 @@ export const metadata: Metadata = {
 
 function InitiativesPage() {
   return (
-    <main className='flex flex-col gap-10 py-7'>
+    <main className='flex flex-col gap-8 px-5 py-7'>
       <HeroSec />
       <FeaturedSec />
       <RecentSec />
