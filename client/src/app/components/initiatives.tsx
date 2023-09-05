@@ -40,8 +40,9 @@ export default function InitiativesSec() {
       <div className='container flex flex-col gap-4'>
         <h2>Titulo H2</h2>
         <div className='flex  gap-5  overflow-y-scroll pb-6'>
-          {initiatives.map((item) => (
+          {initiatives.map((item, index) => (
             <InitiativeItem
+              key={index}
               title={item.title}
               image={item.image}
               location={item.location}

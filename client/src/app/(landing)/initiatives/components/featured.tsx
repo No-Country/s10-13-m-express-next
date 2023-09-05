@@ -48,8 +48,9 @@ export default function FeaturedSec() {
           </Link>
         </div>
         <div className='flex  gap-5 overflow-y-scroll pb-6'>
-          {initiatives.map((item) => (
+          {initiatives.map((item, index) => (
             <InitiativeItem
+              key={index}
               title={item.title}
               image={item.image}
               location={item.location}
