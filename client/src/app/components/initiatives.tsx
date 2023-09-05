@@ -1,5 +1,5 @@
 'use client'
-import { InitiativeItem } from '@/components'
+import { InitiativesFlex } from '@/components'
 import Image from 'next/image'
 import Link from 'next/link'
 
@@ -47,16 +47,7 @@ export default function InitiativesSec() {
             <Image src='/icon/arrow-right.svg' width={7} height={12} alt='arrow-right' />
           </Link>
         </div>
-        <div className='flex  gap-5 overflow-y-scroll p-2 pb-6'>
-          {initiatives.map((item) => (
-            <InitiativeItem
-              title={item.title}
-              image={item.image}
-              location={item.location}
-              minWidth='min-w-[65vw] lg:min-w-[0] '
-            />
-          ))}
-        </div>
+        <InitiativesFlex initiatives={initiatives.slice(0, 4)} />
       </div>
     </section>
   )

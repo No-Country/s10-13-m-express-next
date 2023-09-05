@@ -1,5 +1,5 @@
 'use client'
-import { InitiativeItem } from '@/components'
+import { InitiativesFlex } from '@/components'
 import Image from 'next/image'
 import Link from 'next/link'
 
@@ -39,24 +39,15 @@ const initiatives = [
 export default function RecentSec() {
   return (
     <section className='flex w-full items-center justify-center'>
-      <div className='container flex flex-col gap-5'>
+      <div className='container flex flex-col gap-4'>
         <div className='flex justify-between'>
-          <h2 className='text-xl font-normal text-blue-600'>Destacadas</h2>
+          <h2 className='text-xl font-normal text-blue-600'>Recientes</h2>
           <Link href='/initiatives' className='flex items-center gap-4 '>
-            <span className='text-base font-bold leading-4 text-blue-500'>ver todas</span>
+            <span className='text-base font-normal leading-4 text-blue-500'>ver todas</span>
             <Image src='/icon/arrow-right.svg' width={7} height={12} alt='arrow-right' />
           </Link>
         </div>
-        <div className='flex  gap-5 overflow-y-scroll p-2 pb-6'>
-          {initiatives.map((item) => (
-            <InitiativeItem
-              title={item.title}
-              image={item.image}
-              location={item.location}
-              minWidth='min-w-[65vw] lg:min-w-[0] '
-            />
-          ))}
-        </div>
+        <InitiativesFlex initiatives={initiatives.slice(0, 4)} />
       </div>
     </section>
   )

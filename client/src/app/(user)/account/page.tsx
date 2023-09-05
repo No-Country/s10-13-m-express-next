@@ -3,7 +3,7 @@ import { Heading } from '@/components'
 
 function AccountPage() {
   return (
-    <main className='flex flex-col gap-y-12 px-4 py-8'>
+    <main className='flex flex-col gap-y-12 p-section'>
       <Heading>Configuración</Heading>
       <ConfigOptions />
     </main>
