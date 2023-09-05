@@ -26,7 +26,6 @@ model User {
   posts        Posts[]
   volunteers   Volunteers[]
   initiatives  Initiative[]
-  Session      Session[]
   reviews      Review[]
 }
 
@@ -43,8 +42,10 @@ model Session {
   id      String      @id @default(auto()) @map("_id") @db.ObjectId
   expires DateTime
   session SessionInfo
-  userId  String?     @db.ObjectId
-  User    User?       @relation(fields: [userId], references: [id], onDelete: Cascade)
+  userId  String?
+  //NO AGREGAR NINGUNA COSA MAS
+  //NO RELACIONAR CON NADA MAS
+  //NO TOCAR!!!
 }
 
 type SessionInfo {
