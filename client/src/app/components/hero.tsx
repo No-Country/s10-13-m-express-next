@@ -3,12 +3,12 @@ import { SearchInput } from '@/components'
 
 export default function HeroSec() {
   return (
-    <section className='flex w-full items-center justify-center px-7'>
-      <div className='container flex flex-col gap-4 bg-gray-300 p-4'>
-        <h1>Titulo H1</h1>
-        <div className='flex flex-col gap-4'>
+    <section className='flex w-full items-center justify-center'>
+      <div className='container flex flex-col gap-4'>
+        <h2 className='text-xl font-normal text-blue-600'>Buscar Iniciativas</h2>
+        <div className='flex flex-col gap-2'>
           <SearchInput placeholder='Buscar' />
-          <SearchInput placeholder='Iniciativa' />
+          <SearchInput placeholder='Ubicacion' />
         </div>
       </div>
     </section>
