@@ -5,7 +5,7 @@ export default function HeroSec() {
   return (
     <section className='flex w-full items-center justify-center px-7'>
       <div className='container flex flex-col bg-gray-200'>
-        <div className='relative h-[20vh] lg:h-[30vh] w-full '>
+        <div className='relative h-[20vh] w-full lg:h-[30vh] '>
           <Image
             src='https://images.unsplash.com/photo-1564349683136-77e08dba1ef7?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1472&q=80'
             alt='hero'
