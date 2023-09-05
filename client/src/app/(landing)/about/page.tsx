@@ -1,41 +1,60 @@
+import { Heading } from '@/components'
+import Image from 'next/image'
+import aboutImage from '../../../../public/assets/about-image.webp'
+import logoImage from '../../../../public/assets/logo.webp'
+
 function AboutPage() {
   return (
-    <main className='mx-auto grid max-w-screen-lg gap-y-4 p-4'>
-      <h1 className='text-2xl font-semibold'>Acerca de nosotros</h1>
-      <section className='space-y-2 border border-black p-4'>
-        <h2 className='text-lg font-medium'>¿Quiénes somos?</h2>
-        <p className='text-base'>
-          Lorem ipsum dolor sit amet, consectetur adipisicing elit. Doloribus perferendis illum distinctio rerum eos
-          dolorum saepe quibusdam atque amet? Ipsam obcaecati sapiente dignissimos nobis aspernatur cumque alias illo
-          repudiandae nemo. Lorem ipsum dolor sit amet consectetur, adipisicing elit. Asperiores maxime dolores corporis
-          recusandae inventore facere quo voluptates, reprehenderit, dignissimos, cum laboriosam incidunt natus illum
-          delectus. Dicta quam deserunt illo autem. Lorem ipsum dolor sit amet consectetur adipisicing elit. Rem
-          veritatis architecto voluptatum autem unde ullam voluptatem harum in! Tempore reprehenderit temporibus rerum.
-          Quia quisquam alias, distinctio quidem id voluptas vel. Lorem ipsum, dolor sit amet consectetur adipisicing
-          elit. Modi quis accusamus hic nesciunt veniam quidem porro cum sapiente! Ex veniam voluptatem omnis ut
-          eveniet, rem sapiente quas eligendi temporibus quaerat? Lorem ipsum, dolor sit amet consectetur adipisicing
-          elit. Error pariatur nesciunt tempore ipsum aliquam id quia, sapiente numquam dolores consequatur explicabo
-          animi sequi? Accusamus quia facilis debitis. Impedit, in tempora. Lorem ipsum dolor sit amet, consectetur
-          adipisicing elit. Laborum est voluptatem vero magni assumenda quasi perspiciatis quibusdam ex! Aliquam
-          excepturi, exercitationem perspiciatis praesentium odit deserunt veniam vitae! Beatae, repudiandae earum?
+    <main className='mb-12'>
+      <div className='relative flex h-48 w-full items-center justify-center bg-white/50'>
+        <Image
+          className='-z-10 object-cover'
+          src={aboutImage}
+          fill
+          placeholder='blur'
+          blurDataURL=''
+          sizes='100vw'
+          alt='image de personas apoyando una iniciativa'
+        />
+        <Image src={logoImage} width={100} height={100} alt='logo de la plataforma' />
+      </div>
+      <section className='space-y-3 p-4'>
+        <Heading as='h2'>¿Quiénes somos?</Heading>
+        <p className='text-base text-black'>
+          Desde su fundación en el año 2003, Unión Solidaria ha desempeñado un papel fundamental en la promoción del
+          voluntariado y el servicio comunitario en Latinoamérica. Nuestra organización se ha convertido en un puente
+          sólido que une a voluntarios comprometidos con organizaciones que buscan apoyo para diversas iniciativas
+          sociales, desde la preservación del medio ambiente hasta la educación y la atención médica.
         </p>
       </section>
-      <section className='space-y-2 border border-black p-4'>
-        <h3 className='text-lg font-medium'>Donaciones</h3>
-        <p className='text-base'>
-          Lorem ipsum dolor sit amet consectetur adipisicing elit. Aliquid, nihil. Vel magnam nesciunt, eum blanditiis
-          illo ipsam consequuntur consequatur numquam veniam culpa doloribus quod autem ex qui sapiente facere
-          recusandae. Lorem ipsum, dolor sit amet consectetur adipisicing elit. Saepe ut, numquam quia ipsum tenetur
-          veniam beatae eaque non nihil hic, inventore incidunt sed obcaecati, cumque magnam sit asperiores facilis
-          voluptate. Lorem ipsum dolor sit amet consectetur adipisicing elit. Voluptatem earum perspiciatis blanditiis
-          beatae molestiae! Doloremque quam ad doloribus nihil reiciendis officiis, cupiditate esse suscipit perferendis
-          omnis non dolorum obcaecati. Autem! Lorem ipsum dolor sit amet consectetur adipisicing elit. Ipsum voluptatum,
-          vel maxime assumenda esse cum labore quod commodi repudiandae! Repudiandae ipsa quia ab nihil soluta eum
-          placeat, ipsam aperiam. Delectus. Lorem ipsum dolor sit amet consectetur adipisicing elit. Pariatur harum
-          voluptatibus dolorem ipsa, cupiditate labore dolor totam deserunt, alias esse architecto, ipsum minus
-          repellendus vero in mollitia nesciunt temporibus consequuntur! Lorem ipsum dolor sit amet consectetur
-          adipisicing elit. Eveniet, accusamus mollitia sed voluptatem, ea nam illo consectetur dignissimos consequuntur
-          eum iure aperiam delectus id quibusdam itaque nesciunt adipisci in suscipit?
+      <section className='space-y-3 p-4'>
+        <Heading as='h2'>Nuesta Misión</Heading>
+        <p className='text-base text-black'>
+          En Unión Solidaria, nuestra misión es simple pero poderosa: fortalecer la solidaridad en Latinoamérica al
+          facilitar la colaboración entre voluntarios y organizaciones sin fines de lucro. Creemos en el poder de las
+          personas para generar un cambio positivo en sus comunidades y, por lo tanto, trabajamos incansablemente para
+          hacer que el voluntariado sea accesible y efectivo. Lo que nos diferencia es nuestra capacidad para conectar
+          de manera efectiva a voluntarios apasionados con organizaciones que necesitan su ayuda. Nuestro enfoque en la
+          diversidad de causas, que incluyen medio ambiente, educación, salud y más, permite que cualquier persona
+          encuentre una oportunidad de voluntariado que se alinee con sus intereses y valores.
+        </p>
+      </section>
+      <section className='space-y-3 p-4'>
+        <Heading as='h2'>Recursos y Oportunidades</Heading>
+        <p className='text-base text-black'>
+          Además de servir como plataforma de conexión, Unión Solidaria brinda recursos valiosos y oportunidades de
+          aprendizaje para voluntarios y organizaciones. Nuestra comunidad en línea ofrece herramientas educativas,
+          capacitación y eventos para enriquecer la experiencia de voluntariado y promover un impacto positivo y
+          duradero.
+        </p>
+      </section>
+      <section className='space-y-3 p-4'>
+        <Heading as='h2'>Donaciones</Heading>
+        <p className='text-base text-black'>
+          Además de servir como plataforma de conexión, Unión Solidaria brinda recursos valiosos y oportunidades de
+          aprendizaje para voluntarios y organizaciones. Nuestra comunidad en línea ofrece herramientas educativas,
+          capacitación y eventos para enriquecer la experiencia de voluntariado y promover un impacto positivo y
+          duradero.
         </p>
       </section>
     </main>
