@@ -1,5 +1,5 @@
 import type { Metadata } from 'next'
-import { Cover, Description, InitiativeInfo, Labels, Photos, Volunteers } from './components'
+import { Cover, Description, InitiativeInfo, Labels, Photos, Publications, Volunteers } from './components'
 
 export const metadata: Metadata = {
   title: 'Iniciativa Individual',
@@ -35,7 +35,7 @@ function InitiativeDetailPage() {
       />
       <Photos imgUrls={[pandaImg, ostrich, pandaImg, ostrich, pandaImg]} />
       <Volunteers imgUrls={[pandaImg, ostrich, pandaImg, ostrich, pandaImg, ostrich, pandaImg, ostrich, pandaImg]} />
-      <h3 className='text-xl text-blue-600'>Publication Cards</h3>
+      <Publications />
     </div>
   )
 }
