@@ -1,9 +1,14 @@
 import Image from 'next/image'
 
-export default function SearchInput({ placeholder }: { placeholder: string }) {
+type SearchInputProps = {
+  placeholder: string
+  icon?: string
+}
+
+export default function SearchInput({ placeholder, icon = '/icon/search.svg' }: SearchInputProps) {
   return (
-    <div className='flex items-center gap-3 rounded-full  bg-pink-100 px-4 py-3'>
-      <Image src='/icon/search.svg' width={16} height={16} alt='search' />
+    <div className='flex w-full items-center gap-3 rounded-full  bg-pink-100 px-4 py-3'>
+      <Image src={icon} width={16} height={16} alt='search' />
       <input
         type='text'
         placeholder={placeholder}
