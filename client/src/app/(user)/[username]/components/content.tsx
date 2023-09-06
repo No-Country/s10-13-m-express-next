@@ -1,34 +1,31 @@
 'use client'
-import useUserStore from '@/store/userStore'
-import { useEffect, useState } from 'react'
+import { useAppSelector } from '@/redux/hooks'
+import { currentActiveUserSelector, currentUserSelector } from '@/redux/selectors/users'
+import { usePathname } from 'next/navigation'
+import { useEffect } from 'react'
+import { getCurrentUser } from '@/redux/slices/users'
+import { useAppDispatch } from '@/redux/hooks'
 
-interface Props {
-  pathname: string
-}
-
-export default function ProfilePage({ pathname }: Props) {
-  const { getCurrentUser, currentUser, loggedUser } = useUserStore()
-  const [isCurrent, setIsCurrent] = useState(false)
+export default function Content() {
+  const dispatch = useAppDispatch()
+  const pathname = usePathname()
+  const currentActiveUser = useAppSelector(currentActiveUserSelector)
+  const currentUser = useAppSelector(currentUserSelector)
+  const username = pathname.slice(2) ?? currentUser?.username
+  const isCurrent = currentActiveUser?.username === currentUser?.username
+  const isOrg = currentActiveUser?.role === 'organization'
 
   useEffect(() => {
-    const init = async () => {
-      await getCurrentUser(pathname)
-      setIsCurrent(loggedUser?.username === currentUser?.username)
-    }
-    init()
-  }, [pathname])
-
-  console.log('currentUser', currentUser, 'loggedUser', loggedUser)
+    if (!pathname.startsWith('/@')) return
+    dispatch(getCurrentUser(username))
+  }, [username])
 
   return (
-    <main className='p-section flex flex-col gap-y-12'>
-      <section className='items-start justify-start'>
-        <div className='w-full'>
-          <h1>{currentUser?.username}</h1>
-          <br />
-          <h1>{isCurrent ? 'Igual que el logueado' : 'No es el logueado'}</h1>
-        </div>
-      </section>
-    </main>
+    <section className='flex min-h-[100vh] w-full flex-col gap-6 bg-white '>
+      <p>isCurrent: {isCurrent.toString()}</p>
+      <p>isOrg: {isOrg.toString()}</p>
+      <p>current logged: {currentActiveUser.username}</p>
+      <p>current user: {currentUser.username}</p>
+    </section>
   )
 }

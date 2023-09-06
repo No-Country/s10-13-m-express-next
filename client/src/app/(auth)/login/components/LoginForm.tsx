@@ -4,7 +4,8 @@ import useAuthStore from '@/store/authStore'
 import { useState, useRef } from 'react'
 import { useForm } from 'react-hook-form'
 import { useRouter } from 'next/navigation'
-
+import { useAppDispatch } from '@/redux/hooks'
+import { login } from '@/redux/slices/authSession'
 type FormProps = {
   email: string
   password: string
@@ -12,6 +13,7 @@ type FormProps = {
 
 function LoginForm() {
   const router = useRouter()
+  const dispatch = useAppDispatch()
   const [visibility, setVisibility] = useState(false)
   const { loginLocal } = useAuthStore()
   const close = () => setVisibility(false)
@@ -36,10 +38,10 @@ function LoginForm() {
 
   const onSubmit = async (data: any) => {
     try {
-      await loginLocal(data)
-      router.push('/@thomastestcc')
+      await dispatch(login(data))
+      router.push('/')
     } catch (error) {
-      console.log(error)
+      console.error(error)
     }
   }
 

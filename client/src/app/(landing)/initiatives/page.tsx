@@ -3,6 +3,7 @@ import FeaturedSec from './components/featured'
 import RecentSec from './components/recent'
 import type { Metadata } from 'next'
 
+
 export const metadata: Metadata = {
   title: 'Iniciativas',
   description: '...',
