@@ -7,5 +7,5 @@ interface Props {
 }
 
 export default function ProfilePage(props: Props) {
-  return <Content  />
+  return <Content />
 }
