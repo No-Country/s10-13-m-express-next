@@ -1,6 +1,6 @@
 'use client'
 import clsx from 'clsx'
-import { RegisterOptions, UseFormRegister } from 'react-hook-form'
+import { FieldErrors, RegisterOptions, UseFormRegister } from 'react-hook-form'
 
 type InputProps = {
   type: string
@@ -13,7 +13,7 @@ type InputProps = {
   value?: string
   prefix?: string
   onChange?: any
-  error?: string | null
+  error?: string | null | any
   step?: string
   required?: boolean
   rows?: number

@@ -43,7 +43,7 @@ function RegisterPage() {
     <form className='grid grid-cols-1 justify-items-center gap-8 p-6 md:grid-cols-6 md:justify-items-start md:py-20'>
       <h1 className='col-span-full justify-self-center text-lg font-bold'>REGISTER</h1>
       {dataInput.map((data) => (
-        <FormInput key={data.key} placeHolder={data.placeHolder} type={data.type} />
+        <FormInput key={data.key} name='' label='' placeholder={data.placeHolder} type={data.type} />
       ))}
       <Submit content='Crear cuenta' />
     </form>
