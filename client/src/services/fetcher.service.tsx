@@ -1,4 +1,4 @@
-import { serverUrl } from "@/utils/constants/env.const"
+import { serverUrl } from '@/utils/constants/env.const'
 
 // export const fetcher = (...args:any) => {
 //   fetch(...args).then(res => res.json())
@@ -9,5 +9,5 @@ export const fetcher = async (url: string) => {
   if (!response.ok) {
     throw new Error('No se pudo cargar la data.')
   }
-  return response.json()
+  return await response.json()
 }
