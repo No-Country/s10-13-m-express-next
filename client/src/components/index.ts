@@ -1,2 +1,1 @@
-export { default as Search } from './search/SearchBar'
-export { default as Volunteer } from './volunteer/Volunteer'
+export { default as PublicationCard } from './PublicationCard/PublicationCard'
