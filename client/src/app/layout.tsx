@@ -1,4 +1,4 @@
-import { Footer } from '@/components'
+import Provider from '@/redux/provider'
 import './globals.scss'
 
 export const metadata = {
@@ -14,8 +14,7 @@ function RootLayout({ children }: Props) {
   return (
     <html lang='en'>
       <body className='min-h-screen'>
-        {children}
-        <Footer />
+        <Provider>{children}</Provider>
       </body>
     </html>
   )

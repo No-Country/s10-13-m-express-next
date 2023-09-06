@@ -7,5 +7,5 @@ interface Props {
 }
 
 export default function ProfilePage(props: Props) {
-  return <Content pathname={props.params.username.slice(3)} />
+  return <Content  />
 }
