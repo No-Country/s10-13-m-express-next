@@ -1,6 +1,5 @@
-import { Cover, Labels, Description, InitiativeInfo } from './components'
-import { Gallery } from '@/components'
 import type { Metadata } from 'next'
+import { Cover, Description, InitiativeInfo, Labels, Photos, Volunteers } from './components'
 
 export const metadata: Metadata = {
   title: 'Iniciativa Individual',
@@ -15,7 +14,7 @@ function InitiativeDetailPage() {
     'https://images.unsplash.com/photo-1682687220945-922198770e60?ixlib=rb-4.0.3&ixid=M3wxMjA3fDF8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2070&q=80'
 
   return (
-    <div className='flex flex-col py-7'>
+    <div className='flex w-full flex-col py-7'>
       <Cover />
       <Labels
         labels={{
@@ -34,8 +33,9 @@ function InitiativeDetailPage() {
           time: '10:00hs a 15:00 hs'
         }}
       />
-      <Gallery imgUrls={[pandaImg, ostrich, pandaImg, ostrich, pandaImg]} />
-      <section>publication cards</section>
+      <Photos imgUrls={[pandaImg, ostrich, pandaImg, ostrich, pandaImg]} />
+      <Volunteers imgUrls={[pandaImg, ostrich, pandaImg, ostrich, pandaImg, ostrich, pandaImg, ostrich, pandaImg]} />
+      <h3 className='text-xl text-blue-600'>Publication Cards</h3>
     </div>
   )
 }
