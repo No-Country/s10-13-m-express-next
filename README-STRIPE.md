@@ -17,7 +17,7 @@ Please read the official stripe documentation to learn how to integrate stripe i
 To create a payment intent, make a **post** request to this endpoint.
 
 ```http
-POST /stripe
+POST /create-checkout-session
 ```
 
 **Request Parameters**
