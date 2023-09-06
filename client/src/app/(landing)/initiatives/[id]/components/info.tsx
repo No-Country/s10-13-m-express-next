@@ -22,7 +22,7 @@ const InitiativeInfo = (props: Props) => {
   }
 
   return (
-    <section>
+    <section className='mb-6'>
       <h3 className='text-xl text-blue-600'>Información</h3>
       <div className='ml-7'>
         <ul>
