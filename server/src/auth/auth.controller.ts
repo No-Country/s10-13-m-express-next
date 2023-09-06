@@ -17,6 +17,7 @@ import {
 import {
   ApiBody,
   ApiExcludeEndpoint,
+  ApiHeader,
   ApiOperation,
   ApiResponse,
   ApiTags,
@@ -47,6 +48,7 @@ export class AuthController {
       const { user } = req;
       return {
         userId: user.id,
+        sessionId: session.sessionId,
         message: 'Login successful',
       };
     } catch (error) {
@@ -79,7 +81,7 @@ export class AuthController {
 
       delete req.session.redirectURL;
       const url = user
-        ? `${process.env.CLIENT_URL}/${slug}?userId=${user.id}`
+        ? `${process.env.CLIENT_URL}/${slug}?userId=${user.id}&sessionId=${session.sessionId}`
         : `${process.env.CLIENT_URL}/login?failed=true`;
       return { url };
     } catch (error) {
@@ -89,15 +91,15 @@ export class AuthController {
 
   @Get('/verify')
   @ApiResponse({ status: HttpStatus.OK, type: VerificationResponseDto })
-  @ApiBody({ type: VerificationRequestDto })
+  @ApiBody({ type: VerificationRequestDto }) /**@ApiHeader({ name: 'userId' }) */
   async verify(
     @Body() body,
     @Res() res: Response,
     @Request() req,
   ): Promise<any> {
     try {
-      const { userid } = req.headers;
-      const session = await this.authService.findSessionById(userid);
+      const { userid, sessionid } = req.headers;
+      const session = await this.authService.findSessionById(sessionid);
       if (session) {
         return res.status(200).json({ verified: true });
       } else {

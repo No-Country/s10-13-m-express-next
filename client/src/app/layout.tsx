@@ -1,4 +1,5 @@
-import './globals.css'
+import Provider from '@/redux/provider'
+import './globals.scss'
 
 export const metadata = {
   title: 'Create Next App',
@@ -12,7 +13,9 @@ interface Props {
 function RootLayout({ children }: Props) {
   return (
     <html lang='en'>
-      <body>{children}</body>
+      <body className='min-h-screen'>
+        <Provider>{children}</Provider>
+      </body>
     </html>
   )
 }

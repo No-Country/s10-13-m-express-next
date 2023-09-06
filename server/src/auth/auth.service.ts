@@ -31,12 +31,12 @@ export class AuthService {
     };
   }
 
-  async findSessionById(userId: string) {
+  async findSessionById(sessionId: string) {
     try {
       const sessions = await this.prisma.session.findMany();
       const filteredSessions = sessions.filter((session) => {
         const sessionInfo = session.session;
-        return sessionInfo.user.userId === userId;
+        return sessionInfo.sessionId === sessionId;
       });
 
       if (filteredSessions && filteredSessions.length > 0) {

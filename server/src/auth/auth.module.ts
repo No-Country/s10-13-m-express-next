@@ -9,6 +9,7 @@ import { PrismaService } from 'src/prisma/prisma.service';
 import { PrismaModule } from 'src/prisma/prisma.module';
 import { GoogleSerializer } from './google/google.serializer';
 import { LocalSerializer } from './local/local.serializer';
+import { UuidService } from 'src/uuid/uuid.service';
 
 @Module({
   imports: [UsersModule, PassportModule, PrismaModule],
@@ -19,6 +20,7 @@ import { LocalSerializer } from './local/local.serializer';
     GoogleStrategy,
     GoogleSerializer,
     LocalSerializer,
+    UuidService,
   ],
   controllers: [AuthController],
   exports: [AuthService],

@@ -1,10 +1,24 @@
-interface Props {
+import Content from './components/content'
+import type { Metadata } from 'next'
+
+export const metadata: Metadata = {
+  title: 'Iniciativa Individual',
+  description: '...',
+  themeColor: '#000000'
+}
+
+type Props = {
   params: {
-    initiativeId: string
+    id: string
   }
 }
 
-export default function InitiativeDetailPage(props: Props) {
-  const { initiativeId } = props.params
-  return <h1>Initiatives: {initiativeId}</h1>
+function InitiativesPage(props: Props) {
+  return (
+    <main className='flex flex-col gap-10 py-7'>
+      <Content id={props.params.id} />
+    </main>
+  )
 }
+
+export default InitiativesPage

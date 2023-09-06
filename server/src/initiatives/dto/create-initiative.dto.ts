@@ -1,7 +1,14 @@
-import { ApiProperty } from '@nestjs/swagger';
-import { IsArray, IsISO8601, IsMongoId, IsNotEmpty, IsOptional, IsString } from 'class-validator';
+import { ApiProperty, ApiPropertyOptional } from '@nestjs/swagger';
+import {
+  IsArray,
+  IsISO8601,
+  IsMongoId,
+  IsNotEmpty,
+  IsOptional,
+  IsString,
+} from 'class-validator';
 
-export class CreateInitiativeDto  {
+export class CreateInitiativeDto {
   @ApiProperty({
     description: 'Initiative name',
     nullable: false,
@@ -50,7 +57,7 @@ export class CreateInitiativeDto  {
   @IsISO8601()
   endDate: Date;
 
-  @ApiProperty({
+  @ApiPropertyOptional({
     description: 'Initiative galery',
     nullable: true,
   })
@@ -58,7 +65,7 @@ export class CreateInitiativeDto  {
   @IsOptional()
   galery?: string;
 
-  @ApiProperty({
+  @ApiPropertyOptional({
     description: 'Initiative thumbnail',
     nullable: true,
   })
@@ -66,20 +73,68 @@ export class CreateInitiativeDto  {
   @IsOptional()
   thumbnail?: string;
 
-  @ApiProperty({    
+  @ApiProperty({
+    description: 'Initiative categories',
+    nullable: false,
+    example: "['Agricultura', 'Educación']",
+  })
+  @IsNotEmpty({ message: 'Categories are required' })
+  categories: string[];
+
+  @ApiProperty({
+    description: 'Initiative opportunities',
+    nullable: false,
+    example: "['Comunicación y Marketing', 'Enseñar y Compartir']",
+  })
+  @IsNotEmpty({ message: 'Opportunities are required' })
+  opportunities: string[];
+
+  @ApiProperty({
+    description: 'Initiative Locations (Country)',
+    nullable: false,
+    example: 'Colombia',
+  })
+  @IsNotEmpty({ message: 'Locations are required' })
+  locations: string;
+
+  @ApiProperty({
+    description: 'Initiative languages',
+    nullable: false,
+    example: "['Español', 'Guaraní']",
+  })
+  @IsNotEmpty({ message: 'Languages are required' })
+  languages: string[];
+
+  @ApiProperty({
     description: 'Initiative ownerId (mongo _id format)',
-    nullable: false, 
+    nullable: false,
     example: '64e1bb0cb3ca40c582add154',
   })
   @IsNotEmpty({ message: 'ownerId is required' })
   @IsMongoId()
   ownerId: string;
 
-  @ApiProperty({
-    description: 'Initiative categoryId (mongo _id format)',
-    nullable: false, 
-    example: '64e1bb0cb3ca40c582add154',})
-  @IsNotEmpty({ message: 'categoryId is required' })
-  @IsMongoId()
-  categoryId: string;
+  @ApiPropertyOptional({
+    description: 'Initiative startHour',
+  })
+  @IsString()
+  startHour: string;
+
+  @ApiPropertyOptional({
+    description: 'Initiative endHour',
+  })
+  @IsString()
+  endHour: string;
+
+  @ApiPropertyOptional({
+    description: 'Initiative extraInfo',
+  })
+  @IsString()
+  extraInfo: string;
+
+  @ApiPropertyOptional({
+    description: 'Initiative themes',
+  })
+  @IsArray()
+  themes: string[];
 }
