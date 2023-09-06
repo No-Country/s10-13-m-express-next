@@ -10,7 +10,7 @@ export const metadata = {
 const nunito = Nunito({
   subsets: ['latin'],
   display: 'swap',
-  weight: ['200', '400']
+  weight: ['200', '300', '400', '500', '600', '700']
 })
 
 interface Props {
