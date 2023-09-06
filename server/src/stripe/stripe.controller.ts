@@ -8,15 +8,15 @@ import {
 import { StripeService } from './stripe.service';
 import { CreateStripeIntentDto } from './dto/stripe-intent.dto';
 
-@Controller('stripe')
+@Controller('create-checkout-session')
 export class StripeController {
   constructor(private readonly stripeService: StripeService) {}
   @Post()
   async createPaymentIntent(@Body() createStripeIntent: CreateStripeIntentDto) {
     try {
-      const clientSecret =
+      const sessionUrl =
         await this.stripeService.createPaymentIntent(createStripeIntent);
-      return {clientSecret, message: "Payment Intent create successful"};
+      return {sessionUrl, message: "Session payment create successful"};
     } catch (error) {
       if (
         error instanceof BadRequestException ||
