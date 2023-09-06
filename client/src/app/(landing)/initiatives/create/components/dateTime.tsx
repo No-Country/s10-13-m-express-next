@@ -76,8 +76,10 @@ export default function DateTime({ handleChange, formValues, errors, register }:
           hookForm={{
             register: register,
             validations: {
-              maxLength: { value: 10, message: 'Maximo 80 caracteres' },
-              minLength: { value: 5, message: 'Minimo 5 caracteres' },
+              pattern: {
+                value: /^(1[0-2]|0?[1-9]):[0-5][0-9] (AM|PM)$/,
+                message: 'La hora debe ser en formato 12 horas, ejemplo: 10:30 AM'
+              },
               required: { value: true, message: 'Este campo es requerido' }
             }
           }}
@@ -94,8 +96,10 @@ export default function DateTime({ handleChange, formValues, errors, register }:
           hookForm={{
             register: register,
             validations: {
-              maxLength: { value: 10, message: 'Maximo 80 caracteres' },
-              minLength: { value: 5, message: 'Minimo 5 caracteres' },
+              pattern: {
+                value: /^(1[0-2]|0?[1-9]):[0-5][0-9] (AM|PM)$/,
+                message: 'La hora debe ser en formato 12 horas, ejemplo: 10:30 AM'
+              },
               required: { value: true, message: 'Este campo es requerido' }
             }
           }}
@@ -112,7 +116,7 @@ export default function DateTime({ handleChange, formValues, errors, register }:
           hookForm={{
             register: register,
             validations: {
-              maxLength: { value: 10, message: 'Maximo 80 caracteres' },
+              maxLength: { value: 80, message: 'Maximo 80 caracteres' },
               minLength: { value: 5, message: 'Minimo 5 caracteres' },
               required: { value: true, message: 'Este campo es requerido' }
             }

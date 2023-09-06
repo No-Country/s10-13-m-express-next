@@ -6,7 +6,6 @@ import { useForm } from 'react-hook-form'
 import GeneralInfo from './generalInfo'
 import LocationInfo from './locationInfo'
 import DateTime from './dateTime'
-import { File } from 'buffer'
 import Multimedia from './multimedia'
 
 //Remplazar por Zustand para centralizar el estado
