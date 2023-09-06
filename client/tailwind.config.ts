@@ -10,6 +10,7 @@ const config: Config = {
       white: '#F8F8F8',
       gray: {
         50: '#f7f7f7',
+        75: '#f3f3f3',
         100: '#ededed',
         200: '#dfdfdf',
         300: '#c8c8c8',
@@ -85,7 +86,7 @@ const config: Config = {
         'gradient-conic': 'conic-gradient(from 180deg at 50% 50%, var(--tw-gradient-stops))'
       },
       boxShadow: {
-        'initiativeItem': '0px 2px 6px 0px #B0B0B0',
+        initiativeItem: '0px 2px 6px 0px #B0B0B0'
       }
     }
   },
