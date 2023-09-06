@@ -1,5 +1,5 @@
 'use client'
-import {Heading } from '@/components'
+import { Heading } from '@/components'
 import axios from 'axios'
 import { useRef, useState } from 'react'
 import { useForm } from 'react-hook-form'
@@ -7,9 +7,14 @@ import GeneralInfo from './generalInfo'
 import LocationInfo from './locationInfo'
 import DateTime from './dateTime'
 
+//Remplazar por Zustand para centralizar el estado
 async function postData(form: any) {
-  const res = await axios.post('http://localhost:3001/api/initiatives', form)
-  console.log(res)
+  try {
+    const res = await axios.post('http://localhost:3001/api/initiatives', form)
+    console.log(res)
+  } catch (error) {
+    console.log(error)
+  }
 }
 
 export type FormProps = {

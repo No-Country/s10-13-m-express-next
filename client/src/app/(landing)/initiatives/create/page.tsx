@@ -2,7 +2,7 @@ import FormSec from './components/form'
 import type { Metadata } from 'next'
 
 export const metadata: Metadata = {
-  title: 'Home',
+  title: 'Crear iniciativa',
   description: '...',
   themeColor: '#000000'
 }

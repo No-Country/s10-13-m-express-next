@@ -4,7 +4,7 @@ import ConsultForm from './components/ConsultForm'
 
 function HelpPage() {
   return (
-    <main className='space-y-8 p-section'>
+    <main className='p-section space-y-8'>
       <Heading>Ayuda</Heading>
       <section className='space-y-6'>
         <Heading as='h2'>Preguntas frecuentes</Heading>

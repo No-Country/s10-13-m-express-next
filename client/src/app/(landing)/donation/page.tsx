@@ -3,7 +3,7 @@ import DonateSec from './components/donateForm'
 import type { Metadata } from 'next'
 
 export const metadata: Metadata = {
-  title: 'Home',
+  title: 'Donaciones',
   description: '...',
   themeColor: '#000000'
 }
