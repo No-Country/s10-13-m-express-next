@@ -1,5 +1,5 @@
 import { type TailwindColors } from '@/types'
-import { colorVariants } from '@/utils/constants/icons-colors.const'
+import { iconColorVariants } from '@/utils/constants/colors.const'
 
 interface Props {
   height?: number
@@ -14,7 +14,7 @@ function KiteIcon(props: Props) {
   return (
     <svg
       xmlns='http://www.w3.org/2000/svg'
-      className={`${colorVariants[color]}`}
+      className={`${iconColorVariants[color]}`}
       height={height}
       viewBox={`0 -1 ${DEFAULT_WIDTH} ${DEFAULT_HEIGHT}`}
     >

@@ -1,7 +1,10 @@
+import { type TailwindColors } from '@/types'
+import { bgColorVariants } from '@/utils/constants/colors.const'
+
 interface Props {
   title: string
   icon: JSX.Element
-  bgColor?: 'gray' | 'pink' | 'blue' | 'green' | 'yellow' | 'red'
+  bgColor: TailwindColors
 }
 
 const Pill = (props: Props) => {
@@ -9,9 +12,7 @@ const Pill = (props: Props) => {
 
   return (
     <div
-      className={`flex items-center justify-center gap-[4px] rounded-full bg-${
-        bgColor || 'gray'
-      }-500 px-[4px] py-[2px]`}
+      className={`flex items-center justify-center gap-[4px] rounded-full ${bgColorVariants[bgColor]} px-[4px] py-[2px]`}
     >
       {icon}
       <p className='text-xs font-normal text-white'>{title}</p>
