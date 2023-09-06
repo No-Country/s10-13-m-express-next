@@ -25,7 +25,6 @@ export class StripeService {
                 initiativeId: createStripeIntentDto.initiativeId 
             }
         })
-        console.log(PaymentIntent)
         return PaymentIntent.client_secret;
     }
 }
