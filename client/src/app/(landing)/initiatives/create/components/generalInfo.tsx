@@ -49,7 +49,7 @@ export default function GeneralInfo({
           hookForm={{
             register: register,
             validations: {
-              maxLength: { value: 10, message: 'Maximo 10 caracteres' },
+              maxLength: { value: 60, message: 'Maximo 60 caracteres' },
               minLength: { value: 5, message: 'Minimo 5 caracteres' },
               required: { value: true, message: 'Este campo es requerido' }
             }
@@ -67,8 +67,8 @@ export default function GeneralInfo({
           hookForm={{
             register: register,
             validations: {
-              maxLength: { value: 10, message: 'Maximo 80 caracteres' },
-              minLength: { value: 5, message: 'Minimo 5 caracteres' },
+              maxLength: { value: 500, message: 'Maximo 500 caracteres' },
+              minLength: { value: 50, message: 'Minimo 50 caracteres' },
               required: { value: true, message: 'Este campo es requerido' }
             }
           }}

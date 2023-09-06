@@ -28,8 +28,10 @@ export default function LocationInfo({ handleChange, formValues, errors, registe
           hookForm={{
             register: register,
             validations: {
-              maxLength: { value: 10, message: 'Maximo 10 caracteres' },
-              minLength: { value: 5, message: 'Minimo 5 caracteres' },
+              pattern: {
+                value: /^[a-zA-Z0-9 ]{5,80}$/,
+                message: 'Debe ser de 5 a 80 caracteres, solo numeros y letras'
+              },
               required: { value: true, message: 'Este campo es requerido' }
             }
           }}
