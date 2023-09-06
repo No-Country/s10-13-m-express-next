@@ -12,12 +12,6 @@ import Multimedia from './multimedia'
 //Remplazar por Zustand para centralizar el estado
 async function postData(form: any) {
   try {
-    const formData = new FormData()
-    for (const key in form) {
-      if (form.hasOwnProperty(key)) {
-        formData.append(key, form[key])
-      }
-    }
     const res = await axios.post('http://localhost:3001/api/initiatives', form, {
       headers: {
         'Content-Type': 'multipart/form-data'
@@ -63,8 +57,8 @@ export default function FormSec() {
   const [formValues, setFormValues] = useState<FormProps>({} as FormProps)
 
   const handleChange = (e: any) => {
-    const { name, value,type } = e.target
-    if(type === 'file'){
+    const { name, value, type } = e.target
+    if (type === 'file') {
       return setFormValues({ ...formValues, [name]: e?.target?.files[0] })
     }
     setFormValues({ ...formValues, [name]: value })
@@ -95,7 +89,6 @@ export default function FormSec() {
     formRef.current?.reset()
   }
 
-  const fdata = new FormData()
   const onSubmit = (e: any) => {
     const formData = {
       ...formValues,
@@ -109,10 +102,9 @@ export default function FormSec() {
       thumbnail: formValues.thumbnail,
       deadLine: new Date(formValues.deadLine).toISOString()
     }
-   // fdata.append('thumbnail', formValues.thumbnail[0])
-    console.log(fdata, errors, formValues.thumbnail)
+    console.log(errors, formValues.thumbnail)
     postData(formData)
-    // cleanForm()
+    cleanForm()
   }
 
   return (
@@ -136,7 +128,6 @@ export default function FormSec() {
         <LocationInfo handleChange={handleChange} formValues={formValues} errors={errors} register={register} />
         <DateTime handleChange={handleChange} formValues={formValues} errors={errors} register={register} />
         <Multimedia handleChange={handleChange} formValues={formValues} errors={errors} register={register} />
-
         <button type='submit' className='w-max rounded-full bg-blue-500 px-6 py-2 text-lg font-semibold text-white'>
           Crear iniciativa
         </button>
