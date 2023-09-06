@@ -99,6 +99,12 @@ const postsSlice = createSlice({
       .addCase(changePassword.rejected, (state, action) => {
         toast.error('Verifica los datos')
       })
+      .addCase(register.fulfilled, (state, action) => {
+        toast.success('Registro exitosa')
+      })
+      .addCase(register.rejected, (state, action) => {
+        toast.error('Registro los datos')
+      })
   }
 })
 
