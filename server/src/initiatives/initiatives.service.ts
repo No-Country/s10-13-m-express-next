@@ -43,6 +43,9 @@ export class InitiativesService {
 
     const result = await this.prisma.initiative.findUnique({
       where: { id: id },
+        include: {
+          owner: true,
+        },
     });
 
     if (!result) {

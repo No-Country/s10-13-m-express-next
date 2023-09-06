@@ -17,6 +17,7 @@ import {
 import {
   ApiBody,
   ApiExcludeEndpoint,
+  ApiHeader,
   ApiOperation,
   ApiResponse,
   ApiTags,
@@ -90,7 +91,7 @@ export class AuthController {
 
   @Get('/verify')
   @ApiResponse({ status: HttpStatus.OK, type: VerificationResponseDto })
-  @ApiBody({ type: VerificationRequestDto })
+  @ApiBody({ type: VerificationRequestDto }) /**@ApiHeader({ name: 'userId' }) */
   async verify(
     @Body() body,
     @Res() res: Response,

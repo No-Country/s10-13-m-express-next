@@ -1,4 +1,4 @@
-import { ApiProperty } from '@nestjs/swagger';
+import { ApiProperty, ApiPropertyOptional } from '@nestjs/swagger';
 import { IsArray, IsISO8601, IsMongoId, IsNotEmpty, IsOptional, IsString } from 'class-validator';
 
 export class CreateInitiativeDto  {
@@ -50,7 +50,7 @@ export class CreateInitiativeDto  {
   @IsISO8601()
   endDate: Date;
 
-  @ApiProperty({
+  @ApiPropertyOptional({
     description: 'Initiative galery',
     nullable: true,
   })
@@ -58,7 +58,7 @@ export class CreateInitiativeDto  {
   @IsOptional()
   galery?: string;
 
-  @ApiProperty({
+  @ApiPropertyOptional({
     description: 'Initiative thumbnail',
     nullable: true,
   })

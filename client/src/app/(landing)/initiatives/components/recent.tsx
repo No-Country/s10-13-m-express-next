@@ -38,16 +38,16 @@ const initiatives = [
 
 export default function RecentSec() {
   return (
-    <section className='flex w-full items-center justify-center px-7'>
-      <div className='container flex flex-col gap-4'>
+    <section className='flex w-full items-center justify-center'>
+      <div className='container flex flex-col gap-5'>
         <div className='flex justify-between'>
-          <h2>Recientes</h2>
-          <Link href='/initiatives' className='flex gap-2'>
-            Ver todas
-            <Image src='/icon/arrow-right.svg' width={14} height={14} alt='arrow-right' />
+          <h2 className='text-xl font-normal text-blue-600'>Destacadas</h2>
+          <Link href='/initiatives' className='flex items-center gap-4 '>
+            <span className='text-base font-bold leading-4 text-blue-500'>ver todas</span>
+            <Image src='/icon/arrow-right.svg' width={7} height={12} alt='arrow-right' />
           </Link>
         </div>
-        <div className='flex  gap-5 overflow-y-scroll pb-6'>
+        <div className='flex  gap-5 overflow-y-scroll p-2 pb-6'>
           {initiatives.map((item) => (
             <InitiativeItem
               title={item.title}
