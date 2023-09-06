@@ -15,7 +15,7 @@ type InputProps = {
   value?: string
   prefix?: string
   onChange?: any
-  error?: string | null
+  error?: string | any
   step?: string
   required?: boolean
   rows?: number
