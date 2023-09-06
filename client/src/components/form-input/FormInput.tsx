@@ -40,7 +40,7 @@ export default function FormInput(props: InputProps) {
       className={`smalltext flex w-full min-w-0 flex-col gap-1 font-normal ${props.labelClass}`}
     >
       {props.label}
-      {props.type !== 'textarea' && props.type !== 'select' ? (
+      {props.type !== 'textarea' && props.type !== 'select' && props.type !== 'file' ? (
         <input
           {...hookForm}
           defaultValue={props.defaultValue}
@@ -59,9 +59,22 @@ export default function FormInput(props: InputProps) {
           required={props.required}
           autoComplete={props.autoComplete || 'off'}
         />
+      ) : props.type === 'file' ? (
+        <input
+          {...hookForm}
+          type='file'
+          name={props.name}
+          onChange={(e: any) => {
+            hookForm?.onChange(e)
+            if (props.onChange) props.onChange(e)
+          }}
+          className={`${props.className} w-full rounded-md border-gray-600 px-4 py-3 ${styles.input}`}
+          style={{ borderWidth: '1px' }}
+          required={props.required}
+        />
       ) : (
         <textarea
-        {...hookForm}
+          {...hookForm}
           defaultValue={props.defaultValue}
           name={props.name}
           value={props.value}

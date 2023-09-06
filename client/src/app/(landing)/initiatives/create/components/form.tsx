@@ -6,11 +6,23 @@ import { useForm } from 'react-hook-form'
 import GeneralInfo from './generalInfo'
 import LocationInfo from './locationInfo'
 import DateTime from './dateTime'
+import { File } from 'buffer'
+import Multimedia from './multimedia'
 
 //Remplazar por Zustand para centralizar el estado
 async function postData(form: any) {
   try {
-    const res = await axios.post('http://localhost:3001/api/initiatives', form)
+    const formData = new FormData()
+    for (const key in form) {
+      if (form.hasOwnProperty(key)) {
+        formData.append(key, form[key])
+      }
+    }
+    const res = await axios.post('http://localhost:3001/api/initiatives', form, {
+      headers: {
+        'Content-Type': 'multipart/form-data'
+      }
+    })
     console.log(res)
   } catch (error) {
     console.log(error)
@@ -32,6 +44,7 @@ export type FormProps = {
   endHour: string
   extraInfo: string
   themes: string[]
+  thumbnail?: any
 }
 
 export default function FormSec() {
@@ -49,8 +62,11 @@ export default function FormSec() {
   const [categories, setCategories] = useState<string[]>([])
   const [formValues, setFormValues] = useState<FormProps>({} as FormProps)
 
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
-    const { name, value } = e.target
+  const handleChange = (e: any) => {
+    const { name, value,type } = e.target
+    if(type === 'file'){
+      return setFormValues({ ...formValues, [name]: e?.target?.files[0] })
+    }
     setFormValues({ ...formValues, [name]: value })
   }
 
@@ -79,6 +95,7 @@ export default function FormSec() {
     formRef.current?.reset()
   }
 
+  const fdata = new FormData()
   const onSubmit = (e: any) => {
     const formData = {
       ...formValues,
@@ -89,11 +106,13 @@ export default function FormSec() {
       ownerId: '64f6ac5dbd10725027c83414',
       startDate: new Date(formValues.startDate).toISOString(),
       endDate: new Date(formValues.endDate).toISOString(),
+      thumbnail: formValues.thumbnail,
       deadLine: new Date(formValues.deadLine).toISOString()
     }
-    console.log(formData, errors)
+   // fdata.append('thumbnail', formValues.thumbnail[0])
+    console.log(fdata, errors, formValues.thumbnail)
     postData(formData)
-    cleanForm()
+    // cleanForm()
   }
 
   return (
@@ -116,6 +135,8 @@ export default function FormSec() {
         />
         <LocationInfo handleChange={handleChange} formValues={formValues} errors={errors} register={register} />
         <DateTime handleChange={handleChange} formValues={formValues} errors={errors} register={register} />
+        <Multimedia handleChange={handleChange} formValues={formValues} errors={errors} register={register} />
+
         <button type='submit' className='w-max rounded-full bg-blue-500 px-6 py-2 text-lg font-semibold text-white'>
           Crear iniciativa
         </button>
