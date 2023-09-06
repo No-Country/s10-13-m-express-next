@@ -2,8 +2,8 @@ import { create } from 'zustand'
 
 interface AuthState {
   isLogged: boolean
-  login: (body: { email: string; password: string }) => Promise<void>
-  verifySession: (body: { sessionId: string; userId: string }) => Promise<void>
+  login: (body: { email: string, password: string }) => Promise<void>
+  verifySession: (body: { sessionId: string, userId: string }) => Promise<void>
 }
 
 const useAuthStore = create<AuthState>()((set) => ({

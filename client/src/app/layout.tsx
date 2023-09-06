@@ -1,4 +1,5 @@
-import { Footer } from '@/components'
+
+import { Footer, HamburgerMenu } from '@/components'
 import './globals.scss'
 
 export const metadata = {
@@ -14,6 +15,7 @@ function RootLayout({ children }: Props) {
   return (
     <html lang='en'>
       <body className='min-h-screen'>
+        <HamburgerMenu />
         {children}
         <Footer />
       </body>
