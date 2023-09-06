@@ -12,7 +12,7 @@ const Gallery = (props: Props) => {
   const IMAGE_LIMIT = 4
   const showPlusButton = imgUrls.length >= 5
 
-  const cachedValue = useMemo(() => {
+  const cachedValue = useMemo<string[]>(() => {
     return imgUrls.slice(0, IMAGE_LIMIT)
   }, [imgUrls])
   const [selectedImg, setSelectedImg] = useState<number>(0)
@@ -21,13 +21,12 @@ const Gallery = (props: Props) => {
     if (!(showPlusButton && isLastItem)) {
       setSelectedImg(index)
     } else {
-      console.log('Consultar a UX')
+      alert('Consultar a UX que hace este botón')
     }
   }
 
   return (
-    <section>
-      <h3 className='text-xl text-blue-600'>Fotos</h3>
+    <div>
       <div className='ml-4 flex flex-col gap-2'>
         <div className='relative h-40 w-full'>
           <Image fill className='rounded-xl object-cover' alt='asd' src={imgUrls[selectedImg]} />
@@ -61,7 +60,7 @@ const Gallery = (props: Props) => {
           })}
         </div>
       </div>
-    </section>
+    </div>
   )
 }
 
