@@ -12,7 +12,7 @@ export default function HeroSec(props: Props) {
 
   return (
     <section className='container relative mb-2 w-full rounded-lg bg-gray-200'>
-      <div className='h-[20vh] w-full lg:h-[30vh] '>
+      <div className='relative h-[20vh] w-full lg:h-[30vh] '>
         <Image
           src={
             coverPhoto ||
