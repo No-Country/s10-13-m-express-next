@@ -1,4 +1,5 @@
-import { Cover, Labels, Description, InitiativeInfo, Photos } from './components'
+import { Cover, Labels, Description, InitiativeInfo } from './components'
+import { Gallery } from '@/components'
 import type { Metadata } from 'next'
 
 export const metadata: Metadata = {
@@ -33,7 +34,7 @@ function InitiativeDetailPage() {
           time: '10:00hs a 15:00 hs'
         }}
       />
-      <Photos imgSrc={[pandaImg, ostrich, pandaImg, ostrich, pandaImg]} />
+      <Gallery imgUrls={[pandaImg, ostrich, pandaImg, ostrich, pandaImg]} />
       <section>publication cards</section>
     </div>
   )

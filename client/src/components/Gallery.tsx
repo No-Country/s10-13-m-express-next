@@ -4,17 +4,17 @@ import Image from 'next/image'
 import { useMemo, useState } from 'react'
 
 interface Props {
-  imgSrc: string[]
+  imgUrls: string[]
 }
 
-const Photos = (props: Props) => {
-  const { imgSrc } = props
+const Gallery = (props: Props) => {
+  const { imgUrls } = props
   const IMAGE_LIMIT = 4
-  const showPlusButton = imgSrc.length >= 5
+  const showPlusButton = imgUrls.length >= 5
 
   const cachedValue = useMemo(() => {
-    return imgSrc.slice(0, IMAGE_LIMIT)
-  }, [imgSrc])
+    return imgUrls.slice(0, IMAGE_LIMIT)
+  }, [imgUrls])
   const [selectedImg, setSelectedImg] = useState<number>(0)
 
   const handleClick = (index: number, isLastItem: boolean) => {
@@ -30,7 +30,7 @@ const Photos = (props: Props) => {
       <h3 className='text-xl text-blue-600'>Fotos</h3>
       <div className='ml-4 flex flex-col gap-2'>
         <div className='relative h-40 w-full'>
-          <Image fill className='rounded-xl object-cover' alt='asd' src={imgSrc[selectedImg]} />
+          <Image fill className='rounded-xl object-cover' alt='asd' src={imgUrls[selectedImg]} />
         </div>
         <div className='flex w-full gap-2'>
           {cachedValue.map((img, index) => {
@@ -65,4 +65,4 @@ const Photos = (props: Props) => {
   )
 }
 
-export default Photos
+export default Gallery
