@@ -44,8 +44,8 @@ export class StripeService {
                   },
                 ],
                 mode: 'payment',
-                success_url: `https://www.domain.com/success.html`,
-                cancel_url: `https://www.domain.com/cancel.html`,
+                success_url: `http://localhost:3000/success.html`,
+                cancel_url: `http://localhost:3000/cancel.html`,
               });
               console.log(session)
             return session.url
