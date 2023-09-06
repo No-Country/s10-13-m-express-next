@@ -83,6 +83,10 @@ const config: Config = {
       backgroundImage: {
         'gradient-radial': 'radial-gradient(var(--tw-gradient-stops))',
         'gradient-conic': 'conic-gradient(from 180deg at 50% 50%, var(--tw-gradient-stops))'
+      },
+      boxShadow: {
+        ms: '2px 2px 6px 0px',
+        'initiativeItem': '0px 2px 6px 0px #B0B0B0',
       }
     }
   },

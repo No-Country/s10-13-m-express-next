@@ -11,7 +11,7 @@ export const metadata: Metadata = {
 
 function Home() {
   return (
-    <main className='flex flex-col items-start gap-10 py-7'>
+    <main className='p-section gap-main'>
       <HeroSec />
       <PromoSec />
       <InitiativesSec />

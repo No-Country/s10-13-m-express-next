@@ -1,6 +1,7 @@
-import { Footer } from '@/components'
-import './globals.css'
+import Provider from '@/redux/provider'
+import './globals.scss'
 import { Nunito } from 'next/font/google'
+import { Footer } from '@/components'
 
 export const metadata = {
   title: 'Create Next App',
@@ -21,8 +22,10 @@ function RootLayout({ children }: Props) {
   return (
     <html lang='en'>
       <body className={`min-h-screen ${nunito.className}`}>
-        {children}
-        <Footer />
+        <Provider>
+          {children}
+          <Footer />
+        </Provider>
       </body>
     </html>
   )
