@@ -63,6 +63,18 @@ export class Initiative implements ModelInitiative {
   @ApiProperty()
   ownerId: string;
 
+  @ApiProperty()
+  startHour: string;
+
+  @ApiProperty()
+  endHour: string;
+
+  @ApiProperty()
+  extraInfo: string;
+
+  @ApiProperty()
+  themes: string[];
+
   createdAt: Date;
   updatedAt: Date;
 }
