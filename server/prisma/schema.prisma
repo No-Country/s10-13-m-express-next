@@ -74,6 +74,10 @@ model Initiative {
   reviewsId     String[]     @db.ObjectId
   postsId       String[]     @db.ObjectId
   ownerId       String       @db.ObjectId
+  startHour     String
+  endHour       String
+  extraInfo     String
+  themes        String[]
   owner         User         @relation(fields: [ownerId], references: [id])
   createdAt     DateTime     @default(now()) @map("_created_at")
   updatedAt     DateTime     @updatedAt @map("_updated_at")

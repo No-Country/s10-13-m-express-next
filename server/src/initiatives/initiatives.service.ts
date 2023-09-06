@@ -24,6 +24,7 @@ export class InitiativesService {
       return newInitiative;
     } catch (error) {
       this.errorHandler(error)
+      console.log(error);
       /*throw new HttpException(
         "Data error: " + error.message,
         HttpStatus.BAD_REQUEST,

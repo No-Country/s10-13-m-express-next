@@ -3,7 +3,7 @@ import { SearchInput } from '@/components'
 
 export default function HeroSec() {
   return (
-    <section className='flex w-full items-center justify-center'>
+    <section className='flex items-center justify-center'>
       <div className='flex flex-col gap-4 w-full'>
         <h2 className='text-xl font-normal text-blue-600'>Buscar Iniciativas</h2>
         <div className='flex flex-col gap-2'>
