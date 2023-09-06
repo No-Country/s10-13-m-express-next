@@ -1,6 +1,7 @@
 import { Injectable } from '@nestjs/common';
 import { PrismaService } from 'src/prisma/prisma.service';
 import Stripe from 'stripe';
+import { CreateStripeIntentDto } from './dto/stripe-intent.dto';
 
 const stripeApiKey = process.env.STRIPE_SECRET_KEY;
 const stripe = new Stripe(stripeApiKey, {
@@ -11,8 +12,8 @@ const stripe = new Stripe(stripeApiKey, {
 export class StripeService {
     constructor(private readonly prisma: PrismaService){}
 
-    async createPaymentIntent(amount: number, userId: string){
-        const convertAmount = amount * 100 //El monto debe convertirse en centavos antes de enviarse a Stripe
+    async createPaymentIntent(createStripeIntentDto: CreateStripeIntentDto): Promise<any>{
+        const convertAmount = createStripeIntentDto.amount * 100 //El monto debe convertirse en centavos antes de enviarse a Stripe
         const PaymentIntent = await stripe.paymentIntents.create({
             amount: convertAmount,
             currency: 'usd',
@@ -20,9 +21,11 @@ export class StripeService {
                 enabled: true,
             },
             metadata:{
-                userId: userId
+                userId: createStripeIntentDto.userId, //Agrego una metadata con el user id para identificar quien esta haciendo el pago
+                initiativeId: createStripeIntentDto.initiativeId 
             }
         })
-        return PaymentIntent;
+        console.log(PaymentIntent)
+        return PaymentIntent.client_secret;
     }
 }
