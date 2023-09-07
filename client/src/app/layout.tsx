@@ -1,3 +1,4 @@
+import { Footer, HamburgerMenu } from '@/components'
 import Provider from '@/redux/provider'
 import './globals.scss'
 import { Nunito } from 'next/font/google'
@@ -23,6 +24,7 @@ function RootLayout({ children }: Props) {
     <html lang='en'>
       <body className={`min-h-screen ${nunito.className}`}>
         <Provider>
+          <HamburgerMenu />
           {children}
           <Footer />
         </Provider>
