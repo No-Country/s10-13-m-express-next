@@ -16,7 +16,27 @@ export default function Multimedia({ errors, register }: LocationInfoProps) {
       <div className='flex grid-cols-2 flex-col gap-4 lg:grid'>
         <FormInput
           type='file'
-          name='thumbnail'
+          name='profileImage'
+          label='Imagen de perfil'
+          placeholder='Selecciona una imagen'
+          hookForm={{
+            register,
+            validations: {
+              required: false,
+              validate: (value: any) => {
+                if (value.length > 0) {
+                  if (value[0].size > 5000000) {
+                    return 'La imagen no debe pesar mas de 5MB'
+                  }
+                }
+              }
+            }
+          }}
+          error={errors?.thumbnail?.message}
+        />
+        <FormInput
+          type='file'
+          name='bannerImage'
           label='Imagen de portada'
           placeholder='Selecciona una imagen'
           hookForm={{

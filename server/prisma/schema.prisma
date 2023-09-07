@@ -75,11 +75,11 @@ model Initiative {
   reviewsId     String[]     @db.ObjectId
   postsId       String[]     @db.ObjectId
   ownerId       String       @db.ObjectId
+  owner         User         @relation(fields: [ownerId], references: [id], onDelete: Cascade)
   startHour     String
   endHour       String
   extraInfo     String
   themes        String[]
-  owner         User         @relation(fields: [ownerId], references: [id])
   donations     Donation[]
   createdAt     DateTime     @default(now()) @map("_created_at")
   updatedAt     DateTime     @updatedAt @map("_updated_at")

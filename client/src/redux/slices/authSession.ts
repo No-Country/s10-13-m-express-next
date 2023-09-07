@@ -1,12 +1,31 @@
 import { createSlice, PayloadAction, createAsyncThunk } from '@reduxjs/toolkit'
 import { axiosPutter, axiosPoster, axiosGetter } from '@/utils/requests'
 import Endpoints from '@/utils/constants/endpoints.const'
-import { AuthClass, UserClass } from '@/types'
+import { AuthClass, UserClass } from '@/types/index'
 import { toast } from 'sonner'
 
-const initialState = {
-  auth: {} as AuthClass,
-  session: {} as UserClass
+interface AuthState {
+  auth: AuthClass
+  session: UserClass
+}
+
+const initialState: AuthState = {
+  auth: {
+    isLogged: false,
+    sessionId: ''
+  },
+  session: {
+    id: '',
+    firstName: '',
+    lastName: '',
+    username: '',
+    profileImage: '',
+    email: '',
+    isSuperAdmin: false,
+    softDelete: false,
+    bannerImage: '',
+    role: 'volunteer'
+  }
 }
 
 interface ThunkApiConfig {
@@ -22,12 +41,14 @@ export const setSession = createAsyncThunk('auth/setSession', async (userId: str
 
 export const login = createAsyncThunk(
   'auth/login',
-  async (credentials: { email: string; password: string }, { dispatch }) => {
+  async (credentials: { email: string, password: string }, { dispatch }) => {
     const data = await axiosPoster({
       url: Endpoints.LOGIN,
       body: credentials
     })
     await dispatch(setSession(data.userId))
+    console.log('data login', data)
+    await dispatch(setAuth({ isLogged: true, sessionId: data.sessionId }))
     return data
   }
 )
@@ -70,7 +91,18 @@ const postsSlice = createSlice({
     },
     resetReducer: (state) => {
       state.auth.isLogged = false
-      state.session = {} as UserClass
+      state.session = {
+        id: '',
+        firstName: '',
+        lastName: '',
+        username: '',
+        profileImage: '',
+        email: '',
+        isSuperAdmin: false,
+        softDelete: false,
+        bannerImage: '',
+        role: 'volunteer'
+      }
     }
   },
   extraReducers: (builder) => {
