@@ -1,15 +1,12 @@
 import { FormInput, Heading } from '@/components'
-import { FormProps } from './form'
 import { UseFormRegister } from 'react-hook-form'
 
 interface LocationInfoProps {
-  handleChange: (e: React.ChangeEvent<HTMLInputElement>) => void
-  formValues: FormProps
   errors: any
   register: UseFormRegister<any>
 }
 
-export default function Multimedia({ handleChange, formValues, errors, register }: LocationInfoProps) {
+export default function Multimedia({ errors, register }: LocationInfoProps) {
   return (
     <div className='flex w-full flex-col gap-4'>
       <div className='flex flex-col gap-2'>
@@ -22,8 +19,6 @@ export default function Multimedia({ handleChange, formValues, errors, register 
           name='thumbnail'
           label='Imagen de portada'
           placeholder='Selecciona una imagen'
-          required={false}
-          onChange={handleChange}
           hookForm={{
             register,
             validations: {

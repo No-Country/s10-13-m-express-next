@@ -6,21 +6,12 @@ import { useRouter } from 'next/navigation'
 import { useAppDispatch } from '@/redux/hooks'
 import { login } from '@/redux/slices/authSession'
 
-interface FormProps {
-  email: string
-  password: string
-}
-
 function LoginForm() {
   const router = useRouter()
   const dispatch = useAppDispatch()
   const [visibility] = useState(false)
   // const close = () => setVisibility(false)
   // const open = () => setVisibility(true)
-  const [formValues, setFormValues] = useState<FormProps>({
-    email: '',
-    password: ''
-  })
   const formRef = useRef<HTMLFormElement>(null)
   const {
     register,
@@ -30,15 +21,8 @@ function LoginForm() {
     mode: 'onChange'
   })
 
-  const handleChange = (e: any) => {
-    const { name, value, type } = e.target
-    if (type === 'file') {
-      return setFormValues({ ...formValues, [name]: e?.target?.files[0] })
-    }
-    setFormValues({ ...formValues, [name]: value })
-  }
-
   const onSubmit = async (data: any) => {
+    console.log(data)
     try {
       await dispatch(login(data))
       router.push('/')
@@ -53,9 +37,7 @@ function LoginForm() {
         type='email'
         name='email'
         label='Email'
-        onChange={handleChange}
         placeholder='Email'
-        value={formValues.email}
         hookForm={{
           register,
           validations: {
@@ -73,9 +55,7 @@ function LoginForm() {
           type={visibility ? 'text' : 'password'}
           name='password'
           label='Contraseña'
-          value={formValues.password}
           placeholder='Contraseña'
-          onChange={handleChange}
           hookForm={{
             register,
             validations: {

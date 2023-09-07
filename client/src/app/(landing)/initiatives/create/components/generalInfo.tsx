@@ -1,5 +1,4 @@
 import { FormInput, Heading, MultipleSelectCheckmarks } from '@/components'
-import { FormProps } from './form'
 import { UseFormRegister } from 'react-hook-form'
 
 interface GeneralInfoProps {
@@ -9,8 +8,6 @@ interface GeneralInfoProps {
   themes: string[]
   setOpportunities: (opportunities: string[]) => void
   opportunities: string[]
-  handleChange: (e: React.ChangeEvent<HTMLInputElement>) => void
-  formValues: FormProps
   categories: string[]
   setCategories: (categories: string[]) => void
   errors: any
@@ -24,8 +21,6 @@ export default function GeneralInfo({
   languages,
   themes,
   opportunities,
-  handleChange,
-  formValues,
   categories,
   setCategories,
   errors,
@@ -43,9 +38,6 @@ export default function GeneralInfo({
           name='title'
           label='Titulo de la iniciativa'
           placeholder='Titulo de la iniciativa'
-          required={false}
-          value={formValues.title}
-          onChange={handleChange}
           hookForm={{
             register,
             validations: {
@@ -61,9 +53,6 @@ export default function GeneralInfo({
           name='description'
           label='Descripcion de la iniciativa'
           placeholder='Descripcion de la iniciativa'
-          required={false}
-          value={formValues.description}
-          onChange={handleChange}
           hookForm={{
             register,
             validations: {
@@ -79,9 +68,6 @@ export default function GeneralInfo({
           name='deadLine'
           label='Fecha limite de inscripcion'
           placeholder='Fecha limite de inscripcion'
-          required={false}
-          value={formValues.deadLine}
-          onChange={handleChange}
           hookForm={{
             register,
             validations: {

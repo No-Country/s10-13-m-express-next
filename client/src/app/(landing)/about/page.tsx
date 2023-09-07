@@ -16,8 +16,6 @@ function AboutPage() {
           className='-z-10 object-cover'
           src='/assets/about-image.webp'
           fill
-          placeholder='blur'
-          blurDataURL=''
           sizes='100vw'
           alt='image de personas apoyando una iniciativa'
         />
