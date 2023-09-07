@@ -2,7 +2,6 @@ import { Footer, HamburgerMenu } from '@/components'
 import Provider from '@/redux/provider'
 import './globals.scss'
 import { Nunito } from 'next/font/google'
-import { Footer } from '@/components'
 
 export const metadata = {
   title: 'Create Next App',
