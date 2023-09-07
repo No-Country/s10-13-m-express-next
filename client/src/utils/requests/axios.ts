@@ -11,23 +11,23 @@ export const axiosPutter = async (url: string, data: any, cType: any) => {
   return res
 }
 
-type axiosPoster = {
-  url: any
+interface axiosPosterType {
+  url: string
   body?: any
 }
-export const axiosPoster = async ({ url, body }: axiosPoster) => {
+export const axiosPoster = async ({ url, body }: axiosPosterType) => {
   console.log('axiosPoster body', body)
   const { data: res } = await axios.post(serverUrl + url, body || {})
   console.log('axiosPoster res', res)
-  return res as any
+  return res
 }
 
-type axiosGetter = {
-  url: any
+interface axiosGetterType {
+  url: string
   headers?: any
 }
 
-export const axiosGetter = async ({ url, headers }: axiosGetter) => {
+export const axiosGetter = async ({ url, headers }: axiosGetterType) => {
   console.log('axiosGetter headers', headers)
   const { data: res } = await axios.get(serverUrl + url, {
     headers: headers || {}
@@ -36,14 +36,14 @@ export const axiosGetter = async ({ url, headers }: axiosGetter) => {
   return res
 }
 
-type axiosDeleter = {
-  url: any
+interface axiosDeleterType {
+  url: string
   headers?: any
 }
 
-export const axiosDeleter = async ({ url, headers }: axiosDeleter) => {
+export const axiosDeleter = async ({ url, headers }: axiosDeleterType) => {
   const { data: res } = await axios.delete(serverUrl + url, {
-    headers: headers
+    headers
   })
 
   return res

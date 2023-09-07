@@ -1,6 +1,6 @@
 import Image from 'next/image'
 
-type SearchInputProps = {
+interface SearchInputProps {
   placeholder: string
   icon?: string
 }

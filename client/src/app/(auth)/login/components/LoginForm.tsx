@@ -1,24 +1,17 @@
 'use client'
-import { EyeCloseIcon, EyeOpenIcon, PrimaryButton, FormInput } from '@/components'
-import useAuthStore from '@/store/authStore'
+import { FormInput, PrimaryButton } from '@/components'
 import { useState, useRef } from 'react'
 import { useForm } from 'react-hook-form'
 import { useRouter } from 'next/navigation'
 import { useAppDispatch } from '@/redux/hooks'
 import { login } from '@/redux/slices/authSession'
-type FormProps = {
-  email: string
-  password: string
-}
 
 function LoginForm() {
   const router = useRouter()
   const dispatch = useAppDispatch()
-  const [visibility, setVisibility] = useState(false)
-  const { loginLocal } = useAuthStore()
-  const close = () => setVisibility(false)
-  const open = () => setVisibility(true)
-  const [formValues, setFormValues] = useState<FormProps>({} as FormProps)
+  const [visibility] = useState(false)
+  // const close = () => setVisibility(false)
+  // const open = () => setVisibility(true)
   const formRef = useRef<HTMLFormElement>(null)
   const {
     register,
@@ -28,15 +21,8 @@ function LoginForm() {
     mode: 'onChange'
   })
 
-  const handleChange = (e: any) => {
-    const { name, value, type } = e.target
-    if (type === 'file') {
-      return setFormValues({ ...formValues, [name]: e?.target?.files[0] })
-    }
-    setFormValues({ ...formValues, [name]: value })
-  }
-
   const onSubmit = async (data: any) => {
+    console.log(data)
     try {
       await dispatch(login(data))
       router.push('/')
@@ -51,11 +37,9 @@ function LoginForm() {
         type='email'
         name='email'
         label='Email'
-        onChange={handleChange}
         placeholder='Email'
-        value={formValues.email}
         hookForm={{
-          register: register,
+          register,
           validations: {
             pattern: {
               value: /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/,
@@ -71,11 +55,9 @@ function LoginForm() {
           type={visibility ? 'text' : 'password'}
           name='password'
           label='Contraseña'
-          value={formValues.password}
           placeholder='Contraseña'
-          onChange={handleChange}
           hookForm={{
-            register: register,
+            register,
             validations: {
               pattern: {
                 value: /^(?=.*[A-Z])(?=.*[a-z])(?=.*\d).{8,}$/,
@@ -86,7 +68,15 @@ function LoginForm() {
           }}
           error={errors?.password?.message}
         />
-        <div className='absolute bottom-0 right-0 top-[28px] flex items-center justify-center'>
+      </div>
+      <PrimaryButton>Iniciar sesión</PrimaryButton>
+    </form>
+  )
+}
+
+export default LoginForm
+
+/* <div className='absolute bottom-0 right-0 top-[28px] flex items-center justify-center'>
           {visibility ? (
             <span onClick={close} className='  cursor-pointer'>
               <EyeOpenIcon className='h-6' />
@@ -96,11 +86,4 @@ function LoginForm() {
               <EyeCloseIcon className=' h-6' />
             </span>
           )}
-        </div>
-      </div>
-      <PrimaryButton>Iniciar sesión</PrimaryButton>
-    </form>
-  )
-}
-
-export default LoginForm
+        </div> */

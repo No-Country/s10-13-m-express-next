@@ -7,11 +7,11 @@ import GeneralInfo from './generalInfo'
 import LocationInfo from './locationInfo'
 import DateTime from './dateTime'
 import Multimedia from './multimedia'
+import { serverUrl } from '@/utils/constants/env.const'
 
-//Remplazar por Zustand para centralizar el estado
 async function postData(form: any) {
   try {
-    const res = await axios.post('http://localhost:3001/api/initiatives', form, {
+    const res = await axios.post(`${serverUrl}/api/initiatives`, form, {
       headers: {
         'Content-Type': 'multipart/form-data'
       }
@@ -22,7 +22,7 @@ async function postData(form: any) {
   }
 }
 
-export type FormProps = {
+export interface FormProps {
   title: string
   description: string
   deadLine: string
@@ -53,34 +53,8 @@ export default function FormSec() {
   const [themes, setThemes] = useState<string[]>([])
   const [opportunities, setOpportunities] = useState<string[]>([])
   const [categories, setCategories] = useState<string[]>([])
-  const [formValues, setFormValues] = useState<FormProps>({} as FormProps)
-
-  const handleChange = (e: any) => {
-    const { name, value, type } = e.target
-    if (type === 'file') {
-      return setFormValues({ ...formValues, [name]: e?.target?.files[0] })
-    }
-    setFormValues({ ...formValues, [name]: value })
-  }
 
   const cleanForm = () => {
-    setFormValues({
-      title: '',
-      description: '',
-      deadLine: '',
-      startDate: '',
-      endDate: '',
-      categories: [],
-      opportunities: [],
-      locations: '',
-      languages: [],
-      ownerId: '',
-      startHour: '',
-      endHour: '',
-      extraInfo: '',
-      themes: []
-    })
-
     setLanguages([])
     setThemes([])
     setOpportunities([])
@@ -88,21 +62,21 @@ export default function FormSec() {
     formRef.current?.reset()
   }
 
-  const onSubmit = (e: any) => {
+  const onSubmit = async (data: any) => {
     const formData = {
-      ...formValues,
+      ...data,
       languages,
       themes,
       opportunities,
       categories,
       ownerId: '64f6ac5dbd10725027c83414',
-      startDate: new Date(formValues.startDate).toISOString(),
-      endDate: new Date(formValues.endDate).toISOString(),
-      thumbnail: formValues.thumbnail,
-      deadLine: new Date(formValues.deadLine).toISOString()
+      startDate: new Date(data.startDate).toISOString(),
+      endDate: new Date(data.endDate).toISOString(),
+      thumbnail: data.thumbnail,
+      deadLine: new Date(data.deadLine).toISOString()
     }
-    console.log(errors, formValues.thumbnail)
-    postData(formData)
+    console.log(errors, formData)
+    await postData(formData)
     cleanForm()
   }
 
@@ -117,16 +91,14 @@ export default function FormSec() {
           languages={languages}
           themes={themes}
           opportunities={opportunities}
-          handleChange={handleChange}
-          formValues={formValues}
           categories={categories}
           setCategories={setCategories}
           errors={errors}
           register={register}
         />
-        <LocationInfo handleChange={handleChange} formValues={formValues} errors={errors} register={register} />
-        <DateTime handleChange={handleChange} formValues={formValues} errors={errors} register={register} />
-        <Multimedia handleChange={handleChange} formValues={formValues} errors={errors} register={register} />
+        <LocationInfo errors={errors} register={register} />
+        <DateTime errors={errors} register={register} />
+        <Multimedia errors={errors} register={register} />
         <button type='submit' className='w-max rounded-full bg-blue-500 px-6 py-2 text-lg font-semibold text-white'>
           Crear iniciativa
         </button>

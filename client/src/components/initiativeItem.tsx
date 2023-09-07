@@ -3,12 +3,12 @@ import Routes from '@/utils/constants/routes.const'
 import Image from 'next/image'
 import Link from 'next/link'
 
-type Props = {
+interface Props {
   initiative: any
   minWidth?: string
 }
 
-type ItemProps = {
+interface ItemProps {
   imageSrc: string
   text: string
   icon?: boolean
@@ -26,7 +26,7 @@ function Item({ imageSrc, text, icon = true }: ItemProps) {
 
 export default function InitiativeItem({ initiative, minWidth = '' }: Props) {
   return (
-    <Link href={`${Routes.INITIATIVES}/${initiative.id}`}>
+    <Link href={`${Routes.INITIATIVES}/${initiative?.id}`}>
       <div className={`${minWidth} flex w-full cursor-pointer flex-col rounded-lg shadow-initiativeItem`}>
         <div className='flex w-full flex-col gap-2 p-3 '>
           <div className='l relative aspect-[1/1]  w-full'>
