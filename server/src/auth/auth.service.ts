@@ -33,17 +33,18 @@ export class AuthService {
 
   async findSessionById(sessionId: string) {
     try {
-      const sessions = await this.prisma.session.findMany();
-      const filteredSessions = sessions.filter((session) => {
-        const sessionInfo = session.session;
-        return sessionInfo.sessionId === sessionId;
-      });
-
-      if (filteredSessions && filteredSessions.length > 0) {
-        return filteredSessions;
+      const sessions = await this.prisma.session.findRaw({ filter: { _id: { $eq: sessionId } }});
+      
+      if(sessions.length == 0){
+        return null;
       }
 
-      return null;
+      const tediousObject = sessions[0] as object;
+      const stringTediousObject = JSON.stringify(tediousObject);
+      const jsonResponse = JSON.parse(stringTediousObject);
+     
+      return jsonResponse._id === sessionId;
+
     } catch (error) {
       console.log('Error findSessionById', error);
       throw new Error('Error while fetching sessions: ' + error.message);
