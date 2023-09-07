@@ -1,5 +1,4 @@
-import HeroSec from './components/hero'
-import InfoSec from './components/info'
+import Content from './components/content'
 import type { Metadata } from 'next'
 
 export const metadata: Metadata = {
@@ -8,11 +7,16 @@ export const metadata: Metadata = {
   themeColor: '#000000'
 }
 
-function InitiativesPage() {
+type Props = {
+  params: {
+    id: string
+  }
+}
+
+function InitiativesPage(props: Props) {
   return (
     <main className='flex flex-col gap-10 py-7'>
-      <HeroSec />
-      <InfoSec />
+      <Content id={props.params.id} />
     </main>
   )
 }

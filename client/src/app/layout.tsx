@@ -1,5 +1,5 @@
-
 import { Footer, HamburgerMenu } from '@/components'
+import Provider from '@/redux/provider'
 import './globals.scss'
 
 export const metadata = {
@@ -18,6 +18,7 @@ function RootLayout({ children }: Props) {
         <HamburgerMenu />
         {children}
         <Footer />
+        <Provider>{children}</Provider>
       </body>
     </html>
   )
