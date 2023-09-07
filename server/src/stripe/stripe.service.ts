@@ -5,52 +5,56 @@ import { CreateStripeIntentDto } from './dto/stripe-intent.dto';
 
 const stripeApiKey = process.env.STRIPE_SECRET_KEY;
 const stripe = new Stripe(stripeApiKey, {
-    apiVersion: '2023-08-16',
-  });
+  apiVersion: '2023-08-16',
+});
+
+const successUrl = process.env.STRIPE_SUCCESS_URL;
+const cancelUrl = process.env.STRIPE_CANCEL_URL;
 
 @Injectable()
 export class StripeService {
-    constructor(private readonly prisma: PrismaService){}
+  constructor(private readonly prisma: PrismaService) {}
 
-    async createPaymentIntent(createStripeIntentDto: CreateStripeIntentDto): Promise<any>{
-        const convertAmount = createStripeIntentDto.amount * 100 //El monto debe convertirse en centavos antes de enviarse a Stripe
-        // const PaymentIntent = await stripe.paymentIntents.create({
-        //     amount: convertAmount,
-        //     currency: 'usd',
-        //     automatic_payment_methods: {
-        //         enabled: true,
-        //     },
-        //     metadata:{
-        //         userId: createStripeIntentDto.userId, //Agrego una metadata con el user id para identificar quien esta haciendo el pago
-        //         initiativeId: createStripeIntentDto.initiativeId 
-        //     }
-        // })
-        try {
-            
-            const session = await stripe.checkout.sessions.create({
-                line_items: [
-                  { quantity:1,
-                    price_data:{
-                        product_data:{
-                            name: 'donation',
-                            metadata:{
-                                userId: createStripeIntentDto.userId, //Agrego una metadata con el user id para identificar quien esta haciendo el pago
-                                initiativeId: createStripeIntentDto.initiativeId 
-                            },
-                        },
-                        currency: 'usd',
-                        unit_amount: convertAmount,
-                    }
-                  },
-                ],
-                mode: 'payment',
-                success_url: `http://localhost:3000/success.html`,
-                cancel_url: `http://localhost:3000/cancel.html`,
-              });
-              console.log(session)
-            return session.url
-        } catch (error) {
-            console.log(error)
-        }
+  async createPaymentIntent(
+    createStripeIntentDto: CreateStripeIntentDto,
+  ): Promise<any> {
+    const convertAmount = createStripeIntentDto.amount * 100; //El monto debe convertirse en centavos antes de enviarse a Stripe
+    // const PaymentIntent = await stripe.paymentIntents.create({
+    //     amount: convertAmount,
+    //     currency: 'usd',
+    //     automatic_payment_methods: {
+    //         enabled: true,
+    //     },
+    //     metadata:{
+    //         userId: createStripeIntentDto.userId, //Agrego una metadata con el user id para identificar quien esta haciendo el pago
+    //         initiativeId: createStripeIntentDto.initiativeId
+    //     }
+    // })
+    try {
+      const session = await stripe.checkout.sessions.create({
+        line_items: [
+          {
+            quantity: 1,
+            price_data: {
+              product_data: {
+                name: 'donation',
+                metadata: {
+                  userId: createStripeIntentDto.userId, //Agrego una metadata con el user id para identificar quien esta haciendo el pago
+                  initiativeId: createStripeIntentDto.initiativeId,
+                },
+              },
+              currency: 'usd',
+              unit_amount: convertAmount,
+            },
+          },
+        ],
+        mode: 'payment',
+        success_url: `${successUrl}/donation`,
+        cancel_url: `${cancelUrl}/donation`,
+      });
+      return session.url;
+    } catch (error) {
+      console.log(error);
     }
+  }
 }
