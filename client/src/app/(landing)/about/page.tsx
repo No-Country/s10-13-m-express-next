@@ -28,7 +28,7 @@ function AboutPage() {
           alt='logo de la plataforma'
         />
       </div>
-      <section className='max-w-screen-lg space-y-3 p-4'>
+      <section className='mx-auto max-w-screen-lg space-y-3 p-4'>
         <Heading as='h2'>¿Quiénes somos?</Heading>
         <p className='text-base text-black'>
           Desde su fundación en el año 2003, Unión Solidaria ha desempeñado un papel fundamental en la promoción del
@@ -37,7 +37,7 @@ function AboutPage() {
           sociales, desde la preservación del medio ambiente hasta la educación y la atención médica.
         </p>
       </section>
-      <section className='max-w-screen-lg space-y-3 p-4'>
+      <section className='mx-auto max-w-screen-lg space-y-3 p-4'>
         <Heading as='h2'>Nuestra Misión</Heading>
         <p className='whitespace-pre-line text-base text-black'>
           {`En Unión Solidaria, nuestra misión es simple pero poderosa: fortalecer la solidaridad en Latinoamérica al facilitar la colaboración entre voluntarios y organizaciones sin fines de lucro. Creemos en el poder de las personas para generar un cambio positivo en sus comunidades por lo tanto, trabajamos incansablemente para hacer que el voluntariado sea accesible y efectivo.
@@ -45,7 +45,7 @@ function AboutPage() {
           Lo que nos diferencia es nuestra capacidad para conectar de manera efectiva a apasionados organizaciones que necesitan su ayuda. Nuestro enfoque en la diversidad de causas, que educación, salud y más, permite que cualquier persona encuentre una oportunidad de que se sus intereses y valores.`}
         </p>
       </section>
-      <section className='max-w-screen-lg space-y-3 p-4'>
+      <section className='mx-auto max-w-screen-lg space-y-3 p-4'>
         <Heading as='h2'>Recursos y Oportunidades</Heading>
         <p className='text-base text-black'>
           Además de servir como plataforma de conexión, Unión Solidaria brinda recursos valiosos y oportunidades de
@@ -54,7 +54,7 @@ function AboutPage() {
           duradero.
         </p>
       </section>
-      <section className='max-w-screen-lg space-y-3 p-4'>
+      <section className='mx-auto max-w-screen-lg space-y-3 p-4'>
         <Heading as='h2'>Donaciones</Heading>
         <p className='text-base text-black'>
           Para seguir cumpliendo nuestra misión, dependemos en gran medida de las generosas donaciones de individuos y
