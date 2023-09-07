@@ -1,15 +1,34 @@
 'use client'
-import { FormInput, Heading } from '@/components'
+import { FormInput, Heading, StripeButton } from '@/components'
+import { IDonationPayment } from '@/interfaces'
+import { createDonationToPlatform } from '@/services'
 import Slider from '@mui/material/Slider'
+import { useRouter } from 'next/navigation'
 import { useState } from 'react'
 
 function Donation() {
-  const min = 500
-  const max = 1000000
-  const [value, setValue] = useState(5000)
+  const router = useRouter()
+  const min = 0
+  const max = 1000
+  const [value, setValue] = useState(min)
 
   const handleChange = (event: Event, newValue: number | number[]) => {
     setValue(newValue as number)
+  }
+
+  const handleDonationPayment = async () => {
+    try {
+      const payment: IDonationPayment = {
+        amount: value,
+        userId: 'stripetest',
+        initiativeId: 'globalDonation'
+      }
+
+      const { sessionUrl } = await createDonationToPlatform(payment)
+      router.push(sessionUrl)
+    } catch (error) {
+      console.log(error)
+    }
   }
 
   return (
@@ -19,9 +38,10 @@ function Donation() {
         <p className='rounded-full bg-blue-200 px-4 py-1 text-2xl font-medium'>${value}</p>
         <Slider
           onChange={handleChange}
-          defaultValue={5000}
-          min={500}
-          max={100000}
+          defaultValue={min}
+          min={min}
+          max={max}
+          step={10}
           value={value}
           aria-label='Default'
           valueLabelDisplay='auto'
@@ -31,6 +51,9 @@ function Donation() {
           <p>${max}</p>
         </div>
       </div>
+      <StripeButton align='center' onClick={handleDonationPayment}>
+        Stripe
+      </StripeButton>
     </div>
   )
 }
