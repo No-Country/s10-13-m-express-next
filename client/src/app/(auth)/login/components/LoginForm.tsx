@@ -1,12 +1,13 @@
 'use client'
-import { EyeCloseIcon, EyeOpenIcon, PrimaryButton, FormInput } from '@/components'
-import useAuthStore from '@/store/authStore'
+//import { EyeCloseIcon, EyeOpenIcon, PrimaryButton, FormInput } from '@/components'
+import { FormInput, PrimaryButton } from '@/components'
 import { useState, useRef } from 'react'
 import { useForm } from 'react-hook-form'
 import { useRouter } from 'next/navigation'
 import { useAppDispatch } from '@/redux/hooks'
 import { login } from '@/redux/slices/authSession'
-type FormProps = {
+
+interface FormProps {
   email: string
   password: string
 }
@@ -15,10 +16,12 @@ function LoginForm() {
   const router = useRouter()
   const dispatch = useAppDispatch()
   const [visibility, setVisibility] = useState(false)
-  const { loginLocal } = useAuthStore()
   const close = () => setVisibility(false)
   const open = () => setVisibility(true)
-  const [formValues, setFormValues] = useState<FormProps>({} as FormProps)
+  const [formValues, setFormValues] = useState<FormProps>({
+    email: '',
+    password: ''
+  })
   const formRef = useRef<HTMLFormElement>(null)
   const {
     register,
@@ -55,7 +58,7 @@ function LoginForm() {
         placeholder='Email'
         value={formValues.email}
         hookForm={{
-          register: register,
+          register,
           validations: {
             pattern: {
               value: /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/,
@@ -86,7 +89,15 @@ function LoginForm() {
           }}
           error={errors?.password?.message}
         />
-        <div className='absolute bottom-0 right-0 top-[28px] flex items-center justify-center'>
+      </div>
+      <PrimaryButton>Iniciar sesión</PrimaryButton>
+    </form>
+  )
+}
+
+export default LoginForm
+
+/* <div className='absolute bottom-0 right-0 top-[28px] flex items-center justify-center'>
           {visibility ? (
             <span onClick={close} className='  cursor-pointer'>
               <EyeOpenIcon className='h-6' />
@@ -96,11 +107,4 @@ function LoginForm() {
               <EyeCloseIcon className=' h-6' />
             </span>
           )}
-        </div>
-      </div>
-      <PrimaryButton>Iniciar sesión</PrimaryButton>
-    </form>
-  )
-}
-
-export default LoginForm
+        </div> */

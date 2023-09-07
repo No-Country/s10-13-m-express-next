@@ -1,7 +1,7 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit'
 import { axiosPutter, axiosPoster, axiosGetter } from '@/utils/requests'
 import Endpoints from '@/utils/constants/endpoints.const'
-import { UserClass } from '@/types'
+import { UserClass } from '@/types/index'
 import { toast } from 'sonner'
 
 const initialState = {

@@ -4,9 +4,9 @@ import users from './slices/users'
 import initiatives from './slices/initiatives'
 
 const rootReducer = combineReducers({
-  authSession: authSession,
-  users: users,
-  initiatives: initiatives
+  authSession,
+  users,
+  initiatives
 })
 
 export default rootReducer

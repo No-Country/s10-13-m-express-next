@@ -7,11 +7,11 @@ import GeneralInfo from './generalInfo'
 import LocationInfo from './locationInfo'
 import DateTime from './dateTime'
 import Multimedia from './multimedia'
+import { serverUrl } from '@/utils/constants/env.const'
 
-//Remplazar por Zustand para centralizar el estado
 async function postData(form: any) {
   try {
-    const res = await axios.post('http://localhost:3001/api/initiatives', form, {
+    const res = await axios.post(`${serverUrl}/api/initiatives`, form, {
       headers: {
         'Content-Type': 'multipart/form-data'
       }
@@ -22,7 +22,7 @@ async function postData(form: any) {
   }
 }
 
-export type FormProps = {
+export interface FormProps {
   title: string
   description: string
   deadLine: string
@@ -40,6 +40,23 @@ export type FormProps = {
   thumbnail?: any
 }
 
+const defaultFormValues = {
+  title: '',
+  description: '',
+  deadLine: '',
+  startDate: '',
+  endDate: '',
+  categories: [],
+  opportunities: [],
+  locations: '',
+  languages: [],
+  ownerId: '',
+  startHour: '',
+  endHour: '',
+  extraInfo: '',
+  themes: []
+}
+
 export default function FormSec() {
   const formRef = useRef<HTMLFormElement>(null)
   const {
@@ -53,7 +70,7 @@ export default function FormSec() {
   const [themes, setThemes] = useState<string[]>([])
   const [opportunities, setOpportunities] = useState<string[]>([])
   const [categories, setCategories] = useState<string[]>([])
-  const [formValues, setFormValues] = useState<FormProps>({} as FormProps)
+  const [formValues, setFormValues] = useState<FormProps>(defaultFormValues)
 
   const handleChange = (e: any) => {
     const { name, value, type } = e.target
@@ -64,22 +81,7 @@ export default function FormSec() {
   }
 
   const cleanForm = () => {
-    setFormValues({
-      title: '',
-      description: '',
-      deadLine: '',
-      startDate: '',
-      endDate: '',
-      categories: [],
-      opportunities: [],
-      locations: '',
-      languages: [],
-      ownerId: '',
-      startHour: '',
-      endHour: '',
-      extraInfo: '',
-      themes: []
-    })
+    setFormValues(defaultFormValues)
 
     setLanguages([])
     setThemes([])
@@ -88,7 +90,7 @@ export default function FormSec() {
     formRef.current?.reset()
   }
 
-  const onSubmit = (e: any) => {
+  const onSubmit = async (e: any) => {
     const formData = {
       ...formValues,
       languages,
@@ -102,7 +104,7 @@ export default function FormSec() {
       deadLine: new Date(formValues.deadLine).toISOString()
     }
     console.log(errors, formValues.thumbnail)
-    postData(formData)
+    await postData(formData)
     cleanForm()
   }
 
