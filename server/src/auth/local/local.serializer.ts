@@ -10,7 +10,6 @@ export class LocalSerializer extends PassportSerializer {
   }
 
   serializeUser(user: User, done: CallableFunction) {
-    // Serialize user properties you need for session
     done(null, {
       userId: user.id,
       email: user.email,
@@ -20,7 +19,6 @@ export class LocalSerializer extends PassportSerializer {
 
   async deserializeUser(serializedUser: any, done: CallableFunction) {
     const user = await this.usersService.findOneById(serializedUser.userId);
-    // Deserialize user properties
     done(null, {
       userId: user.id,
       email: user.email,

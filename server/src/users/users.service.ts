@@ -35,25 +35,49 @@ export class UsersService {
   }
 
   async findAllUsers(): Promise<User[]> {
-    return await this.prisma.user.findMany();
+    const allUsers = await this.prisma.user.findMany({
+      include: {
+        posts: true,
+        reviews: true,
+      },
+    });
+    return allUsers;
   }
 
   async findOneById(userId: string): Promise<User | null> {
     const idPattern = /^[0-9a-f]{24}$/i;
 
-    if (!userId || !idPattern.test(userId)) {
-      throw new BadRequestException('User ID entered is incorrect');
+    if (userId && idPattern.test(userId)) {
+      const result = await this.prisma.user.findUnique({
+        where: { id: userId },
+        include: {
+          posts: true,
+          reviews: true,
+        },
+      });
+
+      if (!result) {
+        throw new BadRequestException('User not found or invalid id');
+      }
+
+      return result;
+    } else if (userId) {
+      const result = await this.prisma.user.findUnique({
+        where: { username: userId },
+        include: {
+          posts: true,
+          reviews: true,
+        },
+      });
+
+      if (!result) {
+        throw new BadRequestException('User not found or invalid id');
+      }
+
+      return result;
     }
 
-    const result = await this.prisma.user.findUnique({
-      where: { id: userId },
-    });
-
-    if (!result) {
-      throw new ConflictException('User not found');
-    }
-
-    return result;
+    throw new ConflictException('User not found or invalid id');
   }
 
   async findByEmail(email: string) {

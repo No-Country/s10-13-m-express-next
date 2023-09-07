@@ -8,15 +8,24 @@ import {
   Delete,
   BadRequestException,
   ConflictException,
+  UseInterceptors,
+  UploadedFile,
 } from '@nestjs/common';
 import { UsersService } from './users.service';
 import { CreateUserDto } from './dto/create-user.dto';
 import { UpdateUserDto } from './dto/update-user.dto';
-
+import { ApiBearerAuth, ApiTags } from '@nestjs/swagger';
+import { CloudinaryService } from 'src/cloudinary/cloudinary.service';
+import { FileInterceptor } from '@nestjs/platform-express';
+@ApiBearerAuth()
+@ApiTags('Users')
 @Controller('users')
 export class UsersController {
-  constructor(private readonly usersService: UsersService) {}
-
+  constructor(
+    private readonly usersService: UsersService,
+    private readonly cloudinaryService: CloudinaryService,
+  ) {}
+  @ApiTags('Users')
   @Post()
   async create(@Body() createUserDto: CreateUserDto) {
     try {
@@ -66,16 +75,45 @@ export class UsersController {
     @Param('id') userId: string,
     @Body() updateUserDto: UpdateUserDto,
   ) {
-    const updatedUser = await this.usersService.updateUser(
-      userId,
-      updateUserDto,
-    );
-    return { user: updatedUser, message: 'User correctly updated' };
+    try {
+      const updatedUser = await this.usersService.updateUser(
+        userId,
+        updateUserDto,
+      );
+      return { user: updatedUser, message: 'User correctly updated' };
+    } catch (error) {
+      console.log('error', error);
+      throw error;
+    }
   }
 
   @Delete(':id')
   async remove(@Param('id') userId: string) {
-    await this.usersService.removeUser(userId);
-    return 'User successfully deleted';
+    try {
+      await this.usersService.removeUser(userId);
+      console.log('remove', userId);
+      return 'User successfully deleted';
+    } catch (error) {
+      console.log('error', error);
+      throw error;
+    }
+  }
+
+  @Post('/testImageUpload')
+  @UseInterceptors(FileInterceptor('profileImage'))
+  async testImageUpload(
+    @Body() body,
+    @UploadedFile() profileImage: Express.Multer.File,
+  ) {
+    console.log('file', profileImage);
+    const response = await this.cloudinaryService
+      .uploadImage(profileImage)
+      .catch((error) => {
+        console.log('cloudinaryService', error);
+        throw new BadRequestException('Invalid file type.');
+      });
+
+    console.log('Final url', response.secure_url);
+    return;
   }
 }

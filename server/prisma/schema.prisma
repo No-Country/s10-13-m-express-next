@@ -11,81 +11,116 @@ datasource db {
 }
 
 model User {
-  id                String      @id @default(auto()) @map("_id") @db.ObjectId
-  name              String
-  lastName          String
-  phone             String
-  email             String      @unique
-  role              role?
-  password          String
-  profileImage      String?
-  volunteering      Volunteers[]
-  initiatives       Initiative[] @relation(name: "UserInitiatives")
-  
+  id           String       @id @default(auto()) @map("_id") @db.ObjectId
+  firstName    String
+  lastName     String
+  birthday     DateTime?
+  phone        String
+  email        String       @unique
+  role         role?
+  password     String
+  bannerImage  String?      @default("https://images.unsplash.com/photo-1461532257246-777de18cd58b?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1476&q=80")
+  username     String       @unique
+  profileImage String?      @default("https://images.unsplash.com/photo-1639628735078-ed2f038a193e?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1374&q=80")
+  orgName      String?
+  posts        Posts[]
+  volunteers   Volunteers[]
+  initiatives  Initiative[]
+  reviews      Review[]
+  donations    Donation[]
 }
 
-enum role {
-  volunteer
-  organization
+model Posts {
+  id          String   @id @default(auto()) @map("_id") @db.ObjectId
+  userId      String   @db.ObjectId
+  user        User     @relation(fields: [userId], references: [id])
+  description String
+  createdAt   DateTime @default(now())
+  galery      String?
 }
 
 model Session {
-  id    String      @id @default(auto()) @map("_id") @db.ObjectId
+  id      String      @id @default(auto()) @map("_id") @db.ObjectId
   expires DateTime
   session SessionInfo
+  userId  String?
+  //NO AGREGAR NINGUNA COSA MAS
+  //NO RELACIONAR CON NADA MAS
+  //NO TOCAR!!!
 }
 
 type SessionInfo {
-  user UserSession
+  user      UserSession
+  sessionId String
 }
 
 type UserSession {
   userId String
 }
 
-
 model Initiative {
-  id                String      @id @default(auto()) @map("_id") @db.ObjectId
-  title             String
-  description       String
-  deadLine          DateTime
-  startDate         DateTime
-  endDate           DateTime
-  galery            String?
-  thumbnail         String?
-
-  volunteers        Volunteers[] @relation(name: "InitiativeVolunteering")
-  //volunteers        User   @relation(name: "UserVolunteering", fields: [volunteersArr.volunteersId], references: [id])
-
-  ownerId           String @db.ObjectId
-  user              User   @relation(name: "UserInitiatives", fields: [ownerId], references: [id])
-
-  categoryId        String @db.ObjectId
-//  categories        Category   @relation(name: "InitiativeCategories", fields: [categoryId], references: [id])
-
-  reviewsId         String[] @db.ObjectId
-// review            Review   @relation(name: "InitiativeReviews", fields: [reviewsId], references: [id])
-
-  postsId           String[] @db.ObjectId
-// post              Post   @relation(name: "InitiativePosts", fields: [postsId], references: [id])
-
-  createdAt         DateTime @map("_created_at") @default(now())
-  updatedAt         DateTime @map("_updated_at") @updatedAt
+  id            String       @id @default(auto()) @map("_id") @db.ObjectId
+  title         String
+  description   String
+  deadLine      DateTime
+  startDate     DateTime
+  endDate       DateTime
+  galery        String?
+  thumbnail     String?      @default("https://res.cloudinary.com/dygpgsiei/image/upload/v1693699459/y48ke3c8mlgwjuksqmi1.webp")
+  volunteers    Volunteers[]
+  categories    String[]
+  opportunities String[]
+  locations     String
+  languages     String[]
+  reviewsId     String[]     @db.ObjectId
+  postsId       String[]     @db.ObjectId
+  ownerId       String       @db.ObjectId
+  startHour     String
+  endHour       String
+  extraInfo     String
+  themes        String[]
+  owner         User         @relation(fields: [ownerId], references: [id])
+  donations     Donation[]
+  createdAt     DateTime     @default(now()) @map("_created_at")
+  updatedAt     DateTime     @updatedAt @map("_updated_at")
 }
 
-model Volunteers{
-  id            String          @id @default(auto()) @map("_id") @db.ObjectId
+model Volunteers {
+  id           String     @id @default(auto()) @map("_id") @db.ObjectId
+  volunteersId String     @db.ObjectId
+  volunteer    Initiative @relation(fields: [volunteersId], references: [id])
+  user         User       @relation(fields: [userId], references: [id])
+  userId       String     @db.ObjectId
+  status       Status     @default(pending)
+  createdAt    DateTime   @default(now()) @map("_created_at")
+  updatedAt    DateTime   @updatedAt @map("_updated_at")
+}
 
-  volunteersId  String          @db.ObjectId
-  volunteer     Initiative      @relation(name: "InitiativeVolunteering", fields: [volunteersId], references: [id])
-  
-  user          User            @relation(fields: [userId], references: [id])
-  userId        String          @db.ObjectId
+model Review {
+  id         String   @id @default(auto()) @map("_id") @db.ObjectId
+  title      String
+  body       String
+  rating     String
+  dateReview DateTime @default(now())
+  userIDs    String?  @db.ObjectId
+  users      User?    @relation(fields: [userIDs], references: [id])
+}
 
-  status        Status          @default(pending)
+model Donation {
+  id              String   @id @default(auto()) @map("_id") @db.ObjectId
+  TransactionId   String
+  amount          Int
+  cardType        String
+  creadtedAt      DateTime  @default(now())
+  userId          String    @db.ObjectId
+  user            User?     @relation(fields: [userId], references: [id])
+  initiativeID    String    @db.ObjectId
+  initiative      Initiative? @relation(fields: [initiativeID], references: [id])
+}
 
-  createdAt     DateTime        @map("_created_at") @default(now())
-  updatedAt     DateTime        @map("_updated_at") @updatedAt
+enum role {
+  volunteer
+  organization
 }
 
 enum Status {
