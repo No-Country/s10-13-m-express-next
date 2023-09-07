@@ -1,36 +1,89 @@
 'use client'
-import { EyeCloseIcon, EyeOpenIcon, PrimaryButton } from '@/components'
-import { useState } from 'react'
+import { FormInput, PrimaryButton } from '@/components'
+import { useState, useRef } from 'react'
+import { useForm } from 'react-hook-form'
+import { useRouter } from 'next/navigation'
+import { useAppDispatch } from '@/redux/hooks'
+import { login } from '@/redux/slices/authSession'
 
 function LoginForm() {
-  const [visibility, setVisibility] = useState(false)
+  const router = useRouter()
+  const dispatch = useAppDispatch()
+  const [visibility] = useState(false)
+  // const close = () => setVisibility(false)
+  // const open = () => setVisibility(true)
+  const formRef = useRef<HTMLFormElement>(null)
+  const {
+    register,
+    formState: { errors },
+    handleSubmit
+  } = useForm({
+    mode: 'onChange'
+  })
 
-  const close = () => setVisibility(false)
-  const open = () => setVisibility(true)
+  const onSubmit = async (data: any) => {
+    console.log(data)
+    try {
+      await dispatch(login(data))
+      router.push('/')
+    } catch (error) {
+      console.error(error)
+    }
+  }
+
   return (
-    <form className='flex flex-col gap-4 items-center max-w-sm mx-auto'>
-      <input
-        type='text'
-        id='username'
-        className='border border-gray-700 rounded text-gray-900 text-sm block w-full px-3 py-4 bg-transparent placeholder:text-black'
-        placeholder='Usuario'
-        required
+    <form className='mx-auto flex max-w-sm flex-col items-center gap-4' onSubmit={handleSubmit(onSubmit)} ref={formRef}>
+      <FormInput
+        type='email'
+        name='email'
+        label='Email'
+        placeholder='Email'
+        hookForm={{
+          register,
+          validations: {
+            pattern: {
+              value: /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/,
+              message: 'Debe ser un email valido'
+            },
+            required: { value: true, message: 'Este campo es requerido' }
+          }
+        }}
+        error={errors?.email?.message}
       />
-      <span className='w-full relative'>
-        <input
+      <div className='relative flex w-full items-center'>
+        <FormInput
           type={visibility ? 'text' : 'password'}
-          id='first_name'
-          className='border border-gray-700 rounded text-gray-900 text-sm block w-full px-3 py-4 bg-transparent placeholder:text-black'
+          name='password'
+          label='Contraseña'
           placeholder='Contraseña'
-          required
+          hookForm={{
+            register,
+            validations: {
+              pattern: {
+                value: /^(?=.*[A-Z])(?=.*[a-z])(?=.*\d).{8,}$/,
+                message: 'La contraseña debe tener al menos 8 caracteres, una mayuscula, una minuscula y un numero'
+              },
+              required: { value: true, message: 'Este campo es requerido' }
+            }
+          }}
+          error={errors?.password?.message}
         />
-        {visibility
-          ? <span onClick={close} className='absolute top-1/2 right-0 -translate-y-1/2 cursor-pointer'><EyeOpenIcon className='h-6' /></span>
-          : <span onClick={open} className='absolute top-1/2 right-0 -translate-y-1/2 cursor-pointer'><EyeCloseIcon className=' h-6' /></span>}
-      </span>
+      </div>
       <PrimaryButton>Iniciar sesión</PrimaryButton>
     </form>
   )
 }
 
 export default LoginForm
+
+/* <div className='absolute bottom-0 right-0 top-[28px] flex items-center justify-center'>
+          {visibility ? (
+            <span onClick={close} className='  cursor-pointer'>
+              <EyeOpenIcon className='h-6' />
+            </span>
+          ) : (
+            <span onClick={open} className=' cursor-pointer'>
+              <EyeCloseIcon className=' h-6' />
+            </span>
+          )}
+        </div> */

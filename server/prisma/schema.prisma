@@ -27,6 +27,7 @@ model User {
   volunteers   Volunteers[]
   initiatives  Initiative[]
   reviews      Review[]
+  donations    Donation[]
 }
 
 model Posts {
@@ -74,7 +75,12 @@ model Initiative {
   reviewsId     String[]     @db.ObjectId
   postsId       String[]     @db.ObjectId
   ownerId       String       @db.ObjectId
-  owner         User         @relation(fields: [ownerId], references: [id])
+  owner         User         @relation(fields: [ownerId], references: [id], onDelete: Cascade)
+  startHour     String
+  endHour       String
+  extraInfo     String
+  themes        String[]
+  donations     Donation[]
   createdAt     DateTime     @default(now()) @map("_created_at")
   updatedAt     DateTime     @updatedAt @map("_updated_at")
 }
@@ -98,6 +104,18 @@ model Review {
   dateReview DateTime @default(now())
   userIDs    String?  @db.ObjectId
   users      User?    @relation(fields: [userIDs], references: [id])
+}
+
+model Donation {
+  id              String   @id @default(auto()) @map("_id") @db.ObjectId
+  TransactionId   String
+  amount          Int
+  cardType        String
+  creadtedAt      DateTime  @default(now())
+  userId          String    @db.ObjectId
+  user            User?     @relation(fields: [userId], references: [id])
+  initiativeID    String    @db.ObjectId
+  initiative      Initiative? @relation(fields: [initiativeID], references: [id])
 }
 
 enum role {

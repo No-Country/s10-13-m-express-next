@@ -91,7 +91,7 @@ export class AuthController {
 
   @Get('/verify')
   @ApiResponse({ status: HttpStatus.OK, type: VerificationResponseDto })
-  @ApiBody({ type: VerificationRequestDto }) /**@ApiHeader({ name: 'userId' }) */
+  @ApiHeader({ name: 'sessionid' })
   async verify(
     @Body() body,
     @Res() res: Response,

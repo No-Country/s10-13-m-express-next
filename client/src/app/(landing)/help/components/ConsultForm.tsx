@@ -1,27 +1,11 @@
-/*
-  1. Reemplazar inputs estaticos por componentes Input de la pagina login y register
-*/
-
-import { Button } from '@/components'
+import { Button, FormInput } from '@/components'
 
 function ConsultForm() {
   return (
-    <form className='grid gap-y-5'>
-      <input
-        type='text'
-        className='block w-full rounded border border-gray-700 bg-transparent px-3 py-4 text-sm text-gray-900 placeholder:text-black'
-        placeholder='Nombre'
-      />
-      <input
-        type='email'
-        className='block w-full rounded border border-gray-700 bg-transparent px-3 py-4 text-sm text-gray-900 placeholder:text-black'
-        placeholder='Email'
-      />
-      <textarea
-        className='block w-full rounded border border-gray-700 bg-transparent px-3 py-4 text-sm text-gray-900 placeholder:text-black'
-        placeholder='Escribe tu consulta...'
-        rows={6}
-      />
+    <form className='mx-auto grid max-w-screen-sm gap-y-5'>
+      <FormInput type='text' placeholder='Nombre' name='name' label='Nombre' />
+      <FormInput type='email' placeholder='Email' name='surname' label='Email' />
+      <FormInput type='textarea' placeholder='Escribe tu consulta...' name='consultation' label='Consulta' />
       <Button align='center'>Enviar</Button>
     </form>
   )
