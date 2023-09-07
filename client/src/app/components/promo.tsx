@@ -45,7 +45,7 @@ export default function PromoSec() {
       <section className=' flex w-full items-center justify-center'>
         <div className='flex w-full flex-col gap-4'>
           <h2 className='text-xl font-normal text-blue-600'>¿Qué es Unión Solidaria?</h2>
-          <div className='grid sm:grid-cols-2 grid-cols-1  justify-center gap-5 rounded-xl p-6 shadow-initiativeItem md:p-8 lg:gap-10 lg:p-8 xl:gap-14 xl:p-10'>
+          <div className='grid grid-cols-1 justify-center  gap-5 rounded-xl p-6 shadow-initiativeItem sm:grid-cols-2 md:p-8 lg:gap-10 lg:p-8 xl:gap-14 xl:p-10'>
             <PromoItem
               iconSrc='/icon/home/promo2.svg'
               text='Como voluntario/a, es donde encontrar la próxima iniciativa de la que podés ser parte.'

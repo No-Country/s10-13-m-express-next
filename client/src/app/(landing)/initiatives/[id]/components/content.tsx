@@ -3,12 +3,12 @@ import useSWR from 'swr'
 import Endpoints from '@/utils/constants/endpoints.const'
 import { fetcher } from '@/services/fetcher.service'
 
-type Props = {
+interface Props {
   id: string
 }
 
 function InitiativesPage({ id }: Props) {
-  const { data, error } = useSWR(`${Endpoints.INITIATIVES}/${id}`, fetcher)
+  const { data } = useSWR(`${Endpoints.INITIATIVES}/${id}`, fetcher)
   console.log(data)
 
   return (

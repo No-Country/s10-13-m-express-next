@@ -7,7 +7,7 @@ import { fetcher } from '@/services/fetcher.service'
 import Endpoints from '@/utils/constants/endpoints.const'
 
 export default function FeaturedSec() {
-  const { data, error } = useSWR(Endpoints.INITIATIVES, fetcher)
+  const { data } = useSWR(Endpoints.INITIATIVES, fetcher)
 
   return (
     <section className='flex w-full items-center justify-center'>

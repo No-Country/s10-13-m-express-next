@@ -6,7 +6,7 @@ All routes are prefixed with `/api`.
 
 ##General explanation
 
-In the frontend stripe uses the `STRIPE_PUBLIC_KEY` to create a payment intent, this payment intent creates it (for our specific case) by sending the amount of money to collect (donation amount), sending the id of the user who is making the payment and finally sending the id of the initiative to which the payment is going to be directed, in return the backend will respond with a client secret, that secret client stripe in the frontend will use it to initialize the payment form where the user will be able to enter his debit/credit card data, if the card data is correct stripe will complete the payment successfully, in the following image you can see better the flow:
+In the frontend a post request is sent to the payment intention endpoint sending the amount of money to collect (amount of the donation), sending the id of the user who is going to make the payment and finally sending the id of the initiative to which the payment is going to be directed, in return the backend will respond with a session url, this url will take the user to a payment form where the user can enter his debit/credit card details, if the card details are correct stripe will complete the payment successfully, in the following image you can see better the flow:
 
 ![stripe flow](https://miro.medium.com/v2/resize:fit:765/1*1380x8iqFlXB8-e_R7KXVw.png)
 
@@ -17,7 +17,7 @@ Please read the official stripe documentation to learn how to integrate stripe i
 To create a payment intent, make a **post** request to this endpoint.
 
 ```http
-POST /stripe
+POST /create-checkout-session
 ```
 
 **Request Parameters**
@@ -28,7 +28,7 @@ POST /stripe
 | `userId` | `string` | **Required**. User id of donor |
 | `initiativeId` | `string` | **Required**. Initiative Id |
 
-In the case of the initiative id if the donation will be for the maintenance of the site (not for a specific initiative) then you should send "globalDonation".
+In the case of the initiative id if the donation will be for the maintenance of the site (not for a specific initiative) then you should send "globalDonation" as value of "initiativeId".
 
 **Example of body**
 
@@ -44,7 +44,7 @@ In the case of the initiative id if the donation will be for the maintenance of 
 
 ```json
 {
-	"clientSecret": "pi_3NnTm4FIeveWazdR0G3A59tb_secret_2qniXczt9HEMhzWtGKxs7aeHq",
-	"message": "Payment Intent create successful"
+	"sessionUrl": "https://checkout.stripe.com/c/pay/cs_test_a15HhalOlPdWAwKtICaEVboKzERNEV7hPgIRpHqBjpWkKHgtwcNwUph779#fidkdWxOYHwnPyd1blpxYHZxWjA0S1VBNUdDTGBzYFJkf2FXMjVUTjZLSX9wZF10SVRcX0ZPS3xBUV83NXJRM2tIalc9aDQ2SEdJT0k0PUxrZmMwTTFuV3RpMnRJUUBRPElHZGRJUENQXWdjNTUyT2psMnBmMCcpJ2N3amhWYHdzYHcnP3F3cGApJ2lkfGpwcVF8dWAnPyd2bGtiaWBabHFgaCcpJ2BrZGdpYFVpZGZgbWppYWB3dic%2FcXdwYHgl",
+	"message": "Session payment create successful"
 }
 ```

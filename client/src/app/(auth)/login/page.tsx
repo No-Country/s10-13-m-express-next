@@ -12,9 +12,9 @@ export default function LoginPage() {
   const open = () => setModalOpen(true)
 
   return (
-    <main className='h-screen w-screen flex items-center  bg-[#f5f5fa]'>
-      <section className='p-6 w-full'>
-        <div className='flex py-10 items-center justify-center mb-12'>
+    <main className='flex h-screen w-screen items-center  bg-[#f5f5fa]'>
+      <section className='w-full p-6'>
+        <div className='mb-12 flex items-center justify-center py-10'>
           <Image src='Logo.svg' width={130} height={130} alt='Logo Unión Solidaria' />
           <h1 className='text-3xl'>
             <span className='text-pink-500'>Unión</span>
@@ -27,40 +27,30 @@ export default function LoginPage() {
 
         <div className='mt-6 text-center'>
           <p>¿No tenés cuenta?</p>
-          <button
-            className='font-bold text-blue-500 mt-2'
-            onClick={() => (modalOpen ? close() : open())}
-          >
+          <button className='mt-2 font-bold text-blue-500' onClick={() => (modalOpen ? close() : open())}>
             Registrate
           </button>
         </div>
 
-        <div className='mt-6 mb-6 text-center'>
+        <div className='mb-6 mt-6 text-center'>
           <p className='font-bold text-black'>Iniciar sesión con:</p>
-          <div className='flex py-4 justify-center gap-14'>
-            <button className='h-14 w-14 bg-white rounded-full flex justify-center items-center drop-shadow-md'>
+          <div className='flex justify-center gap-14 py-4'>
+            <button className='flex h-14 w-14 items-center justify-center rounded-full bg-white drop-shadow-md'>
               <GoogleIcon />
             </button>
-            <button className='h-14 w-14 bg-[#1878F3] rounded-full flex justify-center items-center drop-shadow-md'>
+            <button className='flex h-14 w-14 items-center justify-center rounded-full bg-[#1878F3] drop-shadow-md'>
               <FacebookIcon />
             </button>
           </div>
         </div>
-
       </section>
 
-      <AnimatePresence
-        initial={false}
-        mode='wait'
-        onExitComplete={() => null}
-      >
-        {modalOpen &&
-          <Modal
-            handleClose={close}
-            className='bg-[#f3f3f3] w-[80%] max-w-xs rounded-3xl flex flex-col gap-12 p-8'
-          >
+      <AnimatePresence initial={false} mode='wait' onExitComplete={() => null}>
+        {modalOpen && (
+          <Modal handleClose={close} className='flex w-[80%] max-w-xs flex-col gap-12 rounded-3xl bg-[#f3f3f3] p-8'>
             <ModalContent />
-          </Modal>}
+          </Modal>
+        )}
       </AnimatePresence>
     </main>
   )

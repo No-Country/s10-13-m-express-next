@@ -1,2 +1,2 @@
-export { UserClass } from "./user";
-export { AuthClass } from "./auth";
+export { UserClass } from './user'
+export { AuthClass } from './auth'
