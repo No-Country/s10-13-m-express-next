@@ -1,7 +1,7 @@
 import Image from 'next/image'
 import Link from 'next/link'
 
-interface Publication {
+interface PublicationProps {
   avatar: string
   organitationName: string
   title: string
@@ -17,7 +17,7 @@ const PublicationCard = ({
   publicationImg,
   description,
   timeElapsed
-}: Publication) => {
+}: PublicationProps) => {
   return (
     <div className='max-w-2xl overflow-hidden rounded-xl bg-gray-100 px-4 py-4 shadow'>
       <div className='flex items-center px-3 py-3'>

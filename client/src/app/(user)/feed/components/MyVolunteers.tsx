@@ -1,4 +1,4 @@
-import MyVolunteerCard from './my-volunteer/MyVolunteerCard/MyVolunteerCard'
+import MyVolunteerCard from './MyVolunteerCard'
 const myVolunteers = [
   {
     nameOrganitation: 'Amigos de la Playa',
@@ -25,7 +25,7 @@ const myVolunteers = [
       'https://images.unsplash.com/photo-1550439062-609e1531270e?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=500&q=60'
   }
 ]
-const Volunteer = () => {
+const MyVolunteers = () => {
   return (
     <div className='container mx-auto w-full flex-grow px-4 py-4 sm:py-16'>
       <div className='w-full self-stretch px-4 md:w-4/5'>
@@ -43,4 +43,4 @@ const Volunteer = () => {
     </div>
   )
 }
-export default Volunteer
+export default MyVolunteers
