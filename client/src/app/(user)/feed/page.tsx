@@ -1,6 +1,5 @@
 import Volunteer from './components/Volunteer'
 import LatestUpdatesCards from './components/LatestUpdatesCards'
-import SearchBar from './components/SearchBar'
 import Link from 'next/link'
 import Image from 'next/image'
 
@@ -24,7 +23,6 @@ function ContainerHeader({ titleHeader, path }: HeaderComponents) {
 export default function FeedPage() {
   return (
     <main className='flex flex-col px-5 py-5'>
-      <SearchBar search='hola' location='mundo' />
       <ContainerHeader titleHeader='Mis voluntariados' path='#' />
       <Volunteer />
       <ContainerHeader titleHeader='Publicaciones Recientes' path='#' />
