@@ -2,7 +2,7 @@ import { FormInput, Heading } from '@/components'
 import { FormProps } from './form'
 import { UseFormRegister } from 'react-hook-form'
 
-type LocationInfoProps = {
+interface LocationInfoProps {
   handleChange: (e: React.ChangeEvent<HTMLInputElement>) => void
   formValues: FormProps
   errors: any
@@ -26,7 +26,7 @@ export default function LocationInfo({ handleChange, formValues, errors, registe
           value={formValues.locations}
           onChange={handleChange}
           hookForm={{
-            register: register,
+            register,
             validations: {
               pattern: {
                 value: /^[a-zA-Z0-9 ]{5,80}$/,

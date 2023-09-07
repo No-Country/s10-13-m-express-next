@@ -2,7 +2,7 @@ import { FormInput, Heading, MultipleSelectCheckmarks } from '@/components'
 import { FormProps } from './form'
 import { UseFormRegister } from 'react-hook-form'
 
-type GeneralInfoProps = {
+interface GeneralInfoProps {
   setLanguages: (languages: string[]) => void
   languages: string[]
   setThemes: (themes: string[]) => void
@@ -47,7 +47,7 @@ export default function GeneralInfo({
           value={formValues.title}
           onChange={handleChange}
           hookForm={{
-            register: register,
+            register,
             validations: {
               maxLength: { value: 60, message: 'Maximo 60 caracteres' },
               minLength: { value: 5, message: 'Minimo 5 caracteres' },
@@ -65,7 +65,7 @@ export default function GeneralInfo({
           value={formValues.description}
           onChange={handleChange}
           hookForm={{
-            register: register,
+            register,
             validations: {
               maxLength: { value: 500, message: 'Maximo 500 caracteres' },
               minLength: { value: 50, message: 'Minimo 50 caracteres' },
@@ -83,7 +83,7 @@ export default function GeneralInfo({
           value={formValues.deadLine}
           onChange={handleChange}
           hookForm={{
-            register: register,
+            register,
             validations: {
               required: { value: true, message: 'Este campo es requerido' },
               validate: (value: string) => {

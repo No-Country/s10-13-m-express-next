@@ -2,7 +2,7 @@ import { FormInput, Heading } from '@/components'
 import { FormProps } from './form'
 import { UseFormRegister } from 'react-hook-form'
 
-type LocationInfoProps = {
+interface LocationInfoProps {
   handleChange: (e: React.ChangeEvent<HTMLInputElement>) => void
   formValues: FormProps
   errors: any
@@ -25,7 +25,7 @@ export default function Multimedia({ handleChange, formValues, errors, register 
           required={false}
           onChange={handleChange}
           hookForm={{
-            register: register,
+            register,
             validations: {
               required: false,
               validate: (value: any) => {

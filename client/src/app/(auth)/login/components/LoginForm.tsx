@@ -1,5 +1,4 @@
 'use client'
-//import { EyeCloseIcon, EyeOpenIcon, PrimaryButton, FormInput } from '@/components'
 import { FormInput, PrimaryButton } from '@/components'
 import { useState, useRef } from 'react'
 import { useForm } from 'react-hook-form'
@@ -15,9 +14,9 @@ interface FormProps {
 function LoginForm() {
   const router = useRouter()
   const dispatch = useAppDispatch()
-  const [visibility, setVisibility] = useState(false)
-  const close = () => setVisibility(false)
-  const open = () => setVisibility(true)
+  const [visibility] = useState(false)
+  // const close = () => setVisibility(false)
+  // const open = () => setVisibility(true)
   const [formValues, setFormValues] = useState<FormProps>({
     email: '',
     password: ''
@@ -78,7 +77,7 @@ function LoginForm() {
           placeholder='Contraseña'
           onChange={handleChange}
           hookForm={{
-            register: register,
+            register,
             validations: {
               pattern: {
                 value: /^(?=.*[A-Z])(?=.*[a-z])(?=.*\d).{8,}$/,
