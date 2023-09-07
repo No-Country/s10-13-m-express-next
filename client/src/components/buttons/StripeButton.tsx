@@ -3,13 +3,13 @@ import clsx from 'clsx'
 interface Props {
   children: React.ReactNode
   align?: 'center'
-  onClick?: () => void
+  onClick: () => void
 }
 
-function Button({ children, align, onClick }: Props) {
+function StripeButton({ children, align, onClick }: Props) {
   const classes = {
     button: clsx(
-      'rounded-full bg-blue-500 px-6 py-2 text-center text-lg font-bold text-white shadow-md shadow-gray-500 transition-colors duration-300 hover:bg-blue-400',
+      'rounded-full bg-white px-6 py-2 text-center text-lg font-black text-[#635bff] shadow-md shadow-black/30',
       align === 'center' && 'mx-auto'
     )
   }
@@ -21,4 +21,4 @@ function Button({ children, align, onClick }: Props) {
   )
 }
 
-export default Button
+export default StripeButton
