@@ -1,3 +1,4 @@
+import { Footer, HamburgerMenu } from '@/components'
 import Provider from '@/redux/provider'
 import './globals.scss'
 
@@ -14,6 +15,9 @@ function RootLayout({ children }: Props) {
   return (
     <html lang='en'>
       <body className='min-h-screen'>
+        <HamburgerMenu />
+        {children}
+        <Footer />
         <Provider>{children}</Provider>
       </body>
     </html>
