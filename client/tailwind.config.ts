@@ -1,7 +1,7 @@
 import type { Config } from 'tailwindcss'
 
 const config: Config = {
-  content: ['./src/components/**/*.{ts,tsx}', './src/app/**/*.{ts,tsx}'],
+  content: ['./src/components/**/*.{ts,tsx}', './src/app/**/*.{ts,tsx}', './src/utils/constants/*.ts'],
   theme: {
     colors: {
       transparent: 'transparent',
@@ -86,7 +86,7 @@ const config: Config = {
       },
       boxShadow: {
         ms: '2px 2px 6px 0px',
-        'initiativeItem': '0px 2px 6px 0px #B0B0B0',
+        initiativeItem: '0px 2px 6px 0px #B0B0B0'
       }
     }
   },

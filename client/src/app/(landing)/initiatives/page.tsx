@@ -3,7 +3,6 @@ import FeaturedSec from './components/featured'
 import RecentSec from './components/recent'
 import type { Metadata } from 'next'
 
-
 export const metadata: Metadata = {
   title: 'Iniciativas',
   description: '...',
@@ -12,11 +11,11 @@ export const metadata: Metadata = {
 
 function InitiativesPage() {
   return (
-    <main className='p-section gap-main'>
+    <div className='flex flex-col gap-10 py-7'>
       <HeroSec />
       <FeaturedSec />
       <RecentSec />
-    </main>
+    </div>
   )
 }
 

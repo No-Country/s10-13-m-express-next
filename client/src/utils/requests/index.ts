@@ -1,3 +1,3 @@
-export { axiosPutter as axiosPutter } from "./axios";
-export { axiosPoster as axiosPoster } from "./axios";
-export { axiosGetter as axiosGetter } from "./axios";
+export { axiosPutter } from './axios'
+export { axiosPoster } from './axios'
+export { axiosGetter } from './axios'

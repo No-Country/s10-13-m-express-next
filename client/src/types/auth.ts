@@ -1,20 +1,20 @@
 export class AuthClass {
-  sessionId: string;
-  isLogged: boolean;
-  constructor(isLogged: boolean = false, sessionId: string = "") {
-    this.sessionId = sessionId;
-    this.isLogged = isLogged;
+  sessionId: string
+  isLogged: boolean
+  constructor(isLogged: boolean = false, sessionId: string = '') {
+    this.sessionId = sessionId
+    this.isLogged = isLogged
   }
 
   getIsLogged(): boolean {
-    return this.isLogged;
+    return this.isLogged
   }
 
   getSessionId(): string {
-    return this.sessionId;
+    return this.sessionId
   }
 
   static deserialize(data: AuthClass): AuthClass {
-    return new AuthClass(data.isLogged, data.sessionId);
+    return new AuthClass(data.isLogged, data.sessionId)
   }
 }

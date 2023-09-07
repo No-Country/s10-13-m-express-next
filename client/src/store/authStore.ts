@@ -1,4 +1,4 @@
-"use client"
+'use client'
 import { create } from 'zustand'
 import { serverUrl } from '@/utils/constants/env.const'
 import useUserStore from '@/store/userStore'

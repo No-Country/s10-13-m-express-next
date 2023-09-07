@@ -10,7 +10,7 @@ function Backdrop({ children, onClick }: Props) {
   return (
     <motion.div
       onClick={onClick}
-      className='z-10 fixed top-0 left-0 h-full w-full bg-[#000000ce] flex items-center justify-center'
+      className='absolute left-0 top-0 flex h-full w-full items-center justify-center bg-[#000000ce]'
       initial={{ opacity: 0 }}
       animate={{ opacity: 1 }}
       exit={{ opacity: 0 }}
