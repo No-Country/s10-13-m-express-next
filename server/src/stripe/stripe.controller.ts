@@ -16,7 +16,7 @@ export class StripeController {
     try {
       const sessionUrl =
         await this.stripeService.createPaymentIntent(createStripeIntent);
-      return {sessionUrl, message: "Session payment create successful"};
+      return { sessionUrl, message: 'Session payment create successful' };
     } catch (error) {
       if (
         error instanceof BadRequestException ||
