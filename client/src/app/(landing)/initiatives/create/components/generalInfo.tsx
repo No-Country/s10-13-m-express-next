@@ -1,31 +1,14 @@
 import { FormInput, Heading, MultipleSelectCheckmarks } from '@/components'
-import { UseFormRegister } from 'react-hook-form'
+import { Control, Controller, UseFormRegister, UseFormSetValue } from 'react-hook-form'
 
 interface GeneralInfoProps {
-  setLanguages: (languages: string[]) => void
-  languages: string[]
-  setThemes: (themes: string[]) => void
-  themes: string[]
-  setOpportunities: (opportunities: string[]) => void
-  opportunities: string[]
-  categories: string[]
-  setCategories: (categories: string[]) => void
   errors: any
   register: UseFormRegister<any>
+  control: Control<any>
+  setValue: UseFormSetValue<any>
 }
 
-export default function GeneralInfo({
-  setLanguages,
-  setThemes,
-  setOpportunities,
-  languages,
-  themes,
-  opportunities,
-  categories,
-  setCategories,
-  errors,
-  register
-}: GeneralInfoProps) {
+export default function GeneralInfo({ errors, register, control, setValue }: GeneralInfoProps) {
   return (
     <div className='flex w-full flex-col gap-4'>
       <div className='flex flex-col gap-2'>
@@ -72,11 +55,11 @@ export default function GeneralInfo({
             register,
             validations: {
               required: { value: true, message: 'Este campo es requerido' },
-              validate: (value: string) => {
+              validate: (value) => {
                 const date = new Date(value)
-                const currentDate = new Date()
-                if (date < currentDate) {
-                  return 'La fecha no puede ser anterior a la actual'
+                const today = new Date()
+                if (date < today) {
+                  return 'La fecha no puede ser menor a la actual'
                 }
                 return true
               }
@@ -84,33 +67,77 @@ export default function GeneralInfo({
           }}
           error={errors?.deadLine?.message}
         />
-        <MultipleSelectCheckmarks
-          names={['Categorias 1', 'Categorias 2', 'Categorias 3']}
-          placeholder='Categorias'
-          setSelected={setCategories}
-          selectedValue={categories}
-          label='Categorias'
+        <Controller
+          name='categories'
+          control={control}
+          rules={{
+            required: { value: true, message: 'Este campo es requerido' }
+          }}
+          render={({ field }) => (
+            <MultipleSelectCheckmarks
+              field={field}
+              name='categories'
+              names={['Categorias 1', 'Categorias 2', 'Categorias 3']}
+              placeholder='Categorias'
+              setSelected={(selected) => setValue('categories', selected)}
+              label='Categorias'
+              error={errors?.categories?.message}
+            />
+          )}
         />
-        <MultipleSelectCheckmarks
-          names={['Oportundad 1', 'Oportundad 2', 'Oportundad 3']}
-          placeholder='Oportunidades'
-          setSelected={setOpportunities}
-          selectedValue={opportunities}
-          label='Oportunidades'
+        <Controller
+          name='opportunities'
+          control={control}
+          rules={{
+            required: { value: true, message: 'Este campo es requerido' }
+          }}
+          render={({ field }) => (
+            <MultipleSelectCheckmarks
+              names={['Oportundad 1', 'Oportundad 2', 'Oportundad 3']}
+              placeholder='Oportunidades'
+              name='opportunities'
+              field={field}
+              setSelected={(selected) => setValue('opportunities', selected)}
+              label='Oportunidades'
+              error={errors?.opportunities?.message}
+            />
+          )}
         />
-        <MultipleSelectCheckmarks
-          names={['Tematica 1', 'Tematica 2', 'Tematica 3']}
-          placeholder='Tematicas'
-          setSelected={setThemes}
-          selectedValue={themes}
-          label='Tematicas'
+        <Controller
+          name='themes'
+          control={control}
+          rules={{
+            required: { value: true, message: 'Este campo es requerido' }
+          }}
+          render={({ field }) => (
+            <MultipleSelectCheckmarks
+              field={field}
+              name='themes'
+              names={['Tematica 1', 'Tematica 2', 'Tematica 3']}
+              placeholder='Tematicas'
+              setSelected={(selected) => setValue('themes', selected)}
+              label='Tematicas'
+              error={errors?.themes?.message}
+            />
+          )}
         />
-        <MultipleSelectCheckmarks
-          names={['Idioma 1', 'Idioma 2', 'Idioma 3']}
-          placeholder='Idiomas'
-          setSelected={setLanguages}
-          selectedValue={languages}
-          label='Idiomas'
+        <Controller
+          name='languages'
+          control={control}
+          rules={{
+            required: { value: true, message: 'Este campo es requerido' }
+          }}
+          render={({ field }) => (
+            <MultipleSelectCheckmarks
+              field={field}
+              names={['Idioma 1', 'Idioma 2', 'Idioma 3']}
+              placeholder='Idiomas'
+              setSelected={(selected) => setValue('languages', selected)}
+              label='Idiomas'
+              name='languages'
+              error={errors?.languages?.message}
+            />
+          )}
         />
       </div>
     </div>

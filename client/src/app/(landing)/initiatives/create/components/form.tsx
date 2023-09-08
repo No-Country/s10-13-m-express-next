@@ -1,6 +1,6 @@
 'use client'
 import { Heading } from '@/components'
-import { useRef, useState } from 'react'
+import { useEffect, useRef } from 'react'
 import { useAppSelector } from '@/redux/hooks'
 import { useForm } from 'react-hook-form'
 import GeneralInfo from './generalInfo'
@@ -32,33 +32,28 @@ export default function FormSec() {
   const formRef = useRef<HTMLFormElement>(null)
   const { id } = useAppSelector(currentUserSelector)
   const [addPost] = usePostInitiativesMutation()
-  const [languages, setLanguages] = useState<string[]>([])
-  const [themes, setThemes] = useState<string[]>([])
-  const [opportunities, setOpportunities] = useState<string[]>([])
-  const [categories, setCategories] = useState<string[]>([])
   const {
     register,
     formState: { errors },
-    handleSubmit
+    handleSubmit,
+    control,
+    setValue,
+    getValues
   } = useForm({
     mode: 'onChange'
   })
 
+  useEffect(() => {
+    console.log(getValues())
+  }, [errors])
+
   const cleanForm = () => {
-    setLanguages([])
-    setThemes([])
-    setOpportunities([])
-    setCategories([])
     formRef.current?.reset()
   }
 
   const onSubmit = async (data: any) => {
     const formData = {
       ...data,
-      languages,
-      themes,
-      opportunities,
-      categories,
       ownerId: id,
       startDate: new Date(data.startDate).toISOString(),
       endDate: new Date(data.endDate).toISOString(),
@@ -75,18 +70,7 @@ export default function FormSec() {
     <section className='flex items-center  justify-center'>
       <form className='flex w-full flex-col gap-8' onSubmit={handleSubmit(onSubmit)} ref={formRef}>
         <Heading>Crear iniciativa</Heading>
-        <GeneralInfo
-          setLanguages={setLanguages}
-          setThemes={setThemes}
-          setOpportunities={setOpportunities}
-          languages={languages}
-          themes={themes}
-          opportunities={opportunities}
-          categories={categories}
-          setCategories={setCategories}
-          errors={errors}
-          register={register}
-        />
+        <GeneralInfo errors={errors} register={register} control={control} setValue={setValue} />
         <LocationInfo errors={errors} register={register} />
         <DateTime errors={errors} register={register} />
         <Multimedia errors={errors} register={register} />

@@ -39,12 +39,14 @@ export class UsersController {
       return { newUser, message: 'User created Successfully' };
     } catch (error) {
       if (error instanceof BadRequestException) {
+        console.log('error', error);
         // Si es una BadRequestException, devolvemos los detalles de validación
         throw error;
       } else if (error instanceof ConflictException) {
         // Si es una ConflictException, devolvemos el mensaje de conflicto
         throw error;
       } else {
+        console.log('error', error);
         // Para cualquier otra excepción, devolvemos un mensaje genérico
         throw new BadRequestException('Something bad happened', {
           cause: error,
