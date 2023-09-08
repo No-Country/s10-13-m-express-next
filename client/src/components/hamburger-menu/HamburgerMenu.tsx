@@ -1,5 +1,4 @@
 'use client'
-import useActionStore from '@/store/actionsStore'
 import { Backdrop, PrimaryButton, HeartIcon } from '@/components'
 import { motion, AnimatePresence } from 'framer-motion'
 import { usePathname, useRouter } from 'next/navigation'
@@ -30,8 +29,8 @@ const menuAnimation = {
 }
 
 const HamburgerMenu = () => {
-  const menuOpened = useActionStore((state) => state.menuOpened)
-  const setMenuOpen = useActionStore((state) => state.setMenuOpen)
+  const menuOpened = false
+  const setMenuOpen = () => {}
   const router = useRouter()
 
   const pathname = usePathname()

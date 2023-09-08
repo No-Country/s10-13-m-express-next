@@ -1,29 +1,13 @@
 'use client'
 import { Heading } from '@/components'
-import axios from 'axios'
 import { useRef } from 'react'
 import { useAppSelector } from '@/redux/hooks'
-import { currentUserSelector, currentAuthSelector } from '@/redux/selectors/users'
+import { currentUserSelector } from '@/redux/selectors/users'
 import { useForm } from 'react-hook-form'
 import GeneralInfo from './generalInfo'
-import { serverUrl } from '@/utils/constants/env.const'
 import Multimedia from './multimedia'
 import SecurityInfo from './securityInfo'
-import Endpoints from '@/utils/constants/endpoints.const'
-
-async function postData(form: any, userId: string, sessionId: string) {
-  try {
-    const res = await axios.put(serverUrl + Endpoints.USER_BY_ID(userId), form, {
-      headers: {
-        'Content-Type': 'multipart/form-data',
-        sessionId: sessionId
-      }
-    })
-    console.log(res)
-  } catch (error) {
-    console.log(error)
-  }
-}
+import { usePutUsersMutation } from '@/redux/services/users.service'
 
 export interface FormProps {
   title: string
@@ -46,7 +30,7 @@ export interface FormProps {
 export default function FormSec() {
   const formRef = useRef<HTMLFormElement>(null)
   const currentUser = useAppSelector(currentUserSelector)
-  const currentSession = useAppSelector(currentAuthSelector)
+  const [putUser] = usePutUsersMutation()
 
   const {
     register,
@@ -56,19 +40,14 @@ export default function FormSec() {
     mode: 'onChange'
   })
 
-  const cleanForm = () => {
-    formRef.current?.reset()
-  }
-
   const onSubmit = async (data: any) => {
     const formData = {
       ...data,
-      profileImage: data.profileImage[0],
-      bannerImage: data.bannerImage[0]
+      profileImage: data.profileImage[0] ?? '',
+      bannerImage: data.bannerImage[0] ?? ''
     }
     console.log(errors, formData)
-    await postData(formData, currentUser.id, currentSession.sessionId)
-    cleanForm()
+    await putUser({ data: formData, userId: currentUser.id })
   }
 
   return (
