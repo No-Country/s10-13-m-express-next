@@ -1,14 +1,11 @@
 'use client'
 import Image from 'next/image'
 import Link from 'next/link'
-import useSWR from 'swr'
 import { InitiativesFlex } from '@/components'
-import { fetcher } from '@/services/fetcher.service'
-import Endpoints from '@/utils/constants/endpoints.const'
+import { useGetInitiativesQuery } from '@/redux/services/initiatives.service'
 
 export default function FeaturedSec() {
-  const { data } = useSWR(Endpoints.INITIATIVES, fetcher)
-
+  const { data } = useGetInitiativesQuery()
   return (
     <section className='flex w-full items-center justify-center'>
       <div className='container flex flex-col gap-4'>
@@ -19,7 +16,7 @@ export default function FeaturedSec() {
             <Image src='/icon/arrow-right.svg' width={7} height={12} alt='arrow-right' />
           </Link>
         </div>
-        <InitiativesFlex initiatives={data?.slice(0, 4)} />
+        <InitiativesFlex initiatives={data || []} />
       </div>
     </section>
   )

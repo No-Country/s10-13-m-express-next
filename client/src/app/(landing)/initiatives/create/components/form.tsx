@@ -1,27 +1,14 @@
 'use client'
 import { Heading } from '@/components'
-import axios from 'axios'
 import { useRef, useState } from 'react'
+import { useAppSelector } from '@/redux/hooks'
 import { useForm } from 'react-hook-form'
 import GeneralInfo from './generalInfo'
 import LocationInfo from './locationInfo'
 import DateTime from './dateTime'
 import Multimedia from './multimedia'
-import { serverUrl } from '@/utils/constants/env.const'
-import Endpoints from '@/utils/constants/endpoints.const'
-
-async function postData(form: any) {
-  try {
-    const res = await axios.post(serverUrl + Endpoints.INITIATIVES, form, {
-      headers: {
-        'Content-Type': 'multipart/form-data'
-      }
-    })
-    console.log(res)
-  } catch (error) {
-    console.log(error)
-  }
-}
+import { usePostInitiativesMutation } from '@/redux/services/initiatives.service'
+import { currentUserSelector } from '@/redux/selectors/users'
 
 export interface FormProps {
   title: string
@@ -43,6 +30,12 @@ export interface FormProps {
 
 export default function FormSec() {
   const formRef = useRef<HTMLFormElement>(null)
+  const { id } = useAppSelector(currentUserSelector)
+  const [addPost] = usePostInitiativesMutation()
+  const [languages, setLanguages] = useState<string[]>([])
+  const [themes, setThemes] = useState<string[]>([])
+  const [opportunities, setOpportunities] = useState<string[]>([])
+  const [categories, setCategories] = useState<string[]>([])
   const {
     register,
     formState: { errors },
@@ -50,10 +43,6 @@ export default function FormSec() {
   } = useForm({
     mode: 'onChange'
   })
-  const [languages, setLanguages] = useState<string[]>([])
-  const [themes, setThemes] = useState<string[]>([])
-  const [opportunities, setOpportunities] = useState<string[]>([])
-  const [categories, setCategories] = useState<string[]>([])
 
   const cleanForm = () => {
     setLanguages([])
@@ -70,14 +59,15 @@ export default function FormSec() {
       themes,
       opportunities,
       categories,
-      ownerId: '64f6ac5dbd10725027c83414',
+      ownerId: id,
       startDate: new Date(data.startDate).toISOString(),
       endDate: new Date(data.endDate).toISOString(),
       thumbnail: data.thumbnail[0],
       deadLine: new Date(data.deadLine).toISOString()
     }
     console.log(errors, formData)
-    await postData(formData)
+    const res = await addPost(formData)
+    console.log(res)
     cleanForm()
   }
 

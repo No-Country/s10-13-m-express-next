@@ -1,11 +1,11 @@
-export interface User {
-  id?: string
+export interface UserInterface {
+  id: string
   firstName: string
   lastName: string
   birthday?: null | string
   phone: string
   email: string
-  role: string
+  role: 'volunteer' | 'organization'
   password: string
   bannerImage?: null | string
   username: string

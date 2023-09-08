@@ -1,12 +1,15 @@
 import { configureStore } from '@reduxjs/toolkit'
 import { persistStore, persistReducer, FLUSH, REHYDRATE, PAUSE, PERSIST, PURGE, REGISTER } from 'redux-persist'
 import storage from 'redux-persist/lib/storage'
-import rootReducer from '../rootReducer'
+import rootReducer from './rootReducer'
+import { initiativesApi } from './services/initiatives.service'
+import { currentUsersApi } from './services/users.service'
+import { authSessionApi } from './services/authSession.service'
 
 const persistConfig = {
   key: 'root',
   storage,
-  whitelist: ['authSession', 'client'],
+  whitelist: ['authSession', 'users', 'initiatives'],
   debug: true
 }
 
@@ -14,15 +17,13 @@ const persistedReducer = persistReducer(persistConfig, rootReducer)
 
 const store = configureStore({
   reducer: persistedReducer,
-  // middleware: (getDefaultMiddleware) =>
-  //   getDefaultMiddleware().concat(persistMiddleware),
   middleware: (getDefaultMiddleware) =>
     getDefaultMiddleware({
       serializableCheck: {
         ignoredActions: [FLUSH, REHYDRATE, PAUSE, PERSIST, PURGE, REGISTER],
-        ignoredPaths: ['client', 'authSession']
+        ignoredPaths: ['users', 'authSession', 'initiatives']
       }
-    })
+    }).concat(initiativesApi.middleware, currentUsersApi.middleware, authSessionApi.middleware)
 })
 
 export type RootState = ReturnType<typeof store.getState>

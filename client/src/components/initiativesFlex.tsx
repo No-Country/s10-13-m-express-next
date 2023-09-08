@@ -1,7 +1,8 @@
 import { InitiativeItem } from '.'
+import type { InitiativeInterface } from '@/interfaces'
 
 interface Props {
-  initiatives: any[]
+  initiatives: InitiativeInterface[]
 }
 
 export default function InitiativesFlex({ initiatives }: Props) {
