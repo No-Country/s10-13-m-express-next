@@ -6,7 +6,9 @@ function ConsultForm() {
       <FormInput type='text' placeholder='Nombre' name='name' label='Nombre' />
       <FormInput type='email' placeholder='Email' name='surname' label='Email' />
       <FormInput type='textarea' placeholder='Escribe tu consulta...' name='consultation' label='Consulta' />
-      <Button align='center'>Enviar</Button>
+      <Button variant='primary' align='center'>
+        Enviar
+      </Button>
     </form>
   )
 }
