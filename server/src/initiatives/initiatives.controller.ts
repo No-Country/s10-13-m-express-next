@@ -16,6 +16,7 @@ import { UpdateInitiativeDto } from './dto/update-initiative.dto';
 import { ApiBearerAuth, ApiTags } from '@nestjs/swagger';
 import { FileInterceptor } from '@nestjs/platform-express';
 import { CloudinaryService } from 'src/cloudinary/cloudinary.service';
+import { convertToArray } from 'src/utils/convertToArray.utils';
 
 @ApiBearerAuth()
 @ApiTags('Initiatives')
@@ -32,14 +33,31 @@ export class InitiativesController {
     @Body() createInitiativeDto: CreateInitiativeDto,
     @UploadedFile() thumbnail: Express.Multer.File,
   ) {
-    const response = await this.cloudinaryService
-      .uploadImage(thumbnail)
-      .catch((error) => {
-        throw new BadRequestException('Invalid file type.');
-      });
-    createInitiativeDto.thumbnail = response.secure_url;
-
-    return this.initiativesService.create(createInitiativeDto);
+    try {
+      console.log('createInitiativeDto prev', createInitiativeDto);
+      const response = await this.cloudinaryService
+        .uploadImage(thumbnail)
+        .catch((error) => {
+          throw new BadRequestException('Invalid file type.');
+        });
+        // Solución temporal
+      createInitiativeDto.categories = convertToArray(
+        createInitiativeDto.categories,
+      );
+      createInitiativeDto.languages = convertToArray(
+        createInitiativeDto.languages,
+      );
+      createInitiativeDto.themes = convertToArray(createInitiativeDto.themes);
+      createInitiativeDto.opportunities = convertToArray(
+        createInitiativeDto.opportunities,
+      );
+      createInitiativeDto.thumbnail = response.secure_url;
+      console.log('createInitiativeDto', createInitiativeDto);
+      //return;
+      return this.initiativesService.create(createInitiativeDto);
+    } catch (error) {
+      console.log(error);
+    }
   }
 
   @Get()

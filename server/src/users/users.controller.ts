@@ -121,6 +121,8 @@ export class UsersController {
 
       delete updateUserDto.oldPassword;
       delete updateUserDto.newPassword;
+      if (updateUserDto.profileImage === '') delete updateUserDto.profileImage;
+      if (updateUserDto.bannerImage === '') delete updateUserDto.bannerImage;
       const updatedUser = await this.usersService.updateUser(
         userId,
         updateUserDto,
