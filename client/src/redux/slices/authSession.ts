@@ -1,5 +1,6 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit'
 import { AuthInterface, UserInterface } from '@/interfaces'
+import { PURGE } from 'redux-persist'
 
 interface AuthState {
   auth: AuthInterface
@@ -64,7 +65,11 @@ const authSlice = createSlice({
       }
     }
   },
-  extraReducers: (builder) => {}
+  extraReducers: (builder) => {
+    builder.addCase(PURGE, () => {
+      return initialState
+    })
+  }
 })
 
 export const { setAuth, resetReducer, updateCurrentUser } = authSlice.actions

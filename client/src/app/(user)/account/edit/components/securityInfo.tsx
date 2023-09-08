@@ -22,9 +22,11 @@ export default function SecurityInfo({ errors, register }: GeneralInfoProps) {
           hookForm={{
             register,
             validations: {
-              maxLength: { value: 60, message: 'Maximo 60 caracteres' },
-              minLength: { value: 5, message: 'Minimo 5 caracteres' },
-              required: { value: false, message: 'Este campo no es requerido' }
+              pattern: {
+                value: /^(?=.*[A-Z])(?=.*[a-z])(?=.*\d).{8,}$/,
+                message: 'La contraseña debe tener al menos 8 caracteres, una mayuscula, una minuscula y un numero'
+              },
+              required: { value: true, message: 'Este campo es requerido' }
             }
           }}
           error={errors?.oldPassword?.message}
@@ -37,9 +39,11 @@ export default function SecurityInfo({ errors, register }: GeneralInfoProps) {
           hookForm={{
             register,
             validations: {
-              maxLength: { value: 60, message: 'Maximo 60 caracteres' },
-              minLength: { value: 5, message: 'Minimo 5 caracteres' },
-              required: { value: false, message: 'Este campo no es requerido' }
+              pattern: {
+                value: /^(?=.*[A-Z])(?=.*[a-z])(?=.*\d).{8,}$/,
+                message: 'La contraseña debe tener al menos 8 caracteres, una mayuscula, una minuscula y un numero'
+              },
+              required: { value: true, message: 'Este campo es requerido' }
             }
           }}
           error={errors?.oldPassword?.message}
