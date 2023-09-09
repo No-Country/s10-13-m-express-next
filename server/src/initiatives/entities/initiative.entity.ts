@@ -47,8 +47,16 @@ export class Initiative implements ModelInitiative {
   opportunities: string[];
 
   @ApiProperty()
-  @IsNotEmpty({ message: 'Locations are required' })
-  locations: string;
+  @IsNotEmpty({ message: 'Country are required' })
+  country: string;
+
+  @ApiProperty()
+  @IsNotEmpty({ message: 'Province are required' })
+  province: string;
+
+  @ApiProperty()
+  @IsNotEmpty({ message: 'Adress are required' })
+  adress: string;
 
   @ApiProperty()
   @IsNotEmpty({ message: 'Languages are required' })

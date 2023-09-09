@@ -18,6 +18,12 @@ export const initiativesApi = createApi({
     getInitiatives: builder.query<InitiativeInterface[], void>({
       query: () => Endpoints.INITIATIVES
     }),
+    getFilteredInitiatives: builder.query<InitiativeInterface[], any>({
+      query: (query) => ({
+        url: Endpoints.INITIATIVES,
+        params: query
+      })
+    }),
     getInitiativesById: builder.query<InitiativeInterface, string>({
       query: (id) => Endpoints.INITIATIVES_BY_ID(id)
     }),
@@ -56,5 +62,6 @@ export const {
   useGetInitiativesQuery,
   useDeleteInitiativesMutation,
   usePostInitiativesMutation,
-  usePutInitiativesMutation
+  usePutInitiativesMutation,
+  useGetFilteredInitiativesQuery
 } = initiativesApi

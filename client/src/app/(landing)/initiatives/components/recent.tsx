@@ -2,10 +2,13 @@
 import { InitiativesFlex } from '@/components'
 import Image from 'next/image'
 import Link from 'next/link'
-import { useGetInitiativesQuery } from '@/redux/services/initiatives.service'
+import { useAppSelector } from '@/redux/hooks'
+import { currentFilters } from '@/redux/selectors/filters'
+import { useGetFilteredInitiativesQuery } from '@/redux/services/initiatives.service'
 
 export default function RecentSec() {
-  const { data } = useGetInitiativesQuery()
+  const filters = useAppSelector(currentFilters)
+  const { data } = useGetFilteredInitiativesQuery(filters)
   return (
     <section className='flex w-full items-center justify-center'>
       <div className='container flex flex-col gap-4'>

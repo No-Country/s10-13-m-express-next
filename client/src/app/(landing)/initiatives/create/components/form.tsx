@@ -71,7 +71,7 @@ export default function FormSec() {
       <form className='flex w-full flex-col gap-8' onSubmit={handleSubmit(onSubmit)} ref={formRef}>
         <Heading>Crear iniciativa</Heading>
         <GeneralInfo errors={errors} register={register} control={control} setValue={setValue} />
-        <LocationInfo errors={errors} register={register} />
+        <LocationInfo errors={errors} register={register} control={control} setValue={setValue} />
         <DateTime errors={errors} register={register} />
         <Multimedia errors={errors} register={register} />
         <button type='submit' className='w-max rounded-full bg-blue-500 px-6 py-2 text-lg font-semibold text-white'>

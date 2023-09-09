@@ -9,8 +9,9 @@ import { CreateInitiativeDto } from './dto/create-initiative.dto';
 import { UpdateInitiativeDto } from './dto/update-initiative.dto';
 import { PrismaService } from '../prisma/prisma.service';
 import { Initiative } from '@prisma/client';
-import { isMongoId, validate } from 'class-validator';
+import { isMongoId } from 'class-validator';
 import { PrismaClientKnownRequestError } from '@prisma/client/runtime/library';
+import { buildQueryInitiative } from 'src/utils/initiativeFilter.utils';
 
 @Injectable()
 export class InitiativesService {
@@ -31,8 +32,31 @@ export class InitiativesService {
     }
   }
 
-  async findAll(): Promise<Initiative[]> {
-    return await this.prisma.initiative.findMany();
+  async findAll(
+    country,
+    province,
+    name,
+    categories,
+    languages,
+    themes,
+    opportunities,
+  ) {
+    const query = buildQueryInitiative({
+      country,
+      province,
+      name,
+      categories,
+      opportunities,
+      languages,
+      themes,
+    });
+
+    return await this.prisma.initiative.findMany({
+      where: query,
+      include: {
+        owner: true,
+      },
+    });
   }
 
   async findOne(id: string): Promise<Initiative | null> {

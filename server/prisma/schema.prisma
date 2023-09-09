@@ -70,7 +70,9 @@ model Initiative {
   volunteers    Volunteers[]
   categories    String[]
   opportunities String[]
-  locations     String
+  country       String
+  province      String
+  adress        String
   languages     String[]
   reviewsId     String[]     @db.ObjectId
   postsId       String[]     @db.ObjectId
@@ -107,15 +109,15 @@ model Review {
 }
 
 model Donation {
-  id              String   @id @default(auto()) @map("_id") @db.ObjectId
-  TransactionId   String
-  amount          Int
-  cardType        String
-  creadtedAt      DateTime  @default(now())
-  userId          String    @db.ObjectId
-  user            User?     @relation(fields: [userId], references: [id])
-  initiativeID    String    @db.ObjectId
-  initiative      Initiative? @relation(fields: [initiativeID], references: [id])
+  id            String      @id @default(auto()) @map("_id") @db.ObjectId
+  TransactionId String
+  amount        Int
+  cardType      String
+  creadtedAt    DateTime    @default(now())
+  userId        String      @db.ObjectId
+  user          User?       @relation(fields: [userId], references: [id])
+  initiativeID  String      @db.ObjectId
+  initiative    Initiative? @relation(fields: [initiativeID], references: [id])
 }
 
 enum role {
