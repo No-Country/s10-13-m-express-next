@@ -94,8 +94,14 @@ export class CreateInitiativeDto {
     nullable: false,
     example: 'Colombia',
   })
-  @IsNotEmpty({ message: 'Locations are required' })
-  locations: string;
+  @IsNotEmpty({ message: 'Country are required' })
+  country: string;
+
+  @IsNotEmpty({ message: 'Province are required' })
+  province: string;
+
+  @IsNotEmpty({ message: 'Adress are required' })
+  adress: string;
 
   @ApiProperty({
     description: 'Initiative languages',

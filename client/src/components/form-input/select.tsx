@@ -41,7 +41,7 @@ export default function UnstyledSelect({
           onChange={(_, newValue) => setSelected(newValue)}
           renderValue={(selected) => {
             if (!selected?.value) {
-              return <p className='text-gray-400'>Selecciona un rol</p>
+              return <p className='text-gray-400'>{placeholder}</p>
             }
             return <p className='text-black'>{selected?.label as string}</p>
           }}

@@ -9,6 +9,7 @@ import {
   UseInterceptors,
   UploadedFile,
   BadRequestException,
+  Query,
 } from '@nestjs/common';
 import { InitiativesService } from './initiatives.service';
 import { CreateInitiativeDto } from './dto/create-initiative.dto';
@@ -35,12 +36,17 @@ export class InitiativesController {
   ) {
     try {
       console.log('createInitiativeDto prev', createInitiativeDto);
-      const response = await this.cloudinaryService
-        .uploadImage(thumbnail)
-        .catch((error) => {
-          throw new BadRequestException('Invalid file type.');
-        });
-        // Solución temporal
+      if (thumbnail) {
+        const response = await this.cloudinaryService
+          .uploadImage(thumbnail)
+          .catch((error) => {
+            throw new BadRequestException('Invalid file type.');
+          });
+
+          createInitiativeDto.thumbnail = response.secure_url;
+      }
+
+      // Solución temporal
       createInitiativeDto.categories = convertToArray(
         createInitiativeDto.categories,
       );
@@ -51,7 +57,7 @@ export class InitiativesController {
       createInitiativeDto.opportunities = convertToArray(
         createInitiativeDto.opportunities,
       );
-      createInitiativeDto.thumbnail = response.secure_url;
+      
       console.log('createInitiativeDto', createInitiativeDto);
       //return;
       return this.initiativesService.create(createInitiativeDto);
@@ -61,8 +67,16 @@ export class InitiativesController {
   }
 
   @Get()
-  findAll() {
-    return this.initiativesService.findAll();
+  findAll(
+    @Query('country') country: string,
+    @Query('province') province: string,
+    @Query('name') name: string,
+    @Query('categories') categories: string,
+    @Query('languages') languages: string,
+    @Query('themes') themes: string,
+    @Query('opportunities') opportunities: string,
+  ) {
+    return this.initiativesService.findAll(country, province, name, categories, languages, themes, opportunities);
   }
 
   @Get(':id')
