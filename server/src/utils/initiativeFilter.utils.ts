@@ -37,7 +37,7 @@ export const buildQueryInitiative = (params): Prisma.InitiativeWhereInput => {
 
   if (params.opportunities !== undefined && params.opportunities !== '') {
     query.opportunities = {
-      has: 'Op5',
+      has: params.opportunities,
     };
   }
   return query;
