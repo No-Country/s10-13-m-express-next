@@ -17,7 +17,7 @@ interface Props {
     validations: RegisterOptions
   }
   error?: string | any
-  field: ControllerRenderProps<FieldValues, any>
+  field?: ControllerRenderProps<FieldValues, any>
 }
 
 export default function UnstyledSelect({

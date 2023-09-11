@@ -1,11 +1,12 @@
-interface Params {
-  [key: string]: string | number
-}
+export const buildQueryString = (filters: Record<string, string>) => {
+  const filteredFilters: Record<string, string> = {}
 
-export function buildQueryString(params: Params) {
-  const queryString = Object.keys(params)
-    .map((key) => `${encodeURIComponent(key)}=${encodeURIComponent(params[key])}`)
-    .join('&')
+  for (const key in filters) {
+    if (filters[key] !== undefined && filters[key] !== null && filters[key] !== '') {
+      filteredFilters[key] = filters[key].toString()
+    }
+  }
 
-  return `?${queryString}`
+  const queryString = new URLSearchParams(filteredFilters).toString()
+  return queryString ? `?${queryString}` : ''
 }
