@@ -1,4 +1,3 @@
-'use client'
 import SearchSection from './components/search'
 import FeaturedSec from './components/featured'
 import RecentSec from './components/recent'
