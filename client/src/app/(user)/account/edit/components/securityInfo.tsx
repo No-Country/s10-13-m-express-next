@@ -8,7 +8,6 @@ interface GeneralInfoProps {
 }
 
 export default function SecurityInfo({ errors, register, getValues }: GeneralInfoProps) {
-  console.log(errors, getValues())
   return (
     <div className='flex w-full flex-col gap-4'>
       <div className='flex flex-col gap-2'>
