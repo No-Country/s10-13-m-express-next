@@ -70,7 +70,7 @@ export default function UnstyledSelect({
               <p className='font-light text-gray-800'>{placeholder}</p>
             </Option>
             {names.map((name, index) => (
-              <Option className='flex !h-max items-center gap-1 !p-0' key={name.value} value={name.value}>
+              <Option className='flex !h-max items-center gap-1 !p-0' key={index} value={name.value}>
                 <p className='font-light text-black'>{name.label}</p>
               </Option>
             ))}
