@@ -1,10 +1,12 @@
 export const countries = [
+  { value: '', label: 'Todos' },
   { value: 'Argentina', label: 'Argentina' },
   { value: 'Colombia', label: 'Colombia' },
   { value: 'Uruguay', label: 'Uruguay' }
 ]
 
 export const argentinaProvinces = [
+  { value: '', label: 'Todos' },
   { value: 'Buenos Aires', label: 'Buenos Aires' },
   { value: 'Catamarca', label: 'Catamarca' },
   { value: 'Chaco', label: 'Chaco' },
@@ -34,6 +36,7 @@ export const argentinaProvinces = [
 ]
 
 export const colombiaProvinces = [
+  { value: '', label: 'Todos' },
   { value: 'Amazonas', label: 'Amazonas' },
   { value: 'Antioquia', label: 'Antioquia' },
   { value: 'Arauca', label: 'Arauca' },
@@ -69,6 +72,7 @@ export const colombiaProvinces = [
 ]
 
 export const uruguayProvinces = [
+  { value: '', label: 'Todos' },
   { value: 'Artigas', label: 'Artigas' },
   { value: 'Canelones', label: 'Canelones' },
   { value: 'Cerro Largo', label: 'Cerro Largo' },

@@ -1,11 +1,13 @@
 'use client'
 import { SearchInput, UnstyledSelect } from '@/components'
 import Image from 'next/image'
-import { countries } from '@/services/mock/locations.service'
+import { countries, uruguayProvinces, argentinaProvinces, colombiaProvinces } from '@/services/mock/locations.service'
 import { useEffect, useState, useMemo } from 'react'
 import { debounce } from 'lodash'
 import { useRouter, usePathname } from 'next/navigation'
 import { buildQueryString } from '@/utils/functions/buildQueryString.utils'
+import { opportunities } from '@/services/mock/opportunities.service'
+import { themes } from '@/services/mock/themes.service'
 
 function Search({ handleChange }: any) {
   const searchHandler = (searchTerm: string) => {
@@ -30,7 +32,20 @@ function Search({ handleChange }: any) {
   )
 }
 
-function Selects({ handleChange }: any) {
+function Selects({ handleChange, filters }: any) {
+  const activeProvinces = () => {
+    switch (filters.country) {
+      case 'Argentina':
+        return argentinaProvinces
+      case 'Uruguay':
+        return uruguayProvinces
+      case 'Colombia':
+        return colombiaProvinces
+      default:
+        return []
+    }
+  }
+
   return (
     <div>
       <UnstyledSelect
@@ -42,6 +57,35 @@ function Selects({ handleChange }: any) {
         names={countries}
         placeholder='Selecciona una opcion'
       />
+      {filters.country && (
+        <UnstyledSelect
+          name='province'
+          label='Provincia/Estado/Departamento de iniciativa'
+          setSelected={(selected) => {
+            handleChange(selected, 'province')
+          }}
+          names={activeProvinces()}
+          placeholder='Selecciona una opcion'
+        />
+      )}
+      <UnstyledSelect
+        name='themes'
+        label='Tema de iniciativa'
+        setSelected={(selected) => {
+          handleChange(selected, 'themes')
+        }}
+        names={themes}
+        placeholder='Selecciona una opcion'
+      />
+      <UnstyledSelect
+        name='opportunities'
+        label='Oportunidad de la iniciativa'
+        setSelected={(selected) => {
+          handleChange(selected, 'opportunities')
+        }}
+        names={opportunities}
+        placeholder='Selecciona una opcion'
+      />
     </div>
   )
 }
@@ -51,11 +95,24 @@ export default function SearchSection() {
   const pathname = usePathname()
   const [filters, setFilters] = useState({
     name: '',
-    country: ''
+    country: '',
+    province: '',
+    themes: '',
+    opportunities: ''
   })
 
   const handleChange = (query: string, filterName: string) => {
     setFilters((prev) => ({ ...prev, [filterName]: query }))
+  }
+
+  const resetFilters = () => {
+    setFilters({
+      name: '',
+      country: '',
+      province: '',
+      themes: '',
+      opportunities: ''
+    })
   }
 
   useEffect(() => {
@@ -65,7 +122,10 @@ export default function SearchSection() {
   return (
     <section className='flex w-full flex-col items-center justify-center'>
       <Search handleChange={handleChange} />
-      <Selects handleChange={handleChange} />
+      <Selects handleChange={handleChange} filters={filters} />
+      <button className='text-pink-500' onClick={resetFilters}>
+        Resetear filtros
+      </button>
     </section>
   )
 }

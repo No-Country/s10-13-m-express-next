@@ -17,18 +17,6 @@ export const buildQueryInitiative = (params): Prisma.InitiativeWhereInput => {
     };
   }
 
-  if (params.categories !== undefined && params.categories !== '') {
-    query.categories = {
-      has: params.categories,
-    };
-  }
-
-  if (params.languages !== undefined && params.languages !== '') {
-    query.languages = {
-      has: params.languages,
-    };
-  }
-
   if (params.themes !== undefined && params.themes !== '') {
     query.themes = {
       has: params.themes,

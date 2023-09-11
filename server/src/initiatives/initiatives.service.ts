@@ -36,8 +36,6 @@ export class InitiativesService {
     country,
     province,
     name,
-    categories,
-    languages,
     themes,
     opportunities,
   ) {
@@ -45,9 +43,7 @@ export class InitiativesService {
       country,
       province,
       name,
-      categories,
       opportunities,
-      languages,
       themes,
     });
 

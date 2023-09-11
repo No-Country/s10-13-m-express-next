@@ -6,7 +6,7 @@ import clsx from 'clsx'
 import { ControllerRenderProps, FieldValues } from 'react-hook-form'
 
 interface Props {
-  names: string[]
+  names: Array<{ value: string, label: string }>
   name: string
   placeholder: string
   setSelected: (selected: string[]) => void
@@ -91,8 +91,8 @@ export default function UnstyledSelectMultiple({
               return (
                 <Option
                   className='flex !h-max items-center gap-1 !p-0'
-                  key={name}
-                  value={name}
+                  key={name.value}
+                  value={name.value}
                   slotProps={{
                     root: ({ selected, highlighted, disabled }) => ({
                       className: `list-none px-2 py-1 rounded-lg cursor-default last-of-type:border-b-0 ${getOptionColorClasses(
@@ -102,7 +102,7 @@ export default function UnstyledSelectMultiple({
                     })
                   }}
                 >
-                  {name}
+                  {name.label}
                 </Option>
               )
             })}

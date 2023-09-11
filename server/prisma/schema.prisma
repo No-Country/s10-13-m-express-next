@@ -68,12 +68,10 @@ model Initiative {
   galery        String?
   thumbnail     String?      @default("https://res.cloudinary.com/dygpgsiei/image/upload/v1693699459/y48ke3c8mlgwjuksqmi1.webp")
   volunteers    Volunteers[]
-  categories    String[]
   opportunities String[]
   country       String
   province      String
   adress        String
-  languages     String[]
   reviewsId     String[]     @db.ObjectId
   postsId       String[]     @db.ObjectId
   ownerId       String       @db.ObjectId

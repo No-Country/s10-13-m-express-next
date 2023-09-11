@@ -43,23 +43,14 @@ export class InitiativesController {
             throw new BadRequestException('Invalid file type.');
           });
 
-          createInitiativeDto.thumbnail = response.secure_url;
+        createInitiativeDto.thumbnail = response.secure_url;
       }
 
-      // Solución temporal
-      createInitiativeDto.categories = convertToArray(
-        createInitiativeDto.categories,
-      );
-      createInitiativeDto.languages = convertToArray(
-        createInitiativeDto.languages,
-      );
       createInitiativeDto.themes = convertToArray(createInitiativeDto.themes);
       createInitiativeDto.opportunities = convertToArray(
         createInitiativeDto.opportunities,
       );
-      
-      console.log('createInitiativeDto', createInitiativeDto);
-      //return;
+
       return this.initiativesService.create(createInitiativeDto);
     } catch (error) {
       console.log(error);
@@ -71,12 +62,16 @@ export class InitiativesController {
     @Query('country') country: string,
     @Query('province') province: string,
     @Query('name') name: string,
-    @Query('categories') categories: string,
-    @Query('languages') languages: string,
     @Query('themes') themes: string,
     @Query('opportunities') opportunities: string,
   ) {
-    return this.initiativesService.findAll(country, province, name, categories, languages, themes, opportunities);
+    return this.initiativesService.findAll(
+      country,
+      province,
+      name,
+      themes,
+      opportunities,
+    );
   }
 
   @Get(':id')

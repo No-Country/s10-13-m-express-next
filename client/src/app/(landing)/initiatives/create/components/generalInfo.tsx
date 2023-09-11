@@ -1,5 +1,7 @@
 import { FormInput, Heading, MultipleSelectCheckmarks } from '@/components'
 import { Control, Controller, UseFormRegister, UseFormSetValue } from 'react-hook-form'
+import { opportunities } from '@/services/mock/opportunities.service'
+import { themes } from '@/services/mock/themes.service'
 
 interface GeneralInfoProps {
   errors: any
@@ -68,24 +70,6 @@ export default function GeneralInfo({ errors, register, control, setValue }: Gen
           error={errors?.deadLine?.message}
         />
         <Controller
-          name='categories'
-          control={control}
-          rules={{
-            required: { value: true, message: 'Este campo es requerido' }
-          }}
-          render={({ field }) => (
-            <MultipleSelectCheckmarks
-              field={field}
-              name='categories'
-              names={['Categorias 1', 'Categorias 2', 'Categorias 3']}
-              placeholder='Categorias'
-              setSelected={(selected) => setValue('categories', selected)}
-              label='Categorias'
-              error={errors?.categories?.message}
-            />
-          )}
-        />
-        <Controller
           name='opportunities'
           control={control}
           rules={{
@@ -93,7 +77,7 @@ export default function GeneralInfo({ errors, register, control, setValue }: Gen
           }}
           render={({ field }) => (
             <MultipleSelectCheckmarks
-              names={['Oportundad 1', 'Oportundad 2', 'Oportundad 3']}
+              names={opportunities.slice(1)}
               placeholder='Oportunidades'
               name='opportunities'
               field={field}
@@ -113,29 +97,11 @@ export default function GeneralInfo({ errors, register, control, setValue }: Gen
             <MultipleSelectCheckmarks
               field={field}
               name='themes'
-              names={['Tematica 1', 'Tematica 2', 'Tematica 3']}
+              names={themes.slice(1)}
               placeholder='Tematicas'
               setSelected={(selected) => setValue('themes', selected)}
               label='Tematicas'
               error={errors?.themes?.message}
-            />
-          )}
-        />
-        <Controller
-          name='languages'
-          control={control}
-          rules={{
-            required: { value: true, message: 'Este campo es requerido' }
-          }}
-          render={({ field }) => (
-            <MultipleSelectCheckmarks
-              field={field}
-              names={['Idioma 1', 'Idioma 2', 'Idioma 3']}
-              placeholder='Idiomas'
-              setSelected={(selected) => setValue('languages', selected)}
-              label='Idiomas'
-              name='languages'
-              error={errors?.languages?.message}
             />
           )}
         />

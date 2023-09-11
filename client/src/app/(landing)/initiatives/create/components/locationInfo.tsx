@@ -16,11 +16,11 @@ export default function LocationInfo({ errors, register, control, setValue }: Lo
   const activeProvinces = () => {
     switch (country) {
       case 'Argentina':
-        return argentinaProvinces
+        return argentinaProvinces.slice(1)
       case 'Uruguay':
-        return uruguayProvinces
+        return uruguayProvinces.slice(1)
       case 'Colombia':
-        return colombiaProvinces
+        return colombiaProvinces.slice(1)
       default:
         return []
     }
@@ -46,7 +46,7 @@ export default function LocationInfo({ errors, register, control, setValue }: Lo
                 setValue('country', selected)
                 setCountry(selected)
               }}
-              names={countries}
+              names={countries.slice(1)}
               placeholder='Elige un pais'
               error={errors?.country?.message}
             />
