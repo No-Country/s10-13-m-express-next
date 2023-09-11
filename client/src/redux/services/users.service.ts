@@ -20,7 +20,7 @@ export const currentUsersApi = createApi({
     getUsers: builder.query<UserInterface[], void>({
       query: () => Endpoints.USERS
     }),
-    getUsersById: builder.query<any, string>({
+    getUsersByUsername: builder.query<any, string>({
       query: (id) => Endpoints.USER_BY_ID(id),
       onQueryStarted: async (_, { dispatch, queryFulfilled }) => {
         const { data } = await queryFulfilled
@@ -66,7 +66,7 @@ export const currentUsersApi = createApi({
 })
 
 export const {
-  useGetUsersByIdQuery,
+  useGetUsersByUsernameQuery,
   useGetUsersQuery,
   useDeleteUsersMutation,
   usePostUsersMutation,
