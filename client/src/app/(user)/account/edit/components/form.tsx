@@ -35,7 +35,8 @@ export default function FormSec() {
   const {
     register,
     formState: { errors },
-    handleSubmit
+    handleSubmit,
+    getValues
   } = useForm({
     mode: 'onChange'
   })
@@ -56,7 +57,7 @@ export default function FormSec() {
         <Heading>Editar tu cuenta</Heading>
         <GeneralInfo errors={errors} register={register} currentUser={currentUser} />
         <Multimedia errors={errors} register={register} />
-        <SecurityInfo errors={errors} register={register} />
+        <SecurityInfo errors={errors} register={register} getValues={getValues} />
         <button type='submit' className='w-max rounded-full bg-blue-500 px-6 py-2 text-lg font-semibold text-white'>
           Guardar Cambios
         </button>
