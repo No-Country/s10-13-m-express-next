@@ -1,71 +1,49 @@
 'use client'
-import { SearchInput, UnstyledSelect } from '@/components'
-import Image from 'next/image'
-import { countries } from '@/services/mock/locations.service'
-import { useEffect, useState, useMemo } from 'react'
-import { debounce } from 'lodash'
-import { useRouter, usePathname } from 'next/navigation'
+import { SearchInput } from '@/components'
 import { buildQueryString } from '@/utils/functions/buildQueryString.utils'
+import { debounce } from 'lodash'
+import Image from 'next/image'
+import { usePathname, useRouter } from 'next/navigation'
+import { useEffect, useMemo, useState } from 'react'
+import Selects from './selects'
 
-function Search({ handleChange }: any) {
-  const searchHandler = (searchTerm: string) => {
-    handleChange(searchTerm, 'name')
+export default function SearchSection() {
+  const router = useRouter()
+  const pathname = usePathname()
+  const [query, setQuery] = useState({
+    title: '',
+    country: ''
+  })
+
+  const searchHandler = (queryObj: Record<string, string>) => {
+    setQuery((prev) => ({ ...prev, ...queryObj }))
   }
 
   const debouncedSearchHandler = useMemo(() => {
     return debounce(searchHandler, 1000)
   }, [])
 
-  const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    debouncedSearchHandler(event.target.value)
+  const handleSearchChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    debouncedSearchHandler({ [event.target.name]: event.target.value })
   }
 
-  return (
-    <div className='flex w-full gap-8'>
-      <div className='flex items-center justify-center rounded-full bg-pink-100 p-3'>
-        <Image src='/icon/tune.svg' alt='tune' width={24} height={24} />
-      </div>
-      <SearchInput placeholder='Buscar' handleChange={handleInputChange} />
-    </div>
-  )
-}
-
-function Selects({ handleChange }: any) {
-  return (
-    <div>
-      <UnstyledSelect
-        name='country'
-        label='Pais de iniciativa'
-        setSelected={(selected) => {
-          handleChange(selected, 'country')
-        }}
-        names={countries}
-        placeholder='Selecciona una opcion'
-      />
-    </div>
-  )
-}
-
-export default function SearchSection() {
-  const router = useRouter()
-  const pathname = usePathname()
-  const [filters, setFilters] = useState({
-    name: '',
-    country: ''
-  })
-
-  const handleChange = (query: string, filterName: string) => {
-    setFilters((prev) => ({ ...prev, [filterName]: query }))
+  const handleSelectChange = (name: string, value: any) => {
+    debouncedSearchHandler({ [name]: value })
   }
 
   useEffect(() => {
-    router.push(pathname + buildQueryString(filters))
-  }, [filters])
+    router.push(pathname + buildQueryString(query))
+  }, [query])
 
   return (
     <section className='flex w-full flex-col items-center justify-center'>
-      <Search handleChange={handleChange} />
-      <Selects handleChange={handleChange} />
+      <div className='flex w-full gap-8'>
+        <div className='flex items-center justify-center rounded-full bg-pink-100 p-3'>
+          <Image src='/icon/tune.svg' alt='tune' width={24} height={24} />
+        </div>
+        <SearchInput name='title' placeholder='Buscar' handleChange={handleSearchChange} />
+      </div>
+      <Selects handleChange={handleSelectChange} />
     </section>
   )
 }
