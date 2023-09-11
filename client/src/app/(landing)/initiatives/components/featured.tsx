@@ -2,10 +2,14 @@
 import Image from 'next/image'
 import Link from 'next/link'
 import { InitiativesFlex } from '@/components'
-import { useGetInitiativesQuery } from '@/redux/services/initiatives.service'
+import { useGetFilteredInitiativesQuery } from '@/redux/services/initiatives.service'
+import { useSearchParams } from 'next/navigation'
 
 export default function FeaturedSec() {
-  const { data } = useGetInitiativesQuery()
+  const params = useSearchParams()
+  const filters = Object.fromEntries(params.entries())
+
+  const { data } = useGetFilteredInitiativesQuery(filters)
   return (
     <section className='flex w-full items-center justify-center'>
       <div className='container flex flex-col gap-4'>
