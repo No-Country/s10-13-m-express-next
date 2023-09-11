@@ -86,7 +86,7 @@ export default function LocationInfo({ errors, register, control, setValue }: Lo
               required: { value: true, message: 'Este campo es requerido' }
             }
           }}
-          error={errors?.locations?.message}
+          error={errors?.adress?.message}
         />
       </div>
     </div>
