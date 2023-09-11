@@ -1,7 +1,8 @@
-import { Injectable } from '@nestjs/common';
+import { Injectable, ConflictException } from '@nestjs/common';
 import { PrismaService } from 'src/prisma/prisma.service';
 import Stripe from 'stripe';
 import { CreateStripeIntentDto } from './dto/stripe-intent.dto';
+import { createDonation } from './interface/createDonation.interface';
 
 const stripeApiKey = process.env.STRIPE_SECRET_KEY;
 const stripeCliKey = process.env.STRIPE_WEBHOOK_SECRET;
@@ -21,6 +22,20 @@ export class StripeService {
   ): Promise<any> {
     const convertAmount = createStripeIntentDto.amount * 100; //El monto debe convertirse en centavos antes de enviarse a Stripe
     try {
+      const existingUser = await this.prisma.user.findUnique({
+        where: { id: createStripeIntentDto.userId },
+      });
+      if (!existingUser){
+        throw new ConflictException('User ID no found');
+      }
+      if(createStripeIntentDto.initiativeId != 'globalDonation'){
+        const existingInitiative = await this.prisma.initiative.findUnique({
+          where: {id: createStripeIntentDto.initiativeId}
+        })
+        if (!existingInitiative){
+          throw new ConflictException('Initiative ID no found');
+        }
+      }
       const session = await stripe.checkout.sessions.create({
         line_items: [
           {
@@ -48,6 +63,7 @@ export class StripeService {
       return session.url;
     } catch (error) {
       console.log(error);
+      throw error;
     }
   }
 
@@ -76,5 +92,12 @@ export class StripeService {
       }
     }
     return stripeEvent;
+  }
+
+  async saveDonation(createDonation : createDonation){
+    try {
+    } catch (error) {
+      
+    }
   }
 }
