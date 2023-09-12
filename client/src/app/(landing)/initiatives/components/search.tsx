@@ -41,7 +41,8 @@ export default function SearchSection() {
   }, [query])
 
   return (
-    <section className='flex w-full flex-col items-center justify-center'>
+    <section className='flex w-full gap-4 flex-col items-start justify-center'>
+      <h2 className='text-xl font-normal text-blue-600'>Buscar Iniciativas</h2>
       <div className='flex w-full gap-8'>
         <div className='flex items-center justify-center rounded-full bg-pink-100 p-3'>
           <Image src='/icon/tune.svg' alt='tune' width={24} height={24} />
