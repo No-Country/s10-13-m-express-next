@@ -19,15 +19,17 @@ function DesktopHeader() {
   }
 
   return (
-    <header className='2lg:block sticky top-0 z-40 hidden bg-pink-100 py-3'>
+    <header className='sticky top-0 z-40 hidden bg-pink-100 py-3 2lg:block'>
       <div className='mx-auto flex max-w-screen-xl items-center justify-between px-4'>
-        <Image
-          width={148}
-          height={48}
-          className='h-12 w-36 object-contain'
-          src='/assets/logo-with-title.png'
-          alt='Logo y nombre de union solidaria'
-        />
+        <Link href={Routes.HOME}>
+          <Image
+            width={148}
+            height={48}
+            className='h-12 w-36 object-contain'
+            src='/assets/logo-with-title.png'
+            alt='Logo y nombre de union solidaria'
+          />
+        </Link>
         <nav>
           <ul className='flex items-center'>
             <li>

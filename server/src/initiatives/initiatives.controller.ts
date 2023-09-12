@@ -91,4 +91,13 @@ export class InitiativesController {
   remove(@Param('id') id: string) {
     return this.initiativesService.remove(id);
   }
+
+  @Post(':id/join')
+  joinInitiative(@Param('id') id: string, @Body() body) {
+    try {
+      return this.initiativesService.joinInitiative(id, body.userId);
+    } catch (error) {
+      console.log(error);
+    }
+  }
 }

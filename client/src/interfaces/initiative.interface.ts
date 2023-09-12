@@ -10,8 +10,10 @@ export interface InitiativeInterface {
   volunteers: any[]
   categories: string[]
   opportunities: string[]
-  locations: string
+  country: string
+  province: string
   languages: string[]
+  themes: string[]
   reviews: string[]
   posts: string[]
   ownerId: string

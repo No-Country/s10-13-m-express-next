@@ -7,10 +7,8 @@ interface Props {
 
 export default function InitiativesFlex({ initiatives }: Props) {
   return (
-    <div className='flex  gap-5 overflow-y-scroll p-2 pb-6'>
-      {initiatives?.map((item, index) => (
-        <InitiativeItem key={index} initiative={item} minWidth='min-w-[65vw] md:min-w-[35vw] lg:min-w-[0] ' />
-      ))}
+    <div className='grid grid-cols-1 gap-5 p-2 pb-6 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5'>
+      {initiatives?.map((item, index) => <InitiativeItem key={index} initiative={item} />)}
     </div>
   )
 }
