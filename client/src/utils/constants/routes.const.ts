@@ -7,7 +7,8 @@ const Routes = {
   LOGIN: '/login',
   REGISTER: '/register',
   ACCOUNT: '/account',
-  EDIT_ACCOUNT: '/account/edit'
+  EDIT_ACCOUNT: '/account',
+  PROFILE: (username: string) => `/@${username}`
 }
 
 export default Routes

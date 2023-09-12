@@ -1,12 +1,13 @@
 import { FormInput, Heading } from '@/components'
-import { UseFormRegister } from 'react-hook-form'
+import { FieldValues, UseFormGetValues, UseFormRegister } from 'react-hook-form'
 
 interface GeneralInfoProps {
   errors: any
   register: UseFormRegister<any>
+  getValues: UseFormGetValues<FieldValues>
 }
 
-export default function SecurityInfo({ errors, register }: GeneralInfoProps) {
+export default function SecurityInfo({ errors, register, getValues }: GeneralInfoProps) {
   return (
     <div className='flex w-full flex-col gap-4'>
       <div className='flex flex-col gap-2'>
@@ -26,7 +27,10 @@ export default function SecurityInfo({ errors, register }: GeneralInfoProps) {
                 value: /^(?=.*[A-Z])(?=.*[a-z])(?=.*\d).{8,}$/,
                 message: 'La contraseña debe tener al menos 8 caracteres, una mayuscula, una minuscula y un numero'
               },
-              required: { value: true, message: 'Este campo es requerido' }
+              required: {
+                value: getValues()?.oldPassword?.length > 0,
+                message: 'Este campo es requerido'
+              }
             }
           }}
           error={errors?.oldPassword?.message}
@@ -43,7 +47,10 @@ export default function SecurityInfo({ errors, register }: GeneralInfoProps) {
                 value: /^(?=.*[A-Z])(?=.*[a-z])(?=.*\d).{8,}$/,
                 message: 'La contraseña debe tener al menos 8 caracteres, una mayuscula, una minuscula y un numero'
               },
-              required: { value: true, message: 'Este campo es requerido' }
+              required: {
+                value: getValues()?.oldPassword?.length > 0,
+                message: 'Este campo es requerido'
+              }
             }
           }}
           error={errors?.oldPassword?.message}

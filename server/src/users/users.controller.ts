@@ -141,8 +141,7 @@ export class UsersController {
   async remove(@Param('id') userId: string) {
     try {
       await this.usersService.removeUser(userId);
-      console.log('remove', userId);
-      return 'User successfully deleted';
+      return { message: 'User correctly deleted' };
     } catch (error) {
       console.log('error', error);
       throw error;

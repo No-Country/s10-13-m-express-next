@@ -14,6 +14,7 @@ export const currentUsersApi = createApi({
     baseUrl,
     prepareHeaders: (headers, { getState }) => {
       headers.set('sessionId', (getState() as RootState).authSession.auth.sessionId ?? '')
+      headers.set('userId', (getState() as RootState).authSession.session.id ?? '')
     }
   }),
   endpoints: (builder) => ({
