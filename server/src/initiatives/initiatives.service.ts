@@ -32,13 +32,7 @@ export class InitiativesService {
     }
   }
 
-  async findAll(
-    country,
-    province,
-    name,
-    themes,
-    opportunities,
-  ) {
+  async findAll(country, province, name, themes, opportunities) {
     const query = buildQueryInitiative({
       country,
       province,
@@ -64,6 +58,7 @@ export class InitiativesService {
       where: { id: id },
       include: {
         owner: true,
+        volunteers: true,
       },
     });
 
@@ -127,6 +122,41 @@ export class InitiativesService {
         'Data error: ' + error.message + ' - ' + JSON.stringify(error.meta),
         HttpStatus.BAD_REQUEST,
       );
+    }
+  }
+
+  // endpoint para quye un voluntario se una a una iniciativa
+  async joinInitiative(id: string, userId: string) {
+    try {
+      const initiative = await this.prisma.initiative.findUnique({
+        where: { id },
+        include: {
+          volunteers: true,
+        },
+      });
+      if (!initiative) {
+        throw new NotFoundException(`Initiative ${id} not found`);
+      }
+      const volunteer = await this.prisma.user.findUnique({
+        where: { id: userId },
+      });
+      if (!volunteer) {
+        throw new NotFoundException(`Volunteer ${userId} not found`);
+      }
+      const updatedInitiative = await this.prisma.initiative.update({
+        where: { id },
+        data: {
+          volunteers: {
+            connect: {
+              id: userId,
+            },
+          },
+        },
+      });
+      return updatedInitiative;
+    } catch (error) {
+      console.log(error);
+      this.errorHandler(error);
     }
   }
 }

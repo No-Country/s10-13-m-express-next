@@ -10,7 +10,7 @@ export interface UserInterface {
   bannerImage?: null | string
   username: string
   profileImage?: null | string
-  orgName?: null | string
+  orgName: null | string
   posts?: []
   reviews?: []
 }
