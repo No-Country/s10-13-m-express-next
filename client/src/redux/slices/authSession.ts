@@ -44,6 +44,8 @@ const authSlice = createSlice({
     setAuth: (state, action: PayloadAction<AuthInterface>) => {
       console.log('setAuth', action)
       state.auth = action.payload
+      // seteamos una cookie que vence en 1 dia
+      document.cookie = `sessionId=${action.payload.sessionId}; max-age=86400; path=/`
     },
     resetReducer: (state) => {
       state.auth.isLogged = false

@@ -1,5 +1,7 @@
 'use client'
+import Routes from '@/utils/constants/routes.const'
 import Image from 'next/image'
+import Link from 'next/link'
 
 interface PromoItemProps {
   iconSrc: string
@@ -36,9 +38,12 @@ export default function PromoSec() {
                 <br />y comenzá a hacer la diferencia
               </p>
             </div>
-            <button className='w-max rounded-full bg-blue-600 px-6 py-2 font-semibold text-white shadow-xl'>
+            <Link
+              className='w-max rounded-full bg-blue-600 px-6 py-2 font-semibold text-white shadow-xl'
+              href={Routes.REGISTER}
+            >
               Únete ahora
-            </button>
+            </Link>
           </div>
         </div>
       </section>

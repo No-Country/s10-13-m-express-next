@@ -3,13 +3,15 @@ import { SearchInput } from '@/components'
 import { buildQueryString } from '@/utils/functions/buildQueryString.utils'
 import { debounce } from 'lodash'
 import Image from 'next/image'
-import { usePathname, useRouter } from 'next/navigation'
+import { usePathname, useRouter, useSearchParams } from 'next/navigation'
 import { useEffect, useMemo, useState } from 'react'
 import Selects from './selects'
 
 export default function SearchSection() {
   const router = useRouter()
   const pathname = usePathname()
+  const params = useSearchParams()
+  const filters = Object.fromEntries(params.entries())
   const [query, setQuery] = useState({
     title: '',
     country: '',
@@ -35,7 +37,7 @@ export default function SearchSection() {
   }
 
   useEffect(() => {
-    router.push(pathname + buildQueryString(query))
+    router.push(pathname + buildQueryString(query, filters))
   }, [query])
 
   return (
@@ -44,7 +46,7 @@ export default function SearchSection() {
         <div className='flex items-center justify-center rounded-full bg-pink-100 p-3'>
           <Image src='/icon/tune.svg' alt='tune' width={24} height={24} />
         </div>
-        <SearchInput name='title' placeholder='Buscar' handleChange={handleSearchChange} />
+        <SearchInput name='name' placeholder='Buscar' handleChange={handleSearchChange} />
       </div>
       <Selects handleChange={handleSelectChange} query={query} />
     </section>

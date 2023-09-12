@@ -3,7 +3,7 @@ import { NextRequest } from 'next/server'
 
 export function middleware(req: NextRequest) {
   const { hasLoginQueryParams, sid, uid } = checkLoginQueryParams(req.nextUrl.searchParams)
-
+  console.log('middleware')
   // if the query params are found, it's assumed that the login is through google
   if (hasLoginQueryParams) {
     return handleLoginRedirect(req.nextUrl, sid, uid)
