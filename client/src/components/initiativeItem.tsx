@@ -1,15 +1,16 @@
 'use client'
+import { InitiativeInterface } from '@/interfaces'
 import Routes from '@/utils/constants/routes.const'
 import Image from 'next/image'
 import Link from 'next/link'
 
 interface Props {
-  initiative: any
+  initiative: InitiativeInterface
 }
 
 interface ItemProps {
   imageSrc: string
-  text: string
+  text: string | null
   icon?: boolean
 }
 
@@ -42,11 +43,10 @@ export default function InitiativeItem({ initiative }: Props) {
       <div className='flex flex-col gap-2'>
         <h1 className='bodyText truncate font-semibold'>{initiative.title}</h1>
         <div className='flex flex-col gap-2'>
-          <Item imageSrc='' text='Playas felices' icon={false} />
-          <Item imageSrc='/icon/location_on.svg' text='Villa Gesell, Argentina' />
-          <Item imageSrc='/icon/category.svg' text='Medioambiente' />
-          <Item imageSrc='/icon/family_link.svg' text='Actividades Ecológicas' />
-          <Item imageSrc='/icon/star.svg' text='4.5' />
+          <Item imageSrc='' text={initiative.owner.orgName} icon={false} />
+          <Item imageSrc='/icon/location_on.svg' text={`${initiative.country}, ${initiative.province}`} />
+          <Item imageSrc='/icon/category.svg' text={initiative.opportunities.join(', ')} />
+          <Item imageSrc='/icon/family_link.svg' text={initiative.themes.join(', ')} />
         </div>
       </div>
     </Link>
