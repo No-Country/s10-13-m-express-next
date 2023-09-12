@@ -10,7 +10,8 @@ const Routes = {
   EDIT_ACCOUNT: '/account',
   PROFILE: (username: string) => `/@${username}`,
   DASHBOARD: '/dashboard',
-  FEED: '/feed'
+  FEED: '/feed',
+  INSTITUTIONAL: '/institutional'
 }
 
 export default Routes
