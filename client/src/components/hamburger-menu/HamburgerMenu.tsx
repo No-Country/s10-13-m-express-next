@@ -1,9 +1,9 @@
 'use client'
-import { Backdrop, HeartIcon, PrimaryButton } from '@/components'
+import { Backdrop, ButtonLink, HeartIcon } from '@/components'
+import Routes from '@/utils/constants/routes.const'
 import { AnimatePresence, motion } from 'framer-motion'
 import Image from 'next/image'
-import Link from 'next/link'
-import { usePathname, useRouter } from 'next/navigation'
+import { usePathname } from 'next/navigation'
 import { useState } from 'react'
 import { createPortal } from 'react-dom'
 import HamburgerMenuBtn from './HamburgerMenuBtn'
@@ -32,7 +32,6 @@ const menuAnimation = {
 
 const HamburgerMenu = () => {
   const [menuOpened, setMenuOpen] = useState(false)
-  const router = useRouter()
 
   const pathname = usePathname()
   if (pathname === '/login' || pathname === '/register') {
@@ -41,7 +40,8 @@ const HamburgerMenu = () => {
   return (
     <>
       {createPortal(
-        <>
+        <div className='2lg:hidden sticky top-0 z-50 flex w-full items-center justify-between bg-pink-100 px-4 py-3'>
+          <Image src='/assets/logo.webp' width={32} height={32} alt='Logo Uninón Solidaria' />
           <HamburgerMenuBtn menuOpened={menuOpened} toggleMenu={() => setMenuOpen((state) => !state)} />
           <AnimatePresence initial={false} mode='wait' onExitComplete={() => null}>
             {menuOpened && (
@@ -61,27 +61,26 @@ const HamburgerMenu = () => {
                     <h2 className='text-xl font-semibold text-blue-700'>Unión Solidaria</h2>
                   </div>
                   <MenuLinks menuOpen={() => setMenuOpen(false)} />
-                  <div className='flex flex-col items-center p-6'>
-                    <PrimaryButton onClick={() => router.push('/login')}>Iniciar sesión</PrimaryButton>
-                    <Link href='/register' className='mt-6 font-bold text-blue-500'>
-                      Registrate
-                    </Link>
-                    <button
-                      onClick={() => {
-                        setMenuOpen(false)
-                        router.push('/donation')
-                      }}
-                      className='mt-[20vh] flex  items-center rounded-full border-2 border-blue-600 px-6 py-1.5 font-semibold'
+                  <div className='flex grow flex-col items-center gap-y-4 pb-24 pt-6'>
+                    <ButtonLink variant='primary' href={Routes.LOGIN}>
+                      Iniciar sesión
+                    </ButtonLink>
+                    <ButtonLink href={Routes.REGISTER}>Registrate</ButtonLink>
+                    <ButtonLink
+                      variant='secondary'
+                      iconLeft={<HeartIcon className='h-3 w-3 fill-blue-700' />}
+                      href={Routes.DONATION}
+                      onClick={() => setMenuOpen(false)}
+                      align='bottom'
                     >
-                      <HeartIcon className='h-4 fill-blue-700' />
-                      <span className='text-blue-700'>Donar</span>
-                    </button>
+                      Donar
+                    </ButtonLink>
                   </div>
                 </motion.div>
               </Backdrop>
             )}
           </AnimatePresence>
-        </>,
+        </div>,
         document.body
       )}
     </>
