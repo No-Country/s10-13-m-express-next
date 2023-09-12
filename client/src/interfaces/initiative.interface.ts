@@ -1,3 +1,5 @@
+import { UserInterface } from '.'
+
 export interface InitiativeInterface {
   id: string
   title: string
@@ -19,5 +21,6 @@ export interface InitiativeInterface {
   ownerId: string
   startHour: string
   endHour: string
+  owner: UserInterface
   extraInfo: string
 }
