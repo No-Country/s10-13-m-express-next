@@ -11,7 +11,8 @@ const Routes = {
   PROFILE: (username: string) => `/@${username}`,
   DASHBOARD: '/dashboard',
   FEED: '/feed',
-  INSTITUTIONAL: '/institutional'
+  INSTITUTIONAL: '/institutional',
+  DONATION: '/donation'
 }
 
 export default Routes

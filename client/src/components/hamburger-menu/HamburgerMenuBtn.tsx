@@ -5,7 +5,7 @@ interface Props {
 
 function HamburgerMenuBtn({ menuOpened, toggleMenu }: Props) {
   return (
-    <button onClick={toggleMenu} className='fixed right-4 top-2 z-50 h-11 w-11 rounded-md bg-transparent p-3'>
+    <button onClick={toggleMenu} className='z-50 h-5 w-7 rounded-md bg-transparent'>
       <div
         className={`h-0.5 w-full rounded-md bg-blue-700 transition-all
             ${menuOpened ? 'translate-y-0.5 rotate-45' : ''}
