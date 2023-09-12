@@ -8,7 +8,9 @@ const Routes = {
   REGISTER: '/register',
   ACCOUNT: '/account',
   EDIT_ACCOUNT: '/account',
-  PROFILE: (username: string) => `/@${username}`
+  PROFILE: (username: string) => `/@${username}`,
+  DASHBOARD: '/dashboard',
+  FEED: '/feed'
 }
 
 export default Routes
