@@ -83,7 +83,6 @@ export class StripeService {
 
     if (stripeEvent.type == 'payment_intent.succeeded') {
       const paymentEventMetadata: Stripe.PaymentIntent = paymentEventData.object as Stripe.PaymentIntent;
-      console.log(paymentEventMetadata)
       const isGlobalDonation = paymentEventMetadata.metadata.initiativeId === 'globalDonation';
       const paymentObject: createDonation = {
         TransactionId: paymentEventMetadata.id,
@@ -92,7 +91,6 @@ export class StripeService {
         initiativeID: paymentEventMetadata.metadata.initiativeId,
         isGlobalDonation
       }
-      console.log('Se ha recibido una donacion sastifactoria');
       console.log(
         `El usuario de id ${paymentObject.userId} dono el monto de ${paymentObject.amount}$ a la iniciativa ${paymentObject.initiativeID}`,
       );
@@ -107,7 +105,7 @@ export class StripeService {
 
   async saveDonation(createDonation : createDonation){
     try {
-      if(createDonation.initiativeID == 'globalDonation'){
+      if(createDonation.isGlobalDonation){
         const donation = await this.prisma.donation.create({
           data:{
             TransactionId: createDonation.TransactionId,
