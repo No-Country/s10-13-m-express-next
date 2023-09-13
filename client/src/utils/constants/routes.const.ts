@@ -12,7 +12,9 @@ const Routes = {
   DASHBOARD: '/dashboard',
   FEED: '/feed',
   INSTITUTIONAL: '/institutional',
-  DONATION: '/donation'
+  DONATION: '/donation',
+  INSTITUTIONAL_TYC: '/institutional/TYC',
+  INSTITUTIONAL_PDP: '/institutional/PDP'
 }
 
 export default Routes

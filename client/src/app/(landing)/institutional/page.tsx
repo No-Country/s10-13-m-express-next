@@ -15,8 +15,8 @@ function InstitutionalPage() {
   ]
 
   return (
-    <div className='bg-white'>
-      <h1 className='leading-30 mx-auto mb-8  w-11/12 text-2xl font-bold text-pink-500'>Institucional</h1>
+    <div className='bg-white pt-1'>
+      <h1 className='leading-30 mx-auto mb-8 mt-8  w-11/12 text-2xl font-bold text-pink-500'>Institucional</h1>
       <TabBar content={content} />
     </div>
   )
