@@ -74,14 +74,6 @@ export class CreateInitiativeDto {
   thumbnail?: string;
 
   @ApiProperty({
-    description: 'Initiative categories',
-    nullable: false,
-    example: "['Agricultura', 'Educación']",
-  })
-  @IsNotEmpty({ message: 'Categories are required' })
-  categories: string[];
-
-  @ApiProperty({
     description: 'Initiative opportunities',
     nullable: false,
     example: "['Comunicación y Marketing', 'Enseñar y Compartir']",
@@ -94,16 +86,14 @@ export class CreateInitiativeDto {
     nullable: false,
     example: 'Colombia',
   })
-  @IsNotEmpty({ message: 'Locations are required' })
-  locations: string;
+  @IsNotEmpty({ message: 'Country are required' })
+  country: string;
 
-  @ApiProperty({
-    description: 'Initiative languages',
-    nullable: false,
-    example: "['Español', 'Guaraní']",
-  })
-  @IsNotEmpty({ message: 'Languages are required' })
-  languages: string[];
+  @IsNotEmpty({ message: 'Province are required' })
+  province: string;
+
+  @IsNotEmpty({ message: 'Adress are required' })
+  adress: string;
 
   @ApiProperty({
     description: 'Initiative ownerId (mongo _id format)',
