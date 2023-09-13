@@ -1,7 +1,7 @@
 import type { Config } from 'tailwindcss'
 
 const config: Config = {
-  content: ['./src/components/**/*.{ts,tsx}', './src/app/**/*.{ts,tsx}'],
+  content: ['./src/components/**/*.{ts,tsx}', './src/app/**/*.{ts,tsx}', './src/utils/constants/*.ts'],
   theme: {
     colors: {
       transparent: 'transparent',
@@ -10,7 +10,6 @@ const config: Config = {
       white: '#F8F8F8',
       gray: {
         50: '#f7f7f7',
-        75: '#f3f3f3',
         100: '#ededed',
         200: '#dfdfdf',
         300: '#c8c8c8',
@@ -86,7 +85,11 @@ const config: Config = {
         'gradient-conic': 'conic-gradient(from 180deg at 50% 50%, var(--tw-gradient-stops))'
       },
       boxShadow: {
+        ms: '2px 2px 6px 0px',
         initiativeItem: '0px 2px 6px 0px #B0B0B0'
+      },
+      screens: {
+        '2lg': '1148px'
       }
     }
   },

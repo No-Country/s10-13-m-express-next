@@ -1,17 +1,16 @@
 'use client'
+import { InitiativeInterface } from '@/interfaces'
+import Routes from '@/utils/constants/routes.const'
 import Image from 'next/image'
-import { useRouter } from 'next/navigation'
+import Link from 'next/link'
 
-type Props = {
-  title: string
-  image: string
-  location: string
-  minWidth?: string
+interface Props {
+  initiative: InitiativeInterface
 }
 
-type ItemProps = {
+interface ItemProps {
   imageSrc: string
-  text: string
+  text: string | null
   icon?: boolean
 }
 
@@ -19,36 +18,37 @@ function Item({ imageSrc, text, icon = true }: ItemProps) {
   const textStyle = icon ? 'text-gray-800' : 'text-pink-500'
   return (
     <div className='flex gap-2'>
-      {icon && <Image src={imageSrc} width={10} height={13} alt='icon' />}
+      {icon && <Image src={imageSrc} priority width={10} height={13} sizes='40vw' className='h-3 w-3' alt='icon' />}
       <p className={`text-xs font-normal ${textStyle}`}>{text}</p>
     </div>
   )
 }
 
-export default function InitiativeItem({ title, image, location, minWidth = '' }: Props) {
-  const router = useRouter()
-
-  const handleClick = () => {
-    router.push('/initiatives/1')
-  }
-
+export default function InitiativeItem({ initiative }: Props) {
   return (
-    <div className={`${minWidth} flex w-full cursor-pointer flex-col rounded-lg shadow-initiativeItem`} onClick={handleClick}>
-      <div className='flex w-full flex-col gap-2 p-3 '>
-        <div className='l relative aspect-[1/1]  w-full'>
-          <Image src={image} fill alt='thumbnail' className='aspect-[3/4] rounded-lg object-cover' />
-        </div>
+    <Link
+      className='flex h-full flex-col gap-2 rounded-lg p-3 shadow-initiativeItem'
+      href={`${Routes.INITIATIVES}/${initiative?.id}`}
+    >
+      <div className='relative aspect-square'>
+        <Image
+          src={initiative.thumbnail}
+          priority
+          sizes='40vw'
+          fill
+          alt='thumbnail'
+          className='rounded-lg object-cover'
+        />
+      </div>
+      <div className='flex flex-col gap-2'>
+        <h1 className='bodyText truncate font-semibold'>{initiative.title}</h1>
         <div className='flex flex-col gap-2'>
-          <h1 className='bodyText font-semibold'>Ayudantes de limpieza en las playas</h1>
-          <div className='flex flex-col gap-2'>
-            <Item imageSrc='' text='Playas felices' icon={false} />
-            <Item imageSrc='/icon/location_on.svg' text='Villa Gesell, Argentina' />
-            <Item imageSrc='/icon/category.svg' text='Medioambiente' />
-            <Item imageSrc='/icon/family_link.svg' text='Actividades Ecológicas' />
-            <Item imageSrc='/icon/star.svg' text='4.5' />
-          </div>
+          <Item imageSrc='' text={initiative.owner.orgName} icon={false} />
+          <Item imageSrc='/icon/location_on.svg' text={`${initiative.country}, ${initiative.province}`} />
+          <Item imageSrc='/icon/category.svg' text={initiative.opportunities.join(', ')} />
+          <Item imageSrc='/icon/family_link.svg' text={initiative.themes.join(', ')} />
         </div>
       </div>
-    </div>
+    </Link>
   )
 }

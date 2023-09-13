@@ -1,28 +1,68 @@
-/*
-  1. Reemplazar inputs estaticos por componentes Input de la pagina login y register
-*/
-
-import { Button } from '@/components'
+'use client'
+import { Button, FormInput } from '@/components'
+import { useForm } from 'react-hook-form'
 
 function ConsultForm() {
+  const {
+    register,
+    formState: { errors },
+    handleSubmit
+  } = useForm({
+    mode: 'onChange'
+  })
+
+  const onSubmit = async (data: any) => {
+    console.log(data)
+  }
+
   return (
-    <form className='grid gap-y-5'>
-      <input
+    <form className='mx-auto grid max-w-screen-sm gap-y-5' onSubmit={handleSubmit(onSubmit)}>
+      <FormInput
         type='text'
-        className='block w-full rounded border border-gray-700 bg-transparent px-3 py-4 text-sm text-gray-900 placeholder:text-black'
         placeholder='Nombre'
+        name='name'
+        label='Nombre'
+        hookForm={{
+          register,
+          validations: {
+            required: { value: true, message: 'Este campo es requerido' }
+          }
+        }}
+        error={errors?.name?.message}
       />
-      <input
+      <FormInput
         type='email'
-        className='block w-full rounded border border-gray-700 bg-transparent px-3 py-4 text-sm text-gray-900 placeholder:text-black'
+        name='email'
+        label='Email'
         placeholder='Email'
+        hookForm={{
+          register,
+          validations: {
+            pattern: {
+              value: /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/,
+              message: 'Debe ser un email valido'
+            },
+            required: { value: true, message: 'Este campo es requerido' }
+          }
+        }}
+        error={errors?.email?.message}
       />
-      <textarea
-        className='block w-full rounded border border-gray-700 bg-transparent px-3 py-4 text-sm text-gray-900 placeholder:text-black'
+      <FormInput
+        type='textarea'
         placeholder='Escribe tu consulta...'
-        rows={6}
+        name='consultation'
+        label='Consulta'
+        hookForm={{
+          register,
+          validations: {
+            required: { value: true, message: 'Este campo es requerido' }
+          }
+        }}
+        error={errors?.consultation?.message}
       />
-      <Button align='center'>Enviar</Button>
+      <Button variant='primary' align='center'>
+        Enviar
+      </Button>
     </form>
   )
 }

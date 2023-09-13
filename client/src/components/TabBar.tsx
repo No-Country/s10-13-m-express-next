@@ -1,5 +1,4 @@
 'use client'
-
 import { useState } from 'react'
 
 interface TabContentItem {
@@ -16,12 +15,12 @@ function TabBar({ content }: TabProps) {
 
   return (
     <div className='mx-auto w-11/12'>
-      <div className='mb-1 flex justify-around gap-10 bg-[#f2e9f2]  text-blue-500 p-2'>
+      <div className='mb-1 flex justify-around gap-10 bg-[#f2e9f2]  p-2 text-blue-500'>
         {content.map((cont, i) => (
           <button
             key={i}
             onClick={() => setActiveTab(i)}
-            className={activeTab === i ? '  border-blue-500 border-b-2' : ' bg-[#f2e9f2]'}
+            className={activeTab === i ? '  border-b-2 border-blue-500' : ' bg-[#f2e9f2]'}
           >
             {cont.title}
           </button>

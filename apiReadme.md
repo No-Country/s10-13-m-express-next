@@ -763,6 +763,8 @@ GOOGLE_DEFAULT_REDIRECT=example
 CLOUDINARY_CLOUD_NAME=
 CLOUDINARY_API_KEY=
 CLOUDINARY_API_SECRET=
+# Stripe
+STRIPE_SECRET_KEY=
 ```
 
 - `PORT` is the port where the server will run.
@@ -776,3 +778,4 @@ CLOUDINARY_API_SECRET=
 - `CLOUDINARY_CLOUD_NAME` is the cloud name of the Cloudinary account.
 - `CLOUDINARY_API_KEY` is the api key of the Cloudinary account.
 - `CLOUDINARY_API_SECRET` is the api secret of the Cloudinary account.
+- `STRIPE_SECRET_KEY`= is the api secret key of the Stripe account.

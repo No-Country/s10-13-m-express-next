@@ -39,20 +39,20 @@ export class Initiative implements ModelInitiative {
   volunteers: Volunteers[];
 
   @ApiProperty()
-  @IsNotEmpty({ message: 'Categories are required' })
-  categories: string[];
-
-  @ApiProperty()
   @IsNotEmpty({ message: 'Opportunities are required' })
   opportunities: string[];
 
   @ApiProperty()
-  @IsNotEmpty({ message: 'Locations are required' })
-  locations: string;
+  @IsNotEmpty({ message: 'Country are required' })
+  country: string;
 
   @ApiProperty()
-  @IsNotEmpty({ message: 'Languages are required' })
-  languages: string[];
+  @IsNotEmpty({ message: 'Province are required' })
+  province: string;
+
+  @ApiProperty()
+  @IsNotEmpty({ message: 'Adress are required' })
+  adress: string;
 
   @ApiProperty()
   reviewsId: string[];
@@ -62,6 +62,18 @@ export class Initiative implements ModelInitiative {
 
   @ApiProperty()
   ownerId: string;
+
+  @ApiProperty()
+  startHour: string;
+
+  @ApiProperty()
+  endHour: string;
+
+  @ApiProperty()
+  extraInfo: string;
+
+  @ApiProperty()
+  themes: string[];
 
   createdAt: Date;
   updatedAt: Date;

@@ -4,10 +4,12 @@ import Nominations from './components/Nominations'
 
 export default function DashboardPage() {
   return (
-    <>
-      <Createpost />
-      <ActiveInitiatives />
-      <Nominations />
-    </>
+    <main className='p-section flex flex-col items-center justify-center'>
+      <article className='2xl:container'>
+        <Createpost />
+        <ActiveInitiatives />
+        <Nominations />
+      </article>
+    </main>
   )
 }
