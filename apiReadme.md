@@ -549,7 +549,7 @@ PATCH /review/:id
 ```json
 {
 	"review": {
-		"id": "6501cfa95b2c7d435f2f1d84",
+		"id": "6501cfa95b2c7d435f2f1d83",
 		"body": "cuerpo de la review",
 		"dateReview": "2023-09-13T15:05:13.972Z",
 		"userIDs": "64f6ac5dbd10725027c83414",
