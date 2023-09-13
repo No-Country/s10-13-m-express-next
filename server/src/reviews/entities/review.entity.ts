@@ -4,14 +4,14 @@ import { ApiProperty } from '@nestjs/swagger';
 
 export class ReviewsEntity implements ReviewPosts {
   id: string;
-  @ApiProperty({
-    description: 'Review title',
-    nullable: false,
-    minLength: 4,
-    example: 'Buena iniciativa',
-  })
-  @IsNotEmpty({ message: 'title is required' })
-  title: string;
+  // @ApiProperty({
+  //   description: 'Review title',
+  //   nullable: false,
+  //   minLength: 4,
+  //   example: 'Buena iniciativa',
+  // })
+  // @IsNotEmpty({ message: 'title is required' })
+  // title: string;
 
   @ApiProperty({
     description: 'Review description',
@@ -22,13 +22,13 @@ export class ReviewsEntity implements ReviewPosts {
   @IsNotEmpty({ message: 'body is required' })
   body: string;
 
-  @ApiProperty({
-    description: 'Review rating',
-    nullable: false,
-    example: 'Excelente',
-  })
-  @IsNotEmpty({ message: 'rating is required' })
-  rating: string;
+  // @ApiProperty({
+  //   description: 'Review rating',
+  //   nullable: false,
+  //   example: 'Excelente',
+  // })
+  // @IsNotEmpty({ message: 'rating is required' })
+  // rating: string;
   @ApiProperty({
     description: 'User Id',
     nullable: false,

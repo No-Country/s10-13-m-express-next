@@ -1,4 +1,4 @@
-import { UserInterface } from '.'
+import { UserInterface } from './user.interface'
 
 export interface InitiativeInterface {
   id: string
@@ -14,13 +14,19 @@ export interface InitiativeInterface {
   opportunities: string[]
   country: string
   province: string
-  languages: string[]
-  themes: string[]
-  reviews: string[]
-  posts: string[]
+  adress: string
+  reviewsId: string[]
+  postsId: string[]
   ownerId: string
   startHour: string
   endHour: string
   owner: UserInterface
   extraInfo: string
+  themes: string[]
+  createdAt: Date
+  updatedAt: Date
+  locations: string
+  languages: string[]
+  reviews: string[]
+  owner: UserInterface
 }

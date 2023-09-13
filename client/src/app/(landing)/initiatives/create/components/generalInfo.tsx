@@ -73,7 +73,11 @@ export default function GeneralInfo({ errors, register, control, setValue }: Gen
           name='opportunities'
           control={control}
           rules={{
-            required: { value: true, message: 'Este campo es requerido' }
+            required: { value: true, message: 'Este campo es requerido' },
+            validate: (value) => {
+              if (value.length < 2) return 'Debe contener al menos dos oportunidades'
+              return true
+            }
           }}
           render={({ field }) => (
             <MultipleSelectCheckmarks
@@ -91,7 +95,11 @@ export default function GeneralInfo({ errors, register, control, setValue }: Gen
           name='themes'
           control={control}
           rules={{
-            required: { value: true, message: 'Este campo es requerido' }
+            required: { value: true, message: 'Este campo es requerido' },
+            validate: (value) => {
+              if (value.length < 2) return 'Debe contener al menos dos tematicas'
+              return true
+            }
           }}
           render={({ field }) => (
             <MultipleSelectCheckmarks
