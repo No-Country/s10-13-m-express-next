@@ -106,7 +106,7 @@ export class ReviewsController {
   async remove(@Param('id') id: string) {
     try {
       const deleteReview = await this.reviewsService.remove(id);
-      return { deleteReview, message: 'Review delete Successfully' };
+      return { deleteReview, message: 'Review deleted Successfully' };
     } catch (error) {
       if (
         error instanceof BadRequestException ||

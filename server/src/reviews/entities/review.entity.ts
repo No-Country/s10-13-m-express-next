@@ -39,4 +39,5 @@ export class ReviewsEntity implements ReviewPosts {
   dateReview: Date;
   @IsNotEmpty({ message: 'userIDs is required' })
   userIDs: string;
+  initiativeId: string;
 }
