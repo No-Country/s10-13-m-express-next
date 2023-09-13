@@ -27,10 +27,10 @@ function Item({ imageSrc, text, icon = true }: ItemProps) {
 export default function InitiativeItem({ initiative }: Props) {
   return (
     <Link
-      className='flex min-w-[240px] flex-col gap-2 rounded-lg p-3 shadow-initiativeItem'
+      className='flex h-full flex-col gap-2 rounded-lg p-3 shadow-initiativeItem'
       href={`${Routes.INITIATIVES}/${initiative?.id}`}
     >
-      <div className='relative aspect-square h-36'>
+      <div className='relative aspect-square '>
         <Image
           src={initiative.thumbnail}
           priority
