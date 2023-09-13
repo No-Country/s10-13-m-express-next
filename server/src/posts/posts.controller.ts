@@ -41,8 +41,46 @@ export class PostsController {
     }
   }
 
+  @Get()
+  async getAllPosts() {
+    try {
+      const posts = await this.postsServices.getAllPosts();
+      return { posts, message: 'Posts successfully found' };
+    } catch (error) {
+      if (
+        error instanceof BadRequestException ||
+        error instanceof ConflictException
+      ) {
+        throw error;
+      } else {
+        throw new BadRequestException('Something bad happened', {
+          cause: error,
+        });
+      }
+    }
+  }
+
   @Get(':id')
-  async getPostsByUserid(@Param('id') userId: string) {
+  async getPostsByPostid(@Param('id') id: string) {
+    try {
+      const posts = await this.postsServices.getPostsByPostId(id);
+      return { posts, message: 'Posts successfully found' };
+    } catch (error) {
+      if (
+        error instanceof BadRequestException ||
+        error instanceof ConflictException
+      ) {
+        throw error;
+      } else {
+        throw new BadRequestException('Something bad happened', {
+          cause: error,
+        });
+      }
+    }
+  }
+
+  @Get('user/:id')
+  async getPostsByUserId(@Param('id') userId: string) {
     try {
       const posts = await this.postsServices.getPostsByUserId(userId);
       return { posts, message: 'Posts successfully found' };
