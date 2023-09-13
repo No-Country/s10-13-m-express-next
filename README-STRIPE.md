@@ -1,6 +1,6 @@
 #STRIPE API Reference
 
-All routes are prefixed with `/api`.
+All routes are prefixed with `/api/stripe`.
 
 - Remember to add the `STRIPE_SECRET_KEY` in your .env in /server and the `STRIPE_PUBLIC_KEY` in the .env of /client.
 
