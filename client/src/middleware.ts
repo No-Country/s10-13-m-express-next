@@ -8,9 +8,8 @@ export async function middleware(req: NextRequest) {
   const privateRoutes = [Routes.ACCOUNT, Routes.DASHBOARD, Routes.FEED]
   const isPathPrivate = privateRoutes.includes(req.nextUrl.pathname)
   const sessionId = req.cookies.get('sessionId')?.value || ''
-
   const isSessionValid = await verifySession(sessionId)
-  console.log('sessionId', sessionId, isSessionValid, isPathPrivate)
+
   if (hasLoginQueryParams) {
     return handleLoginRedirect(req.nextUrl, sid, uid)
   }
