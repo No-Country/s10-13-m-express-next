@@ -18,14 +18,7 @@ export class donationEntity implements Donation {
   })
   @IsNotEmpty({ message: 'Amount is required' })
   amount: number;
-  @ApiProperty({
-    description: 'Card type',
-    nullable: false,
-    example: 'VISA',
-  })
-  @IsNotEmpty({ message: 'Card type is required' })
-  cardType: string;
-  creadtedAt: Date;
+  createdAt: Date;
   @ApiProperty({
     description: 'User Id',
     nullable: false,
@@ -39,4 +32,5 @@ export class donationEntity implements Donation {
     example: '64ff1079e0ee7e30d94dd140',
   })
   initiativeID: string;
+  isGlobalDonation: boolean;
 }

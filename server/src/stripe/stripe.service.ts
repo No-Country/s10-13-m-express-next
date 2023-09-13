@@ -3,6 +3,7 @@ import { PrismaService } from 'src/prisma/prisma.service';
 import Stripe from 'stripe';
 import { CreateStripeIntentDto } from './dto/stripe-intent.dto';
 import { createDonation } from './interface/createDonation.interface';
+import { isMongoId } from 'class-validator';
 
 const stripeApiKey = process.env.STRIPE_SECRET_KEY;
 const stripeCliKey = process.env.STRIPE_WEBHOOK_SECRET;
@@ -28,14 +29,18 @@ export class StripeService {
       if (!existingUser){
         throw new ConflictException('User ID no found');
       }
-      if(createStripeIntentDto.initiativeId != 'globalDonation'){
+      console.log('estoy aqui')
+      if(isMongoId(createStripeIntentDto.initiativeId)){
         const existingInitiative = await this.prisma.initiative.findUnique({
           where: {id: createStripeIntentDto.initiativeId}
         })
         if (!existingInitiative){
           throw new ConflictException('Initiative ID no found');
         }
+      }else if (createStripeIntentDto.initiativeId != 'globalDonation'){
+        throw new ConflictException('Initiative ID invalid');
       }
+
       const session = await stripe.checkout.sessions.create({
         line_items: [
           {
@@ -78,17 +83,23 @@ export class StripeService {
 
     if (stripeEvent.type == 'payment_intent.succeeded') {
       const paymentEventMetadata: Stripe.PaymentIntent = paymentEventData.object as Stripe.PaymentIntent;
-      const paymentUserId = paymentEventMetadata.metadata.userId
-      const paymentAmount = paymentEventMetadata.amount / 100
-      const paymentInitiativeId = paymentEventMetadata.metadata.initiativeId
+      console.log(paymentEventMetadata)
+      const isGlobalDonation = paymentEventMetadata.metadata.initiativeId === 'globalDonation';
+      const paymentObject: createDonation = {
+        TransactionId: paymentEventMetadata.id,
+        userId: paymentEventMetadata.metadata.userId,
+        amount: paymentEventMetadata.amount / 100,
+        initiativeID: paymentEventMetadata.metadata.initiativeId,
+        isGlobalDonation
+      }
       console.log('Se ha recibido una donacion sastifactoria');
       console.log(
-        `El usuario de id ${paymentUserId} dono el monto de ${paymentAmount} a la iniciativa ${paymentInitiativeId}`,
+        `El usuario de id ${paymentObject.userId} dono el monto de ${paymentObject.amount}$ a la iniciativa ${paymentObject.initiativeID}`,
       );
       try {
-        
+        await this.saveDonation(paymentObject)
       } catch (error) {
-        
+        throw error;
       }
     }
     return stripeEvent;
@@ -96,8 +107,31 @@ export class StripeService {
 
   async saveDonation(createDonation : createDonation){
     try {
-    } catch (error) {
+      if(createDonation.initiativeID == 'globalDonation'){
+        const donation = await this.prisma.donation.create({
+          data:{
+            TransactionId: createDonation.TransactionId,
+            amount: createDonation.amount,
+            userId: createDonation.userId,
+            isGlobalDonation: true
+          }
+        })
+        console.log(donation)
+      }else{
+        const donation = await this.prisma.donation.create({
+          data:{
+            TransactionId: createDonation.TransactionId,
+            amount: createDonation.amount,
+            userId: createDonation.userId,
+            initiativeID: createDonation.initiativeID
+          }
+        })
+        console.log(donation)
+      }
       
+    } catch (error) {
+      console.log(error);
+      throw error;
     }
   }
 }
