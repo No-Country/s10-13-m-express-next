@@ -20,6 +20,7 @@ export interface InitiativeInterface {
   ownerId: string
   startHour: string
   endHour: string
+  owner: UserInterface
   extraInfo: string
   themes: string[]
   createdAt: Date

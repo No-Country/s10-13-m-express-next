@@ -2,7 +2,6 @@
 import { SearchInput } from '@/components'
 import { buildQueryString } from '@/utils/functions/buildQueryString.utils'
 import { debounce } from 'lodash'
-import Image from 'next/image'
 import { usePathname, useRouter, useSearchParams } from 'next/navigation'
 import { useEffect, useMemo, useState } from 'react'
 import Selects from './selects'
@@ -41,15 +40,17 @@ export default function SearchSection() {
   }, [query])
 
   return (
-    <section className='flex w-full gap-4 flex-col items-start justify-center'>
-      <h2 className='text-xl font-normal text-blue-600'>Buscar Iniciativas</h2>
-      <div className='flex w-full gap-8'>
-        <div className='flex items-center justify-center rounded-full bg-pink-100 p-3'>
-          <Image src='/icon/tune.svg' alt='tune' width={24} height={24} />
+    <section className='flex w-full flex-col items-center justify-center gap-4'>
+      <div className='container flex flex-col gap-4'>
+        <h2 className='text-xl font-normal text-blue-600'>Buscar Iniciativas</h2>
+        <div className='flex w-full gap-8'>
+          {/* <div className='flex items-center justify-center rounded-full bg-pink-100 p-3'>
+            <Image src='/icon/tune.svg' alt='tune' width={24} height={24} />
+          </div> */}
+          <SearchInput name='name' placeholder='Buscar' handleChange={handleSearchChange} />
         </div>
-        <SearchInput name='name' placeholder='Buscar' handleChange={handleSearchChange} />
+        <Selects handleChange={handleSelectChange} query={query} />
       </div>
-      <Selects handleChange={handleSelectChange} query={query} />
     </section>
   )
 }

@@ -26,44 +26,46 @@ export default function Selects(props: Props) {
 
   return (
     <>
-      <UnstyledSelect
-        name='country'
-        label='Pais de iniciativa'
-        setSelected={(selected) => {
-          handleChange('country', selected)
-        }}
-        names={countries}
-        placeholder='Selecciona una opción'
-      />
-      {props.query.country && (
+      <div className='flex flex-col md:flex-row gap-5'>
         <UnstyledSelect
-          name='province'
-          label='Elige una provincia/estado/departamento'
+          name='country'
+          label='Pais de iniciativa'
           setSelected={(selected) => {
-            handleChange('province', selected)
+            handleChange('country', selected)
           }}
-          names={activeProvinces()}
-          placeholder='Elige una provincia/estado/departamento'
+          names={countries}
+          placeholder='Selecciona una opción'
         />
-      )}
-      <UnstyledSelect
-        name='opportunities'
-        label='Elige una Oportunidad'
-        setSelected={(selected) => {
-          handleChange('opportunities', selected)
-        }}
-        names={opportunities}
-        placeholder='Elige una opportunities'
-      />
-      <UnstyledSelect
-        name='themes'
-        label='Elige un Tema'
-        setSelected={(selected) => {
-          handleChange('themes', selected)
-        }}
-        names={themes}
-        placeholder='Elige un Tema'
-      />
+        {props.query.country && (
+          <UnstyledSelect
+            name='province'
+            label='Elige una provincia/estado/departamento'
+            setSelected={(selected) => {
+              handleChange('province', selected)
+            }}
+            names={activeProvinces()}
+            placeholder='Elige una provincia/estado/departamento'
+          />
+        )}
+        <UnstyledSelect
+          name='opportunities'
+          label='Elige una Oportunidad'
+          setSelected={(selected) => {
+            handleChange('opportunities', selected)
+          }}
+          names={opportunities}
+          placeholder='Elige una opportunities'
+        />
+        <UnstyledSelect
+          name='themes'
+          label='Elige un Tema'
+          setSelected={(selected) => {
+            handleChange('themes', selected)
+          }}
+          names={themes}
+          placeholder='Elige un Tema'
+        />
+      </div>
     </>
   )
 }
