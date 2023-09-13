@@ -22,6 +22,7 @@ import {
   FileFieldsInterceptor,
   FileInterceptor,
 } from '@nestjs/platform-express';
+
 @ApiBearerAuth()
 @ApiTags('Users')
 @Controller('users')
@@ -38,12 +39,14 @@ export class UsersController {
       return { newUser, message: 'User created Successfully' };
     } catch (error) {
       if (error instanceof BadRequestException) {
+        console.log('error', error);
         // Si es una BadRequestException, devolvemos los detalles de validación
         throw error;
       } else if (error instanceof ConflictException) {
         // Si es una ConflictException, devolvemos el mensaje de conflicto
         throw error;
       } else {
+        console.log('error', error);
         // Para cualquier otra excepción, devolvemos un mensaje genérico
         throw new BadRequestException('Something bad happened', {
           cause: error,
@@ -121,6 +124,8 @@ export class UsersController {
 
       delete updateUserDto.oldPassword;
       delete updateUserDto.newPassword;
+      if (updateUserDto.profileImage === '') delete updateUserDto.profileImage;
+      if (updateUserDto.bannerImage === '') delete updateUserDto.bannerImage;
       const updatedUser = await this.usersService.updateUser(
         userId,
         updateUserDto,
@@ -136,8 +141,7 @@ export class UsersController {
   async remove(@Param('id') userId: string) {
     try {
       await this.usersService.removeUser(userId);
-      console.log('remove', userId);
-      return 'User successfully deleted';
+      return { message: 'User correctly deleted' };
     } catch (error) {
       console.log('error', error);
       throw error;
