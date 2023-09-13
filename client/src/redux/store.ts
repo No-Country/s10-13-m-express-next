@@ -5,6 +5,7 @@ import rootReducer from './rootReducer'
 import { initiativesApi } from './services/initiatives.service'
 import { currentUsersApi } from './services/users.service'
 import { authSessionApi } from './services/authSession.service'
+import { reviewsApi } from './services/reviews.service'
 
 const persistConfig = {
   key: 'root',
@@ -23,7 +24,7 @@ const store = configureStore({
         ignoredActions: [FLUSH, REHYDRATE, PAUSE, PERSIST, PURGE, REGISTER],
         ignoredPaths: ['users', 'authSession', 'initiatives']
       }
-    }).concat(initiativesApi.middleware, currentUsersApi.middleware, authSessionApi.middleware)
+    }).concat(initiativesApi.middleware, currentUsersApi.middleware, authSessionApi.middleware, reviewsApi.middleware)
 })
 
 export type RootState = ReturnType<typeof store.getState>
