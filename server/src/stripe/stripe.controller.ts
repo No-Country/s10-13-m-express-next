@@ -2,16 +2,19 @@ import {
   Controller,
   Post,
   Body,
+  Headers,
+  Req,
   BadRequestException,
   ConflictException,
 } from '@nestjs/common';
 import { StripeService } from './stripe.service';
 import { CreateStripeIntentDto } from './dto/stripe-intent.dto';
+import RequestWithRawBody from './interface/requestWithRawBody.interface';
 
-@Controller('create-checkout-session')
+@Controller('stripe')
 export class StripeController {
   constructor(private readonly stripeService: StripeService) {}
-  @Post()
+  @Post('create-checkout-session')
   async createPaymentIntent(@Body() createStripeIntent: CreateStripeIntentDto) {
     try {
       const sessionUrl =
@@ -29,5 +32,14 @@ export class StripeController {
         });
       }
     }
+  }
+
+  @Post('webhook')
+  async stripeWebHook(@Headers('stripe-signature') signature: string, @Req() request: RequestWithRawBody ){
+    if (!signature) {
+      throw new BadRequestException('Missing stripe-signature header');
+    }
+    await this.stripeService.stripeWebHook(signature, request.rawBody)
+    return null
   }
 }
