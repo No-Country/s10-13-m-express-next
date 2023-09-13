@@ -26,7 +26,7 @@ export default function Review() {
   const onSubmit = handleSubmit(async (formData) => {
     try {
       const data = { ...formData, userIDs: user.id }
-      const res = await addReview(data).unwrap()
+      await addReview(data).unwrap()
       reset()
     } catch (error) {
       console.error(error)
