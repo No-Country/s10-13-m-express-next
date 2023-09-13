@@ -1,7 +1,7 @@
 'use client'
 import { Backdrop, ButtonLink, LogoutIcon, ProfileIcon, SettingIcon } from '@/components'
 import { useAppSelector } from '@/redux/hooks'
-import { currentAuthSelector } from '@/redux/selectors/users'
+import { currentAuthSelector, currentUserSelector } from '@/redux/selectors/users'
 import Routes from '@/utils/constants/routes.const'
 import Image from 'next/image'
 import Link from 'next/link'
@@ -12,6 +12,7 @@ import { createPortal } from 'react-dom'
 function DesktopHeader() {
   const [openOptions, setOpenOptions] = useState(false)
   const user = useAppSelector(currentAuthSelector)
+  const currentUser = useAppSelector(currentUserSelector)
   const pathname = usePathname()
 
   if (pathname === '/login' || pathname === '/register') {
@@ -69,7 +70,7 @@ function DesktopHeader() {
                 <hr className='h-[1px] w-full bg-gray-500' />
                 <ul className='text-lg text-blue-700'>
                   <li>
-                    <Link href='/initiatives/@username' className='flex items-center gap-x-3 px-3 py-4'>
+                    <Link href={`/@${currentUser.username}`} className='flex items-center gap-x-3 px-3 py-4'>
                       <ProfileIcon className='h-6 w-6 fill-current' /> Perfil
                     </Link>
                   </li>
