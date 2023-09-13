@@ -70,7 +70,6 @@ export class DonationService {
             const donations = await this.prisma.donation.findMany({
                 where: {isGlobalDonation: true}
             })
-            console.log(donations)
             if (donations.length == 0){
                 throw new ConflictException('Donations global not found');
             }else{

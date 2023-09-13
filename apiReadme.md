@@ -745,6 +745,162 @@ DELETE /initiatives/:id
 
 ---
 
+## Donation API
+
+The Donation API provides endpoints for donations management.
+
+
+#### Get all donation
+
+To get all donations, make a **get** request to this endpoint.
+
+```http
+POST /donation
+```
+
+**Successful Response**
+
+```json
+{
+	"donations": [
+		{
+			"id": "650123f67bafdc0dc097abd6",
+			"TransactionId": "pi_3NpjBwFIeveWazdR0WJMLwvQ",
+			"amount": 3,
+			"createdAt": "2023-09-13T02:52:38.899Z",
+			"userId": "64f6ac5dbd10725027c83414",
+			"initiativeID": null,
+			"isGlobalDonation": true
+		},
+		{
+			"id": "6501b3265d0d8e2117a326cb",
+			"TransactionId": "pi_3NpsjAFIeveWazdR0lk0S1o9",
+			"amount": 30,
+			"createdAt": "2023-09-13T13:03:34.144Z",
+			"userId": "64f6ac5dbd10725027c83414",
+			"initiativeID": "6500b5639f3a6ec4f7d98fbc",
+			"isGlobalDonation": false
+		}
+	],
+	"message": "Donations found Successfully"
+}
+```
+
+#### Get donation by donation id 
+
+To get a donation by donation id, make a **get** request to this endpoint with the donation's id as a parameter.
+
+```http
+GET /donation/:id
+```
+
+**Successful Response**
+
+```json
+{
+	"donation": {
+		"id": "650123f67bafdc0dc097abd6",
+		"TransactionId": "pi_3NpjBwFIeveWazdR0WJMLwvQ",
+		"amount": 3,
+		"createdAt": "2023-09-13T02:52:38.899Z",
+		"userId": "64f6ac5dbd10725027c83414",
+		"initiativeID": null,
+		"isGlobalDonation": true
+	},
+	"message": "Donation found Successfully"
+}
+```
+
+#### Get donation by user id 
+
+To get a donation by user id, make a **get** request to this endpoint with the user's id as a parameter.
+
+```http
+GET /donation/user/:id
+```
+
+**Successful Response**
+
+```json
+{
+	"donation": [
+		{
+			"id": "650123f67bafdc0dc097abd6",
+			"TransactionId": "pi_3NpjBwFIeveWazdR0WJMLwvQ",
+			"amount": 3,
+			"createdAt": "2023-09-13T02:52:38.899Z",
+			"userId": "64f6ac5dbd10725027c83414",
+			"initiativeID": null,
+			"isGlobalDonation": true
+		},
+		{
+			"id": "6501b3265d0d8e2117a326cb",
+			"TransactionId": "pi_3NpsjAFIeveWazdR0lk0S1o9",
+			"amount": 30,
+			"createdAt": "2023-09-13T13:03:34.144Z",
+			"userId": "64f6ac5dbd10725027c83414",
+			"initiativeID": "6500b5639f3a6ec4f7d98fbc",
+			"isGlobalDonation": false
+		}
+	],
+	"message": "Donations found Successfully"
+}
+```
+
+#### Get donation by initiative id 
+
+To get a donation by initiative id, make a **get** request to this endpoint with the initiative's id as a parameter.
+
+```http
+GET /donation/initiative/:id
+```
+
+**Successful Response**
+
+```json
+{
+	"donation": [
+		{
+			"id": "6501b3265d0d8e2117a326cb",
+			"TransactionId": "pi_3NpsjAFIeveWazdR0lk0S1o9",
+			"amount": 30,
+			"createdAt": "2023-09-13T13:03:34.144Z",
+			"userId": "64f6ac5dbd10725027c83414",
+			"initiativeID": "6500b5639f3a6ec4f7d98fbc",
+			"isGlobalDonation": false
+		}
+	],
+	"message": "Donation found Successfully"
+}
+```
+
+#### Get all Global donation
+
+To get all Global donations, make a **get** request to this endpoint.
+
+```http
+POST /donation/global
+```
+
+**Successful Response**
+
+```json
+{
+	"donations": [
+		{
+			"id": "650123f67bafdc0dc097abd6",
+			"TransactionId": "pi_3NpjBwFIeveWazdR0WJMLwvQ",
+			"amount": 3,
+			"createdAt": "2023-09-13T02:52:38.899Z",
+			"userId": "64f6ac5dbd10725027c83414",
+			"initiativeID": null,
+			"isGlobalDonation": true
+		}
+	],
+	"message": "Donations found Successfully"
+}
+```
+
 ## Env file explanation
 
 ```js
