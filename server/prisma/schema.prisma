@@ -98,9 +98,7 @@ model Volunteers {
 
 model Review {
   id         String   @id @default(auto()) @map("_id") @db.ObjectId
-  title      String
   body       String
-  rating     String
   dateReview DateTime @default(now())
   userIDs    String?  @db.ObjectId
   users      User?    @relation(fields: [userIDs], references: [id])
