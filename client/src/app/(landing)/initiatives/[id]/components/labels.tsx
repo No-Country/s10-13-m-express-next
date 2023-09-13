@@ -11,7 +11,7 @@ interface Props {
 
 type LabelsKeys = keyof Props['labels']
 
-export default function Labels(props: Props) {
+const Labels = (props: Props) => {
   const { labels } = props
   const labelIcons: Record<LabelsKeys, JSX.Element> = {
     topic: <KiteIcon color='white' height={12} />,
@@ -31,5 +31,17 @@ export default function Labels(props: Props) {
         />
       ))}
     </section>
+  )
+}
+
+export default Labels
+
+export const LabelsSkeleton = () => {
+  return (
+    <div className='mb-6 flex flex-wrap gap-[4px]'>
+      {[1, 2, 3, 4].map((num) => (
+        <div key={num} className='h-[20px] w-[150px] animate-pulse rounded-full bg-gray-700' />
+      ))}
+    </div>
   )
 }

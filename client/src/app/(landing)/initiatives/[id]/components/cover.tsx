@@ -7,12 +7,12 @@ interface Props {
   ownerPhoto?: string
 }
 
-export default function HeroSec(props: Props) {
+const Cover = (props: Props) => {
   const { coverPhoto, title, owner, ownerPhoto } = props
 
   return (
     <section className='container relative mb-2 w-full rounded-lg bg-gray-200'>
-      <div className='relative h-[20vh] w-full lg:h-[30vh] '>
+      <div className='relative h-[20vh] w-full lg:h-[30vh]'>
         <Image
           src={
             coverPhoto ||
@@ -41,4 +41,10 @@ export default function HeroSec(props: Props) {
       </div>
     </section>
   )
+}
+
+export default Cover
+
+export const CoverSkeleton = () => {
+  return <div className='mb-2 h-[20vh] w-full animate-pulse bg-gray-700 lg:h-[30vh]' />
 }

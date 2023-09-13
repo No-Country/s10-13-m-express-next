@@ -10,7 +10,7 @@ interface FormValues {
   body: string
 }
 
-export default function Review() {
+const Review = () => {
   const user = useAppSelector(currentUserSelector)
 
   const {
@@ -54,11 +54,17 @@ export default function Review() {
             }}
             error={errors?.body?.message}
           />
-          <button className='m-auto w-3/12 rounded-full bg-blue-500 px-[24px] py-[8px] text-lg font-bold text-white'>
+          <button className='m-auto w-3/12 min-w-[140px] rounded-full bg-blue-500 px-[24px] py-[8px] text-lg font-bold text-white'>
             Publicar
           </button>
         </form>
       </div>
     </section>
   )
+}
+
+export default Review
+
+export const ReviewSkeleton = () => {
+  return <div className='mb-6 h-[250px] w-full animate-pulse bg-gray-700' />
 }

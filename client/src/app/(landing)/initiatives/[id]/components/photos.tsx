@@ -16,3 +16,7 @@ const Photos = (props: Props) => {
 }
 
 export default Photos
+
+export const PhotosSkeleton = () => {
+  return <div className='mb-6 h-[250px] w-full animate-pulse bg-gray-700' />
+}
