@@ -28,6 +28,34 @@ export class PostsService {
         return newPost
     }
 
+    async getAllPosts(): Promise<Posts[]> {
+        try {
+            const userPosts = await this.prisma.posts.findMany();
+            if (userPosts.length === 0) {
+                throw new ConflictException('Posts not found');
+            } else {
+                return userPosts;
+            }
+        } catch (error) {
+            throw error;
+        }
+    }
+
+    async getPostsByPostId(id: string): Promise<Posts[]> {
+        try {
+            const userPosts = await this.prisma.posts.findMany({
+                where: { id: id }
+            });
+            if (userPosts.length === 0) {
+                throw new ConflictException('Post ID not found');
+            } else {
+                return userPosts;
+            }
+        } catch (error) {
+            throw error;
+        }
+    }
+
     async getPostsByUserId(userId: string): Promise<Posts[]> {
         try {
             const userPosts = await this.prisma.posts.findMany({

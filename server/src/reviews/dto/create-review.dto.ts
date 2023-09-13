@@ -36,4 +36,13 @@ export class CreateReviewDto {
   })
   @IsNotEmpty({ message: 'userIDs is required' })
   userIDs: string;
+  @ApiProperty({
+    description: 'Initiative Id',
+    nullable: false,
+    minLength: 24,
+    maxLength: 24,
+    example: '64e83e47891866a96b5977c1',
+  })
+  @IsNotEmpty({ message: 'initiativeId is required' })
+  initiativeId: string
 }
