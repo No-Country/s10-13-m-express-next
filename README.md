@@ -14,9 +14,9 @@ A portal for volunteers who want to help beyond their resources or possibilities
 
 ## **🎨MOCKUPS**
 
-![Proyect Mockups](https://res.cloudinary.com/dpdtjoyi3/image/upload/v1694710388/union-solidaria/546shots_so_bdnefv.jpg)
-![Proyect Mockups](https://res.cloudinary.com/dpdtjoyi3/image/upload/v1694710388/union-solidaria/584shots_so_lzihor.jpg)
-![Proyect Mockups](https://res.cloudinary.com/dpdtjoyi3/image/upload/v1694710387/union-solidaria/562shots_so_ojb3ns.jpg)
+![Proyect Mockups](https://res.cloudinary.com/dpdtjoyi3/image/upload/v1694716921/union-solidaria/cap1_pvpmek.png)
+![Proyect Mockups](https://res.cloudinary.com/dpdtjoyi3/image/upload/v1694716921/union-solidaria/cap3_s0qxsx.png)
+![Proyect Mockups](https://res.cloudinary.com/dpdtjoyi3/image/upload/v1694716921/union-solidaria/cap2_shkllr.png)
 
 ## **💬TECHNOLOGIES USED**
 
