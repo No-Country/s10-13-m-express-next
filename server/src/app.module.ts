@@ -15,6 +15,7 @@ import { AuthMiddleware } from './auth/auth.middleware';
 import { UserMiddleware } from './users/users.middleware';
 import { UuidService } from './uuid/uuid.service';
 import { StripeModule } from './stripe/stripe.module';
+import { DonationModule } from './donation/donation.module';
 
 @Module({
   imports: [
@@ -26,7 +27,8 @@ import { StripeModule } from './stripe/stripe.module';
     PostsModule,
     ReviewsModule,
     CloudinaryModule,
-    StripeModule
+    StripeModule,
+    DonationModule
   ],
   controllers: [AppController],
   providers: [AppService, PrismaService, CloudinaryService, UuidService],

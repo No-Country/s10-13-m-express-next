@@ -7,6 +7,7 @@ import * as passport from 'passport';
 import * as session from 'express-session';
 import * as connectMongoDBSession from 'connect-mongodb-session';
 import * as cookieParser from 'cookie-parser';
+import rawBodyMiddleware from './middleware/rawBody.middleware';
 
 const MongoDBStore = connectMongoDBSession(session);
 
@@ -21,7 +22,7 @@ async function bootstrap() {
   app.use(cookieParser());
   app.setGlobalPrefix('api/');
   app.useGlobalPipes(new ValidationPipe());
-
+  app.use(rawBodyMiddleware()); // Raw body for stripe web hook
   app.use(
     session({
       secret: 'your-secret-key',

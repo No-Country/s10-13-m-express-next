@@ -74,6 +74,7 @@ model Initiative {
   adress        String
   reviewsId     String[]     @db.ObjectId
   postsId       String[]     @db.ObjectId
+  reviews       Review[]
   ownerId       String       @db.ObjectId
   owner         User         @relation(fields: [ownerId], references: [id], onDelete: Cascade)
   startHour     String
@@ -97,23 +98,25 @@ model Volunteers {
 }
 
 model Review {
-  id         String   @id @default(auto()) @map("_id") @db.ObjectId
-  body       String
-  dateReview DateTime @default(now())
-  userIDs    String?  @db.ObjectId
-  users      User?    @relation(fields: [userIDs], references: [id])
+  id            String      @id @default(auto()) @map("_id") @db.ObjectId
+  body          String
+  dateReview    DateTime    @default(now())
+  userIDs       String?     @db.ObjectId
+  users         User?       @relation(fields: [userIDs], references: [id])
+  initiativeId  String?     @db.ObjectId
+  initiative    Initiative? @relation(fields: [initiativeId], references: [id])
 }
 
 model Donation {
   id            String      @id @default(auto()) @map("_id") @db.ObjectId
   TransactionId String
   amount        Int
-  cardType      String
-  creadtedAt    DateTime    @default(now())
+  createdAt    DateTime    @default(now())
   userId        String      @db.ObjectId
   user          User?       @relation(fields: [userId], references: [id])
-  initiativeID  String      @db.ObjectId
+  initiativeID  String?      @db.ObjectId
   initiative    Initiative? @relation(fields: [initiativeID], references: [id])
+  isGlobalDonation Boolean  @default(false)
 }
 
 enum role {
