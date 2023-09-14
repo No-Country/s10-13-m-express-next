@@ -16,15 +16,15 @@ export default function Content({ name }: Props) {
 
   const TabContentItem = [
     { title: 'Iniciativas', content: <InitiativesFlex initiatives={data || []} /> },
-    { title: 'Certificados', content: <span className='p-10 text-lg text-gray-600'>En desarrollo...</span> },
-    { title: 'Reseñas', content: <span className='p-10 text-lg text-gray-600'>En desarrollo...</span> }
+    { title: 'Certificados', content: <span className='px-10 text-lg text-gray-600'>En desarrollo...</span> },
+    { title: 'Reseñas', content: <span className='px-10 text-lg text-gray-600'>En desarrollo...</span> }
   ]
 
   const username = name.slice(3)
   useGetUsersByUsernameQuery(username)
   const currentActiveUser = useAppSelector(currentActiveUserSelector)
   const currentUser = useAppSelector(currentUserSelector)
-  console.log(currentActiveUser.role)
+
   return (
     <section className='flex min-h-[100vh] w-full flex-col gap-6 bg-white py-16 pt-20'>
       {username === currentUser.username ? (

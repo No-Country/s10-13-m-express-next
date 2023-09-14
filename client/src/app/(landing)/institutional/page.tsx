@@ -1,6 +1,11 @@
 import { TabBar } from '@/components'
 import Privacy from './components/privacy'
 import Terms from './components/terms'
+import type { Metadata } from 'next'
+
+export const metadata: Metadata = {
+  title: 'Institucional | Unión Solidaria'
+}
 
 function InstitutionalPage() {
   const content = [
