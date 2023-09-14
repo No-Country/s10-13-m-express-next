@@ -20,7 +20,6 @@ function LoginForm() {
   })
 
   const onSubmit = async (data: any) => {
-    console.log(data)
     try {
       await login(data).unwrap()
       router.push(Routes.HOME)
