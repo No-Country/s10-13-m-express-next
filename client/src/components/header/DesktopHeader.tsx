@@ -21,7 +21,7 @@ function DesktopHeader() {
 
   return (
     <header className='sticky top-0 z-40 hidden bg-pink-100 py-3 2lg:block'>
-      <div className='mx-auto flex max-w-screen-xl items-center justify-between px-4'>
+      <div className='mx-auto flex max-w-screen-xl items-center justify-between 2lg:px-4'>
         <Link href={Routes.HOME}>
           <Image
             width={148}
@@ -48,7 +48,7 @@ function DesktopHeader() {
           </ul>
         </nav>
         {!user.isLogged && (
-          <div>
+          <div className='flex items-center'>
             <ButtonLink variant='primary' href={Routes.LOGIN}>
               Inicia sesión
             </ButtonLink>
