@@ -1,3 +1,4 @@
+import { Review } from './review.interface'
 import { UserInterface } from './user.interface'
 
 export interface InitiativeInterface {
@@ -26,6 +27,6 @@ export interface InitiativeInterface {
   updatedAt: Date
   locations: string
   languages: string[]
-  reviews: string[]
+  reviews: Review[]
   owner: UserInterface
 }

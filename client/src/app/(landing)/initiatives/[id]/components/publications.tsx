@@ -34,3 +34,7 @@ const Publications = (props: Props) => {
 }
 
 export default Publications
+
+export const PublicationsSkeleton = () => {
+  return <div className='mb-6 max-w-2xl animate-pulse rounded-xl bg-gray-700' />
+}
