@@ -36,9 +36,11 @@ function DesktopFooter() {
       </div>
       <div className='grid max-w-[182px] place-items-center gap-y-4'>
         <p className='text-center text-base'>¿Estás listo/a para hacer la diferencia?</p>
-        <Button variant='secondary' iconLeft={<HeartIcon className='h-3 w-3 fill-blue-700' />}>
-          Donar
-        </Button>
+        <Link href={Routes.DONATION}>
+          <Button variant='secondary' iconLeft={<HeartIcon className='h-3 w-3 fill-blue-700' />}>
+            Donar
+          </Button>
+        </Link>
       </div>
       <ul className='space-y-5 text-left text-base font-bold text-blue-500'>
         <li className='text-xl'>Institucional</li>

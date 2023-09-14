@@ -65,7 +65,7 @@ function DesktopHeader() {
             <Backdrop onClick={() => setOpenOptions(false)}>
               <div className='fixed right-16 top-20 rounded bg-pink-100 shadow-md shadow-gray-500'>
                 <div className='px-8 py-4 text-xl font-bold'>
-                  ¡Hola, <span className='text-blue-500'>Usuario</span>!
+                  ¡Hola, <span className='text-blue-500'>{currentUser.firstName}</span>!
                 </div>
                 <hr className='h-[1px] w-full bg-gray-500' />
                 <ul className='text-lg text-blue-700'>
