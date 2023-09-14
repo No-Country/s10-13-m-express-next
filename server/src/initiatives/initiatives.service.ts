@@ -59,6 +59,7 @@ export class InitiativesService {
       include: {
         owner: true,
         volunteers: true,
+        reviews: true,
       },
     });
 
