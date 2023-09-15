@@ -12,6 +12,7 @@ interface InputProps {
   className?: string
   labelClass?: string
   defaultValue?: string
+  disabled?: boolean
   value?: string
   prefix?: string
   onChange?: any
@@ -19,9 +20,15 @@ interface InputProps {
   step?: string
   required?: boolean
   rows?: number
-  selectOptions?: Array<{ value: string, label: string }>
+  selectOptions?: Array<{
+    value: string
+    label: string
+  }>
   handleSelectChange?: (e: any) => void
-  selectSelected?: { value: string, label: string }
+  selectSelected?: {
+    value: string
+    label: string
+  }
   autoComplete?: 'on' | 'off'
   hookForm?: {
     register: UseFormRegister<any>
@@ -64,7 +71,8 @@ export default function FormInput(props: InputProps) {
               name={props.name}
               value={props.value}
               prefix={props.prefix}
-              onChange={async(e: any) => {
+              disabled={props.disabled}
+              onChange={async (e: any) => {
                 await hookForm?.onChange(e)
                 if (props.onChange) props.onChange(e)
               }}
@@ -84,7 +92,8 @@ export default function FormInput(props: InputProps) {
               {...hookForm}
               type='file'
               name={props.name}
-              onChange={async(e: any) => {
+              disabled={props.disabled}
+              onChange={async (e: any) => {
                 await hookForm?.onChange(e)
                 if (props.onChange) props.onChange(e)
               }}
@@ -102,7 +111,8 @@ export default function FormInput(props: InputProps) {
             defaultValue={props.defaultValue}
             name={props.name}
             value={props.value}
-            onChange={async(e: any) => {
+            disabled={props.disabled}
+            onChange={async (e: any) => {
               await hookForm?.onChange(e)
               if (props.onChange) props.onChange(e)
             }}

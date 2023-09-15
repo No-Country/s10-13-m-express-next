@@ -22,3 +22,13 @@ const Volunteers = (props: Props) => {
 }
 
 export default Volunteers
+
+export const VolunteersSkeleton = () => {
+  return (
+    <div className='flex flex-wrap gap-4'>
+      {[1, 2, 3, 4, 5].map((num) => (
+        <div key={num} className='h-10 w-10 animate-pulse rounded-full bg-gray-700' />
+      ))}
+    </div>
+  )
+}

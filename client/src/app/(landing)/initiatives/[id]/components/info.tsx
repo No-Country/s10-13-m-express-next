@@ -38,3 +38,13 @@ const InitiativeInfo = (props: Props) => {
 }
 
 export default InitiativeInfo
+
+export const InitiativeInfoSkeleton = () => {
+  return (
+    <div className=''>
+      {[1, 2, 3, 4].map((num) => (
+        <div key={num} className='w-full animate-pulse bg-gray-700' />
+      ))}
+    </div>
+  )
+}
